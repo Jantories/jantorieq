@@ -164,8 +164,8 @@ type Props = {
 
 export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
   const [background, setBackground] = useState<string | null>(null)
-  const [turns, setTurns] = useState(0)
-  const flip = () => setTurns((t) => t + 1)
+  const [flipped, setFlipped] = useState(false)
+  const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
   const bgRef = useRef<HTMLInputElement>(null)
 
@@ -199,8 +199,8 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
       onClick={interactive ? handleCardTap : undefined}
     >
       <div
-        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-700 [transform-style:preserve-3d]"
-        style={{ transform: `rotateY(${turns * -180}deg)`, borderRadius: '4.5cqw' }}
+        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
+        style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFront photo={photo} background={background} onPickPhoto={onPickPhoto} />
         <CardBack background={background} />

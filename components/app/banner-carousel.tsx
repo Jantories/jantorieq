@@ -22,7 +22,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
   function handleScroll() {
     const el = trackRef.current
     if (!el) return
-    setIndex(Math.min(banners.length - 1, Math.round(el.scrollLeft / slideWidth())))
+    setIndex(Math.round(el.scrollLeft / slideWidth()) % banners.length)
   }
 
   function stopAnimation() {
@@ -31,12 +31,12 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
     if (trackRef.current) trackRef.current.style.scrollSnapType = ''
   }
 
-  function goTo(i: number) {
+  function goTo(position: number) {
     const el = trackRef.current
     if (!el) return
     stopAnimation()
     const from = el.scrollLeft
-    const to = i * slideWidth()
+    const to = position * slideWidth()
     if (from === to) return
     el.style.scrollSnapType = 'none'
     const start = performance.now()
@@ -45,16 +45,29 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
       el.scrollLeft = from + (to - from) * easeInOutSine(t)
       if (t < 1) {
         frameRef.current = requestAnimationFrame(step)
-      } else {
-        frameRef.current = null
-        el.style.scrollSnapType = ''
+        return
       }
+      frameRef.current = null
+      // Landed on the trailing clone of the first slide: jump back to the real one unseen.
+      if (position >= banners.length) el.scrollLeft = (position - banners.length) * slideWidth()
+      el.style.scrollSnapType = ''
     }
     frameRef.current = requestAnimationFrame(step)
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => goTo((index + 1) % banners.length), AUTO_SLIDE_MS)
+    const timer = setTimeout(() => {
+      const el = trackRef.current
+      if (!el) return
+      let current = Math.round(el.scrollLeft / slideWidth())
+      if (current >= banners.length) {
+        current -= banners.length
+        el.style.scrollSnapType = 'none'
+        el.scrollLeft = current * slideWidth()
+        el.style.scrollSnapType = ''
+      }
+      goTo(current + 1)
+    }, AUTO_SLIDE_MS)
     return () => clearTimeout(timer)
   }, [index])
 
@@ -70,12 +83,14 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
         style={{ columnGap: SLIDE_GAP }}
         className="flex snap-x snap-mandatory items-start overflow-x-auto px-[10%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {banners.map((b) => (
+        {[...banners, banners[0]].map((b, i) => (
           <button
-            key={b.src}
+            key={`${b.src}-${i}`}
             type="button"
             onClick={() => onAction(b.title)}
             aria-label={b.title}
+            aria-hidden={i === banners.length}
+            tabIndex={i === banners.length ? -1 : 0}
             className="block w-[80%] shrink-0 snap-center"
           >
             <span className="block aspect-[4/1] w-full overflow-hidden rounded-2xl">

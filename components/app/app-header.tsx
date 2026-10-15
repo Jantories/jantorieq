@@ -21,17 +21,17 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
   }
 
   return (
-    <header className="flex items-center gap-3 px-5">
+    <header className="flex items-center gap-2.5 px-5">
       <button
         type="button"
         onClick={() => fileRef.current?.click()}
-        className="group relative size-12 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
+        className="group relative size-10 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
         aria-label="เปลี่ยนรูปโปรไฟล์"
       >
         {avatar ? (
           <img src={avatar || '/placeholder.svg'} alt="รูปโปรไฟล์" className="size-full object-cover" />
         ) : (
-          <User className="m-auto size-6 text-white" />
+          <User className="m-auto size-5 text-white" />
         )}
       </button>
       <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={handleFile} />
@@ -41,8 +41,8 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
           <Camera className="size-5 text-white" />
         </span>
         <div className="flex items-center gap-2">
-          <span className="text-lg text-white/90">{profile.greeting}</span>
-          <span className="rounded-full bg-online px-3 py-0.5 text-xs font-medium leading-tight text-white">
+          <span className="text-base text-white/90">{profile.greeting}</span>
+          <span className="rounded-full bg-online px-2.5 py-0.5 text-[11px] font-medium leading-tight text-white">
             {profile.status}
           </span>
         </div>
@@ -53,7 +53,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
           id="display-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full truncate bg-transparent text-lg font-bold leading-tight text-white outline-none focus:underline"
+          className="w-full truncate bg-transparent text-base font-bold leading-tight text-white outline-none focus:underline"
         />
       </div>
 
@@ -61,17 +61,17 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
         type="button"
         onClick={onNotifications}
         aria-label="การแจ้งเตือน"
-        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
-        <Bell className="size-5" />
+        <Bell className="size-[18px]" />
       </button>
       <button
         type="button"
         onClick={onLogout}
         aria-label="ออกจากระบบ"
-        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
-        <Power className="size-5" />
+        <Power className="size-[18px]" />
       </button>
     </header>
   )
