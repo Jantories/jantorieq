@@ -25,7 +25,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
       <button
         type="button"
         onClick={() => fileRef.current?.click()}
-        className="group relative size-16 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
+        className="group relative size-14 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
         aria-label="เปลี่ยนรูปโปรไฟล์"
       >
         {avatar ? (
@@ -61,17 +61,17 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
         type="button"
         onClick={onNotifications}
         aria-label="การแจ้งเตือน"
-        className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-14 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
-        <Bell className="size-7" />
+        <Bell className="size-6" />
       </button>
       <button
         type="button"
         onClick={onLogout}
         aria-label="ออกจากระบบ"
-        className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-14 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
-        <Power className="size-7" />
+        <Power className="size-6" />
       </button>
     </header>
   )

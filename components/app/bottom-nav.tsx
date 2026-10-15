@@ -23,8 +23,8 @@ export function BottomNav({ active, onChange, onScan }: Props) {
         aria-current={isActive ? 'page' : undefined}
         className={`flex flex-1 flex-col items-center gap-1 pt-3 transition ${isActive ? 'text-brand' : 'text-neutral-500 hover:text-neutral-700'}`}
       >
-        <Icon className="size-9" strokeWidth={isActive ? 2 : 1.6} />
-        <span className="text-base">{label}</span>
+        <Icon className="size-7" strokeWidth={isActive ? 2 : 1.6} />
+        <span className="text-sm">{label}</span>
         <span className={`h-1 w-10 rounded-full ${isActive ? 'bg-brand' : 'bg-transparent'}`} />
       </button>
     )
@@ -42,11 +42,11 @@ export function BottomNav({ active, onChange, onScan }: Props) {
             type="button"
             onClick={onScan}
             aria-label={nav.scan}
-            className="-mt-12 flex size-[4.5rem] items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
+            className="-mt-10 flex size-16 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
           >
-            <ScanLine className="size-9" strokeWidth={1.75} />
+            <ScanLine className="size-7" strokeWidth={1.75} />
           </button>
-          <span className="mt-2 pb-2 text-base text-neutral-500">{nav.scan}</span>
+          <span className="mt-2 pb-2 text-sm text-neutral-500">{nav.scan}</span>
         </div>
         {tabs.slice(2).map(renderTab)}
       </div>
