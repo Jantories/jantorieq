@@ -26,7 +26,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
       <button
         type="button"
         onClick={() => fileRef.current?.click()}
-        className="group relative size-10 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
+        className="group relative size-10 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[1.5px] ring-white"
         aria-label="เปลี่ยนรูปโปรไฟล์"
       >
         {avatar ? (
@@ -60,7 +60,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
           id="display-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full truncate bg-transparent text-base font-bold leading-tight text-white outline-none focus:underline"
+          className="w-full truncate bg-transparent text-base font-medium leading-tight text-white outline-none focus:underline"
         />
       </div>
 

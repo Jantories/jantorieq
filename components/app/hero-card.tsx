@@ -6,7 +6,7 @@ import { ChevronLeft, Maximize2, RefreshCcwDot, UserRound } from 'lucide-react'
 import { card } from '@/lib/app-content'
 
 const FRONT = { src: '/images/source-front.png', natural: { width: 1279, height: 948 }, crop: { x: 56, y: 173, width: 1175, height: 739 } }
-const BACK = { src: '/images/source-back.png', natural: { width: 474, height: 302 }, crop: { x: 12, y: 8, width: 450, height: 284 } }
+const BACK = { src: '/images/source-back.png', natural: { width: 1422, height: 906 }, crop: { x: 36, y: 24, width: 1350, height: 852 } }
 
 function CardFace({ face, label, back = false }: { face: typeof FRONT; label: string; back?: boolean }) {
   return (
