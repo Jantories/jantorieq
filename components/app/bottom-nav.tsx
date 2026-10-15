@@ -42,7 +42,7 @@ export function BottomNav({ active, onChange, onScan }: Props) {
             type="button"
             onClick={onScan}
             aria-label={nav.scan}
-            className="-mt-10 flex size-16 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
+            className="-mt-9 flex size-16 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
           >
             <ScanLine className="size-7" strokeWidth={1.75} />
           </button>

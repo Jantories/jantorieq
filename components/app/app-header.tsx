@@ -21,7 +21,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
   }
 
   return (
-    <header className="flex items-center gap-4 px-5">
+    <header className="flex items-center gap-3 px-5">
       <button
         type="button"
         onClick={() => fileRef.current?.click()}

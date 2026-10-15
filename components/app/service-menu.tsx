@@ -29,7 +29,7 @@ export function ServiceMenu() {
           <ChevronRight className="size-5" />
         </span>
       </div>
-      <ul className="mt-5 grid grid-cols-4 gap-1 px-2">
+      <ul className="mt-4 grid grid-cols-4 gap-0 px-2">
         {services.map(({ id, label, disabled }) => {
           const Icon = icons[id]
           return (
