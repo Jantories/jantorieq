@@ -1,19 +1,27 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { CroppedImage } from './cropped-image'
-import { ChevronLeft, Maximize2, RefreshCcwDot, UserRound } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
+import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 import { card } from '@/lib/app-content'
 
-const FRONT = { src: '/images/source-front.png', natural: { width: 1279, height: 948 }, crop: { x: 56, y: 173, width: 1175, height: 739 } }
-const BACK = { src: '/images/source-back.png', natural: { width: 1422, height: 906 }, crop: { x: 36, y: 24, width: 1350, height: 852 } }
+const FRONT = { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' }
+const BACK = { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' }
 
 function CardFace({ face, label, back = false }: { face: typeof FRONT; label: string; back?: boolean }) {
   return (
     <div
       className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''}`}
     >
-      <CroppedImage {...face} alt={label} className="size-full" />
+      <img
+        src={face.large}
+        srcSet={`${face.small} 640w, ${face.large} 1100w`}
+        sizes="640px"
+        alt={label}
+        draggable={false}
+        decoding="async"
+        className="size-full select-none object-cover"
+      />
     </div>
   )
 }
@@ -69,18 +77,18 @@ export function HeroCard({ onOpenInfo }: Props) {
       {renderCard(undefined, true)}
       <div className="mt-4 flex items-center justify-center gap-[18px]">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
-          <UserRound className="size-5" />
+          <PersonIcon className="size-[22px]" />
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
           className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
-          <Maximize2 className="size-5" />
+          <ExpandIcon className="size-5" />
           <span>{card.expandLabel}</span>
         </button>
         <button type="button" onClick={flip} aria-label="พลิกบัตร" className={circleBtn}>
-          <RefreshCcwDot className="size-5" />
+          <FlipIcon className="size-[22px]" />
         </button>
       </div>
 
@@ -96,7 +104,7 @@ export function HeroCard({ onOpenInfo }: Props) {
               <ChevronLeft className="size-8" strokeWidth={2.5} />
             </button>
             <button type="button" onClick={flip} aria-label="พลิกบัตร" className={glassBtn}>
-              <RefreshCcwDot className="size-7" />
+              <FlipIcon className="size-7" />
             </button>
           </div>
           <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' })}</div>
