@@ -19,9 +19,11 @@ export function Announcements({ onAction }: { onAction: (msg: string) => void })
                 <Image
                   src="/images/dopa-logo.png"
                   alt=""
-                  width={22}
-                  height={22}
-                  className="size-[22px] shrink-0"
+                  width={192}
+                  height={192}
+                  sizes="24px"
+                  quality={95}
+                  className="size-6 shrink-0"
                 />
                 <span className="min-w-0 flex-1 truncate text-[17px] font-bold leading-6 text-neutral-900">
                   {item.title}

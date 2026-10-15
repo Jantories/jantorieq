@@ -30,7 +30,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
         ref={trackRef}
         onScroll={handleScroll}
         style={{ columnGap: SLIDE_GAP }}
-        className="flex snap-x snap-mandatory items-end overflow-x-auto px-[10%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory items-start overflow-x-auto px-[10%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {banners.map((b) => (
           <button
@@ -40,12 +40,14 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
             aria-label={b.title}
             className="block w-[80%] shrink-0 snap-center"
           >
-            <img
-              src={b.src}
-              alt=""
-              draggable={false}
-              className={b.overflow ? 'block h-auto w-full' : 'block aspect-[4.3/1] w-full rounded-2xl object-cover'}
-            />
+            <span className="block aspect-[4.3/1] w-full overflow-hidden rounded-2xl">
+              <img
+                src={b.src}
+                alt=""
+                draggable={false}
+                className="block size-full object-cover"
+              />
+            </span>
           </button>
         ))}
       </div>
