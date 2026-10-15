@@ -153,6 +153,8 @@ const circleBtn =
 const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
 
+const DOUBLE_TAP_MS = 350
+
 type Props = {
   photo: string | null
   onPickPhoto: () => void
@@ -163,6 +165,7 @@ type Props = {
 export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
   const [background, setBackground] = useState<string | null>(null)
   const [flipped, setFlipped] = useState(false)
+  const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
   const bgRef = useRef<HTMLInputElement>(null)
 
@@ -174,11 +177,30 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
     onAction('อัปเดตพื้นหลังบัตรแล้ว')
   }
 
-  const renderCard = (style?: React.CSSProperties) => (
-    <div className="[container-type:inline-size] [perspective:1200px]" style={style}>
+  const lastTapRef = useRef(0)
+
+  function handleCardTap(e: React.MouseEvent) {
+    if ((e.target as HTMLElement).closest('button, input, [contenteditable]')) return
+    const now = Date.now()
+    if (now - lastTapRef.current < DOUBLE_TAP_MS) {
+      lastTapRef.current = 0
+      flip()
+      setExpanded(true)
+      return
+    }
+    lastTapRef.current = now
+    flip()
+  }
+
+  const renderCard = (style?: React.CSSProperties, interactive = false) => (
+    <div
+      className="[container-type:inline-size] [perspective:1200px]"
+      style={style}
+      onClick={interactive ? handleCardTap : undefined}
+    >
       <div
-        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-700 [transform-style:preserve-3d]"
-        style={{ transform: flipped ? 'rotateY(180deg)' : undefined, borderRadius: '4.5cqw' }}
+        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
+        style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFront photo={photo} background={background} onPickPhoto={onPickPhoto} />
         <CardBack background={background} />
@@ -190,20 +212,20 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
     <div className="px-5 pt-4">
       <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
-      {renderCard()}
-      <div className="mt-4 flex items-center justify-center gap-4">
+      {renderCard(undefined, true)}
+      <div className="mt-4 flex items-center justify-center gap-[18px]">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
           <UserRound className="size-5" />
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark px-5 text-sm text-white transition hover:bg-brand-dark/80 active:scale-95"
+          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
           <Maximize2 className="size-5" />
           <span>{card.expandLabel}</span>
         </button>
-        <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={circleBtn}>
+        <button type="button" onClick={flip} aria-label="พลิกบัตร" className={circleBtn}>
           <RefreshCcwDot className="size-5" />
         </button>
       </div>
@@ -219,7 +241,7 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
             <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
               <ChevronLeft className="size-8" strokeWidth={2.5} />
             </button>
-            <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={glassBtn}>
+            <button type="button" onClick={flip} aria-label="พลิกบัตร" className={glassBtn}>
               <RefreshCcwDot className="size-7" />
             </button>
           </div>
