@@ -1,8 +1,8 @@
-import { ImagePlus, UserRound } from 'lucide-react'
+import { UserRound } from 'lucide-react'
 import { cardInfo as c } from '@/lib/app-content'
 import { BackButton } from './page-parts'
 
-type Props = { photo: string | null; onPickPhoto: () => void; onBack: () => void }
+type Props = { onBack: () => void }
 
 function Field({ label, value, align = 'left' }: { label: string; value: string; align?: 'left' | 'right' }) {
   return (
@@ -13,7 +13,7 @@ function Field({ label, value, align = 'left' }: { label: string; value: string;
   )
 }
 
-export function CardInfoScreen({ photo, onPickPhoto, onBack }: Props) {
+export function CardInfoScreen({ onBack }: Props) {
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-brand">
       <header className="grid grid-cols-[3.5rem_1fr_3.5rem] items-center px-5 pb-6 pt-[max(env(safe-area-inset-top),1.5rem)]">
@@ -27,22 +27,12 @@ export function CardInfoScreen({ photo, onPickPhoto, onBack }: Props) {
           <p className="text-base text-neutral-800">{c.photoSub}</p>
         </div>
 
-        <button
-          type="button"
-          onClick={onPickPhoto}
-          aria-label="เปลี่ยนรูปหน้าบัตร"
-          className="group relative mx-auto mt-6 block aspect-[5/6] w-[72%] overflow-hidden bg-neutral-100"
+        <div
+          className="relative mx-auto mt-6 block aspect-[5/6] w-[72%] overflow-hidden bg-neutral-100"
           style={{ backgroundImage: 'repeating-linear-gradient(180deg,#ebebef 0 21%,#4b4b4b 21% 21.6%)' }}
         >
-          {photo ? (
-            <img src={photo || '/placeholder.svg'} alt="รูปหน้าบัตร" className="size-full object-cover" />
-          ) : (
-            <UserRound className="mx-auto size-24 text-neutral-400" />
-          )}
-          <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
-            <ImagePlus className="size-8 text-white" />
-          </span>
-        </button>
+          <UserRound className="mx-auto size-24 text-neutral-400" />
+        </div>
 
         <div className="mt-6 text-center">
           <p className="text-sm text-neutral-500">{c.numberLabel}</p>

@@ -164,10 +164,31 @@
   * {
     @apply border-border outline-ring/50;
   }
-body {
-  margin: 0;
-  min-width: 320px;
-  background: #2b2f8f;
-  color: #151515;
-}
+  html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    touch-action: pan-x pan-y;
+    -webkit-text-size-adjust: 100%;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+    margin: 0;
+    min-width: 320px;
+    background: #2b2f8f;
+    color: #151515;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  input,
+  textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  img {
+    -webkit-user-drag: none;
+  }
 }

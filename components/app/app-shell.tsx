@@ -23,10 +23,8 @@ export function AppShell() {
   const [screen, setScreen] = useState<Screen>(null)
   const [chatOpen, setChatOpen] = useState(false)
   const [logoutOpen, setLogoutOpen] = useState(false)
-  const [photo, setPhoto] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const photoRef = useRef<HTMLInputElement>(null)
 
   const notify = useCallback((message: string) => {
     setToast(message)
@@ -34,21 +32,11 @@ export function AppShell() {
     timer.current = setTimeout(() => setToast(null), 1800)
   }, [])
 
-  function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    if (photo) URL.revokeObjectURL(photo)
-    setPhoto(URL.createObjectURL(file))
-    e.target.value = ''
-    notify('อัปเดตรูปบนบัตรแล้ว')
-  }
-
-  const pickPhoto = () => photoRef.current?.click()
   const openLogout = () => setLogoutOpen(true)
 
   function renderContent() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
-    if (screen === 'cardInfo') return <CardInfoScreen photo={photo} onPickPhoto={pickPhoto} onBack={() => setScreen(null)} />
+    if (screen === 'cardInfo') return <CardInfoScreen onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
@@ -70,8 +58,6 @@ export function AppShell() {
   return (
     <div className="min-h-dvh bg-canvas px-0 sm:px-3 sm:py-2">
       <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden rounded-none bg-[linear-gradient(to_bottom,var(--color-brand)_3rem,white_3rem)] sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
-        <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={handlePhoto} />
-
         {renderContent()}
 
         <button
