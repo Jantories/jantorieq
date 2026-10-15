@@ -54,11 +54,12 @@ export function AppShell() {
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
       <main className="flex-1 pb-28">
-        <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),1.25rem)]">
+        <section className="bg-brand pb-12 pt-0">
+          <div className="h-24 bg-black" aria-hidden="true" />
           <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
           <HeroCard photo={photo} onPickPhoto={pickPhoto} onOpenInfo={() => setScreen('cardInfo')} onAction={notify} />
         </section>
-        <div className="-mt-6 rounded-t-[2rem] bg-white pt-6">
+        <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
           <BannerCarousel onAction={notify} />
           <Announcements onAction={notify} />
