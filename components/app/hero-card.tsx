@@ -213,14 +213,14 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
       <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
       {renderCard(undefined, true)}
-      <div className="mt-4 flex items-center justify-center gap-3">
+      <div className="mt-4 flex items-center justify-center gap-[18px]">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
           <UserRound className="size-5" />
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark px-5 text-sm text-white transition hover:bg-brand-dark/80 active:scale-95"
+          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
           <Maximize2 className="size-5" />
           <span>{card.expandLabel}</span>
