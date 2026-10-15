@@ -5,10 +5,14 @@ import { banners } from '@/lib/app-content'
 
 const SLIDE_GAP = 22
 const AUTO_SLIDE_MS = 5000
+const SLIDE_DURATION_MS = 1600
+
+const easeInOutSine = (t: number) => -(Math.cos(Math.PI * t) - 1) / 2
 
 export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }) {
   const [index, setIndex] = useState(0)
   const trackRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<number | null>(null)
 
   function slideWidth() {
     const first = trackRef.current?.firstElementChild as HTMLElement | null
@@ -21,23 +25,48 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
     setIndex(Math.min(banners.length - 1, Math.round(el.scrollLeft / slideWidth())))
   }
 
+  function stopAnimation() {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current)
+    frameRef.current = null
+    if (trackRef.current) trackRef.current.style.scrollSnapType = ''
+  }
+
   function goTo(i: number) {
-    trackRef.current?.scrollTo({ left: i * slideWidth(), behavior: 'smooth' })
+    const el = trackRef.current
+    if (!el) return
+    stopAnimation()
+    const from = el.scrollLeft
+    const to = i * slideWidth()
+    if (from === to) return
+    el.style.scrollSnapType = 'none'
+    const start = performance.now()
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / SLIDE_DURATION_MS)
+      el.scrollLeft = from + (to - from) * easeInOutSine(t)
+      if (t < 1) {
+        frameRef.current = requestAnimationFrame(step)
+      } else {
+        frameRef.current = null
+        el.style.scrollSnapType = ''
+      }
+    }
+    frameRef.current = requestAnimationFrame(step)
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const next = (index + 1) % banners.length
-      trackRef.current?.scrollTo({ left: next * slideWidth(), behavior: 'smooth' })
-    }, AUTO_SLIDE_MS)
+    const timer = setTimeout(() => goTo((index + 1) % banners.length), AUTO_SLIDE_MS)
     return () => clearTimeout(timer)
   }, [index])
+
+  useEffect(() => stopAnimation, [])
 
   return (
     <section aria-label="แบนเนอร์" className="mt-2.5">
       <div
         ref={trackRef}
         onScroll={handleScroll}
+        onPointerDown={stopAnimation}
+        onWheel={stopAnimation}
         style={{ columnGap: SLIDE_GAP }}
         className="flex snap-x snap-mandatory items-start overflow-x-auto px-[10%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >

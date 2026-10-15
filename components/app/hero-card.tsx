@@ -164,7 +164,8 @@ type Props = {
 
 export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
   const [background, setBackground] = useState<string | null>(null)
-  const [flipped, setFlipped] = useState(false)
+  const [turns, setTurns] = useState(0)
+  const flip = () => setTurns((t) => t + 1)
   const [expanded, setExpanded] = useState(false)
   const bgRef = useRef<HTMLInputElement>(null)
 
@@ -183,12 +184,12 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
     const now = Date.now()
     if (now - lastTapRef.current < DOUBLE_TAP_MS) {
       lastTapRef.current = 0
-      setFlipped((v) => !v)
+      flip()
       setExpanded(true)
       return
     }
     lastTapRef.current = now
-    setFlipped((v) => !v)
+    flip()
   }
 
   const renderCard = (style?: React.CSSProperties, interactive = false) => (
@@ -199,7 +200,7 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
     >
       <div
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-700 [transform-style:preserve-3d]"
-        style={{ transform: flipped ? 'rotateY(180deg)' : undefined, borderRadius: '4.5cqw' }}
+        style={{ transform: `rotateY(${turns * -180}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFront photo={photo} background={background} onPickPhoto={onPickPhoto} />
         <CardBack background={background} />
@@ -212,7 +213,7 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
       <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
       {renderCard(undefined, true)}
-      <div className="mt-4 flex items-center justify-center gap-4">
+      <div className="mt-4 flex items-center justify-center gap-3">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
           <UserRound className="size-5" />
         </button>
@@ -224,7 +225,7 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
           <Maximize2 className="size-5" />
           <span>{card.expandLabel}</span>
         </button>
-        <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={circleBtn}>
+        <button type="button" onClick={flip} aria-label="พลิกบัตร" className={circleBtn}>
           <RefreshCcwDot className="size-5" />
         </button>
       </div>
@@ -240,7 +241,7 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
             <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
               <ChevronLeft className="size-8" strokeWidth={2.5} />
             </button>
-            <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={glassBtn}>
+            <button type="button" onClick={flip} aria-label="พลิกบัตร" className={glassBtn}>
               <RefreshCcwDot className="size-7" />
             </button>
           </div>
