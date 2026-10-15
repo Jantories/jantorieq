@@ -36,6 +36,7 @@ export const card = {
   backNote: 'แตะที่ข้อความเพื่อแก้ไข หรือกดปุ่มด้านล่างเพื่อพลิกบัตร',
   expandLabel: 'ขยายรูปบัตร',
   collapseLabel: 'ย่อรูปบัตร',
+  infoLabel: 'ข้อมูลบัตร',
 }
 
 export const sections = {
@@ -69,6 +70,109 @@ export const announcements = [
     body: 'ระบบจะปิดปรับปรุงในวันอาทิตย์ เวลา 00:00 - 04:00 น. ขออภัยในความไม่สะดวก',
   },
 ]
+
+export const appName = 'MyApp'
+
+export const notificationsPage = {
+  title: 'แจ้งเตือนทั้งหมด',
+  emptyTitle: 'ไม่มีการแจ้งเตือน',
+  emptySub: 'ยังไม่มี การแจ้งเตือนใด ๆ',
+}
+
+export const logoutDialog = {
+  title: 'แจ้งเตือน',
+  message: 'คุณต้องการออกจากระบบใช่หรือไม่?',
+  confirm: 'ใช่',
+  cancel: 'ไม่',
+}
+
+export const cardInfo = {
+  title: 'ข้อมูลบัตร',
+  photoTitle: 'รูปหน้าบัตร',
+  photoSub: 'รูปหน้าบัตรประจำตัว',
+  numberLabel: 'หมายเลขสมาชิก',
+  number: '1-2345-67890-12-3',
+  nameTh: 'นาย ชื่อ นามสกุล',
+  nameEn: 'Mr. Firstname  Lastname',
+  addressLabel: 'ที่อยู่',
+  address: '123/45 ถนนตัวอย่าง แขวงตัวอย่าง เขตตัวอย่าง กรุงเทพมหานคร',
+  birthLabel: 'เกิดวันที่',
+  birth: '1 ม.ค. 2540',
+  issueLabel: 'วันที่ออกบัตร',
+  issue: '1 ม.ค. 2567',
+  expiryLabel: 'วันที่หมดอายุ',
+  expiry: '1 ม.ค. 2575',
+}
+
+export const chat = {
+  title: 'แชทบอท',
+  badge: 'Bot',
+  greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู่ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัยของท่าน?',
+  reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
+  placeholder: 'พิมพ์ข้อความ...',
+}
+
+export const documentsPage = {
+  title: 'เอกสาร',
+  heading: 'รวมเอกสารที่เกี่ยวข้อง',
+  sub: 'แสดงรายการเอกสารทั้งหมด',
+  // tone: blue | green | red
+  groups: [
+    [{ id: 'idcard', title: 'บัตรประจำตัว', sub: 'บัตรประจำตัว', tone: 'blue' }],
+    [
+      { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
+      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานที่เกิด บิดา มารดา', tone: 'green' },
+    ],
+    [
+      { id: 'marriage', title: 'ทะเบียนสมรส', sub: 'ทะเบียนการสมรส', tone: 'red' },
+      { id: 'divorce', title: 'ทะเบียนหย่า', sub: 'ทะเบียนการหย่า', tone: 'red' },
+    ],
+    [{ id: 'disability', title: 'บัตรประจำตัวคนพิการ', sub: 'บัตรประจำตัวคนพิการ', tone: 'blue' }],
+    [
+      { id: 'license', title: 'ใบอนุญาต', sub: 'รายการใบอนุญาตต่าง ๆ', tone: 'blue' },
+      { id: 'other', title: 'เอกสารอื่น ๆ', sub: 'เอกสารเพิ่มเติม', tone: 'blue' },
+    ],
+  ],
+} as const
+
+export const historyPage = {
+  title: 'ประวัติการทำรายการ',
+  groups: [
+    {
+      date: '12 ตุลาคม พ.ศ. 2569',
+      items: [
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีการร้องขอให้ท่านยืนยันตัวตน' },
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'แพลตฟอร์ม App 02 มีการร้องขอให้ท่านยืนยันตัวตน' },
+      ],
+    },
+    {
+      date: '1 กันยายน พ.ศ. 2569',
+      items: [
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ระบบตัวอย่าง มีการร้องขอให้ท่านยืนยันตัวตน' },
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ระบบตัวอย่าง มีการร้องขอให้ท่านยืนยันตัวตน' },
+      ],
+    },
+    {
+      date: '15 กรกฎาคม พ.ศ. 2569',
+      items: [{ title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ระบบตัวอย่าง มีการร้องขอให้ท่านยืนยันตัวตน' }],
+    },
+  ],
+}
+
+export const settingsPage = {
+  title: 'การตั้งค่า',
+  heading: 'ปรับแต่งฟังก์ชันของแอปพลิเคชัน',
+  sub: 'จัดการรหัสผ่าน การเข้าถึง ปรับแต่งสิทธิ์',
+  changePin: { title: 'เปลี่ยนรหัสผ่าน', sub: 'เปลี่ยนรหัสผ่านในรูปแบบ PIN' },
+  biometric: { title: 'ใช้งานด้วยอัตลักษณ์บุคคล', sub: 'การเข้าถึงด้วยอัตลักษณ์ เช่น ลายนิ้วมือ ใบหน้า' },
+  notifications: { title: 'การแจ้งเตือน', sub: `รายละเอียดอื่น ๆ ของ แอปพลิเคชัน ${appName}` },
+  registration: { title: 'ประวัติการลงทะเบียน', sub: 'ประวัติการลงทะเบียนในอุปกรณ์ที่ผ่านมา' },
+  about: { title: 'เกี่ยวกับ', sub: 'เวอร์ชัน 1.0.0 (100001)' },
+  moveDevice: { title: 'ย้ายอุปกรณ์', sub: 'แสดง QR Code สำหรับย้ายไปยังอุปกรณ์ใหม่' },
+  trust: { title: 'จัดการ Trust Application', sub: 'ให้สิทธิการเข้าถึงโดยไม่ยืนยันตัวตนเพิ่มเติม' },
+  deactivate: { title: 'ยกเลิกการใช้งาน', sub: `ยกเลิกการใช้งาน แอปพลิเคชัน ${appName}` },
+  logout: { title: 'ออกจากระบบ', sub: 'ออกจากระบบบนอุปกรณ์นี้' },
+}
 
 export const nav = {
   home: 'หน้าหลัก',

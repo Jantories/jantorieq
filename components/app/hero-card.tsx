@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { ImagePlus, Maximize2, Minimize2, RefreshCcwDot, ShieldCheck, UserRound, X } from 'lucide-react'
+import { ChevronLeft, ImagePlus, Maximize2, RefreshCcwDot, ShieldCheck, UserRound } from 'lucide-react'
 import { card } from '@/lib/app-content'
 
 function Editable({ children, className = '' }: { children: string; className?: string }) {
@@ -150,84 +150,88 @@ function CardBack({ background }: { background: string | null }) {
 const circleBtn =
   'flex size-14 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
 
-export function HeroCard({ onAction }: { onAction: (msg: string) => void }) {
-  const [photo, setPhoto] = useState<string | null>(null)
+const glassBtn =
+  'flex size-14 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
+
+type Props = {
+  photo: string | null
+  onPickPhoto: () => void
+  onOpenInfo: () => void
+  onAction: (msg: string) => void
+}
+
+export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
   const [background, setBackground] = useState<string | null>(null)
   const [flipped, setFlipped] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  const photoRef = useRef<HTMLInputElement>(null)
   const bgRef = useRef<HTMLInputElement>(null)
 
-  function readFile(e: React.ChangeEvent<HTMLInputElement>, set: (url: string) => void, msg: string) {
+  function handleBackground(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-    set(URL.createObjectURL(file))
+    setBackground(URL.createObjectURL(file))
     e.target.value = ''
-    onAction(msg)
+    onAction('อัปเดตพื้นหลังบัตรแล้ว')
   }
 
-  const cardEl = (
-    <div className="[container-type:inline-size] [perspective:1200px]">
+  const renderCard = (style?: React.CSSProperties) => (
+    <div className="[container-type:inline-size] [perspective:1200px]" style={style}>
       <div
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-700 [transform-style:preserve-3d]"
         style={{ transform: flipped ? 'rotateY(180deg)' : undefined, borderRadius: '4.5cqw' }}
       >
-        <CardFront photo={photo} background={background} onPickPhoto={() => photoRef.current?.click()} />
+        <CardFront photo={photo} background={background} onPickPhoto={onPickPhoto} />
         <CardBack background={background} />
       </div>
     </div>
   )
 
-  const controls = (
-    <div className="mt-6 flex items-center justify-center gap-6">
-      <button type="button" onClick={() => photoRef.current?.click()} aria-label="เปลี่ยนรูปบนบัตร" className={circleBtn}>
-        <UserRound className="size-6" />
-      </button>
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        className="flex h-14 items-center gap-3 rounded-full bg-brand-dark px-8 text-lg text-white transition hover:bg-brand-dark/80 active:scale-95"
-      >
-        {expanded ? <Minimize2 className="size-6" /> : <Maximize2 className="size-6" />}
-        <span>{expanded ? card.collapseLabel : card.expandLabel}</span>
-      </button>
-      <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={circleBtn}>
-        <RefreshCcwDot className="size-6" />
-      </button>
-    </div>
-  )
-
   return (
     <div className="px-5 pt-5">
-      <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={(e) => readFile(e, setPhoto, 'อัปเดตรูปบนบัตรแล้ว')} />
-      <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={(e) => readFile(e, setBackground, 'อัปเดตพื้นหลังบัตรแล้ว')} />
+      <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
-      {!expanded && cardEl}
-      {!expanded && controls}
+      {renderCard()}
+      <div className="mt-6 flex items-center justify-center gap-6">
+        <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
+          <UserRound className="size-6" />
+        </button>
+        <button
+          type="button"
+          onClick={() => setExpanded(true)}
+          className="flex h-14 items-center gap-3 rounded-full bg-brand-dark px-8 text-lg text-white transition hover:bg-brand-dark/80 active:scale-95"
+        >
+          <Maximize2 className="size-6" />
+          <span>{card.expandLabel}</span>
+        </button>
+        <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={circleBtn}>
+          <RefreshCcwDot className="size-6" />
+        </button>
+      </div>
 
       {expanded && (
-        <div role="dialog" aria-modal="true" aria-label={card.expandLabel} className="fixed inset-0 z-50 flex items-center justify-center bg-brand p-4">
-          <button
-            type="button"
-            onClick={() => setExpanded(false)}
-            aria-label="ปิด"
-            className="absolute right-4 top-[max(env(safe-area-inset-top),1rem)] flex size-11 items-center justify-center rounded-full bg-brand-dark text-white"
-          >
-            <X className="size-5" />
-          </button>
-          <div className="w-full max-w-md">
-            {cardEl}
-            {controls}
-            <button
-              type="button"
-              onClick={() => bgRef.current?.click()}
-              className="mx-auto mt-4 flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm text-white transition hover:bg-white/25"
-            >
-              <ImagePlus className="size-4" />
-              เปลี่ยนพื้นหลังบัตร
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={card.expandLabel}
+          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px]"
+        >
+          <div className="absolute inset-x-5 top-[max(env(safe-area-inset-top),1.25rem)] z-10 flex justify-between">
+            <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
+              <ChevronLeft className="size-8" strokeWidth={2.5} />
+            </button>
+            <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={glassBtn}>
+              <RefreshCcwDot className="size-7" />
             </button>
           </div>
+          <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' })}</div>
+          <button
+            type="button"
+            onClick={() => bgRef.current?.click()}
+            className="absolute bottom-[max(env(safe-area-inset-bottom),1.25rem)] left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/20 px-5 py-2.5 text-sm text-white backdrop-blur transition hover:bg-white/30"
+          >
+            <ImagePlus className="size-4" />
+            เปลี่ยนพื้นหลังบัตร
+          </button>
         </div>
       )}
     </div>

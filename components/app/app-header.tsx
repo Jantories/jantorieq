@@ -4,7 +4,9 @@ import { useRef, useState } from 'react'
 import { Bell, Camera, Power, User } from 'lucide-react'
 import { profile } from '@/lib/app-content'
 
-export function AppHeader({ onAction }: { onAction: (msg: string) => void }) {
+type Props = { onAction: (msg: string) => void; onNotifications: () => void; onLogout: () => void }
+
+export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
   const [avatar, setAvatar] = useState<string | null>(null)
   const [name, setName] = useState(profile.name)
   const fileRef = useRef<HTMLInputElement>(null)
@@ -57,7 +59,7 @@ export function AppHeader({ onAction }: { onAction: (msg: string) => void }) {
 
       <button
         type="button"
-        onClick={() => onAction('ไม่มีการแจ้งเตือนใหม่')}
+        onClick={onNotifications}
         aria-label="การแจ้งเตือน"
         className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
@@ -65,7 +67,7 @@ export function AppHeader({ onAction }: { onAction: (msg: string) => void }) {
       </button>
       <button
         type="button"
-        onClick={() => onAction('ออกจากระบบ')}
+        onClick={onLogout}
         aria-label="ออกจากระบบ"
         className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
       >

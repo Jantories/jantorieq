@@ -8,12 +8,25 @@ import { ServiceMenu } from './service-menu'
 import { BannerCarousel } from './banner-carousel'
 import { Announcements } from './announcements'
 import { BottomNav, type TabId } from './bottom-nav'
-import { PlaceholderTab } from './placeholder-tab'
+import { DocumentsTab } from './documents-tab'
+import { HistoryTab } from './history-tab'
+import { SettingsTab } from './settings-tab'
+import { NotificationsScreen } from './notifications-screen'
+import { CardInfoScreen } from './card-info-screen'
+import { ChatScreen } from './chat-screen'
+import { LogoutDialog } from './logout-dialog'
+
+type Screen = 'notifications' | 'cardInfo' | null
 
 export function AppShell() {
   const [tab, setTab] = useState<TabId>('home')
+  const [screen, setScreen] = useState<Screen>(null)
+  const [chatOpen, setChatOpen] = useState(false)
+  const [logoutOpen, setLogoutOpen] = useState(false)
+  const [photo, setPhoto] = useState<string | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const photoRef = useRef<HTMLInputElement>(null)
 
   const notify = useCallback((message: string) => {
     setToast(message)
@@ -21,40 +34,84 @@ export function AppShell() {
     timer.current = setTimeout(() => setToast(null), 1800)
   }, [])
 
+  function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (photo) URL.revokeObjectURL(photo)
+    setPhoto(URL.createObjectURL(file))
+    e.target.value = ''
+    notify('อัปเดตรูปบนบัตรแล้ว')
+  }
+
+  const pickPhoto = () => photoRef.current?.click()
+  const openLogout = () => setLogoutOpen(true)
+
+  function renderContent() {
+    if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
+    if (screen === 'cardInfo') return <CardInfoScreen photo={photo} onPickPhoto={pickPhoto} onBack={() => setScreen(null)} />
+    if (tab === 'docs') return <DocumentsTab onAction={notify} />
+    if (tab === 'history') return <HistoryTab onAction={notify} />
+    if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
+    return (
+      <main className="flex-1 pb-28">
+        <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),1.25rem)]">
+          <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
+          <HeroCard photo={photo} onPickPhoto={pickPhoto} onOpenInfo={() => setScreen('cardInfo')} onAction={notify} />
+        </section>
+        <div className="-mt-6 rounded-t-[2rem] bg-white pt-6">
+          <ServiceMenu />
+          <BannerCarousel onAction={notify} />
+          <Announcements onAction={notify} />
+        </div>
+      </main>
+    )
+  }
+
   return (
     <div className="min-h-dvh bg-neutral-200">
       <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-white shadow-xl">
-        {tab === 'home' ? (
-          <main className="flex-1 pb-28">
-            <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),1.25rem)]">
-              <AppHeader onAction={notify} />
-              <HeroCard onAction={notify} />
-            </section>
-            <div className="-mt-6 rounded-t-[2rem] bg-white pt-6">
-              <ServiceMenu onAction={notify} />
-              <BannerCarousel onAction={notify} />
-              <Announcements onAction={notify} />
-            </div>
-          </main>
-        ) : (
-          <PlaceholderTab tab={tab} onBack={() => setTab('home')} />
-        )}
+        <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={handlePhoto} />
+
+        {renderContent()}
 
         <button
           type="button"
-          onClick={() => notify('เปิดแชทช่วยเหลือ')}
-          aria-label="แชทช่วยเหลือ"
-          className="fixed bottom-28 right-[max(1rem,calc(50%-14rem+1rem))] z-30 flex size-14 items-center justify-center rounded-full bg-white text-brand shadow-lg ring-1 ring-black/5 transition active:scale-95"
+          onClick={() => setChatOpen(true)}
+          aria-label="แชทบอท"
+          className={`fixed right-[max(1rem,calc(50%-14rem+1rem))] z-30 flex size-14 items-center justify-center rounded-full bg-white text-brand shadow-lg ring-1 ring-black/5 transition active:scale-95 ${
+            screen ? 'bottom-8' : 'bottom-28'
+          }`}
         >
           <MessageCircleMore className="size-7" />
         </button>
 
-        <BottomNav active={tab} onChange={setTab} onScan={() => notify('เปิดกล้องสแกน')} />
+        {!screen && (
+          <BottomNav
+            active={tab}
+            onChange={(t) => {
+              setTab(t)
+              window.scrollTo({ top: 0 })
+            }}
+            onScan={() => notify('เปิดกล้องสแกน')}
+          />
+        )}
+
+        {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
+        {logoutOpen && (
+          <LogoutDialog
+            onCancel={() => setLogoutOpen(false)}
+            onConfirm={() => {
+              setLogoutOpen(false)
+              setTab('home')
+              notify('ออกจากระบบแล้ว')
+            }}
+          />
+        )}
 
         <div
           role="status"
           aria-live="polite"
-          className={`pointer-events-none fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-full bg-neutral-900/90 px-4 py-2 text-sm text-white transition-all ${
+          className={`pointer-events-none fixed left-1/2 top-6 z-[60] -translate-x-1/2 rounded-full bg-neutral-900/90 px-4 py-2 text-sm text-white transition-all ${
             toast ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
           }`}
         >
