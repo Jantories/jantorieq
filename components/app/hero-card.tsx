@@ -148,10 +148,10 @@ function CardBack({ background }: { background: string | null }) {
 }
 
 const circleBtn =
-  'flex size-14 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
+  'flex size-12 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
 
 const glassBtn =
-  'flex size-14 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
+  'flex size-12 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
 
 type Props = {
   photo: string | null
@@ -193,18 +193,18 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
       {renderCard()}
       <div className="mt-6 flex items-center justify-center gap-6">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
-          <UserRound className="size-6" />
+          <UserRound className="size-5" />
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="flex h-14 items-center gap-3 rounded-full bg-brand-dark px-8 text-lg text-white transition hover:bg-brand-dark/80 active:scale-95"
+          className="flex h-12 items-center gap-2.5 rounded-full bg-brand-dark px-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
-          <Maximize2 className="size-6" />
+          <Maximize2 className="size-5" />
           <span>{card.expandLabel}</span>
         </button>
         <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={circleBtn}>
-          <RefreshCcwDot className="size-6" />
+          <RefreshCcwDot className="size-5" />
         </button>
       </div>
 

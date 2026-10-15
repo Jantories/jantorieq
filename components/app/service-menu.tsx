@@ -34,8 +34,8 @@ export function ServiceMenu() {
           const Icon = icons[id]
           return (
             <li key={id} className={`flex flex-col items-center gap-3 ${disabled ? 'opacity-40' : ''}`}>
-              <span className="flex size-[4.5rem] items-center justify-center rounded-full bg-[#eef0f6] text-brand">
-                <Icon className="size-9" strokeWidth={1.75} />
+              <span className="flex size-16 items-center justify-center rounded-full bg-[#eef0f6] text-brand">
+                <Icon className="size-8" strokeWidth={1.75} />
               </span>
               <span className="text-balance px-1 text-center text-base leading-snug text-neutral-800">{label}</span>
             </li>
