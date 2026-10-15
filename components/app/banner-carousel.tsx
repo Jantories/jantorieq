@@ -30,7 +30,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
         ref={trackRef}
         onScroll={handleScroll}
         style={{ columnGap: SLIDE_GAP }}
-        className="flex snap-x snap-mandatory items-end overflow-x-auto px-[10%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory items-start overflow-x-auto px-[10%] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {banners.map((b) => (
           <button
