@@ -78,11 +78,11 @@ export function AppShell() {
           type="button"
           onClick={() => setChatOpen(true)}
           aria-label="แชทบอท"
-          className={`fixed right-[max(1rem,calc(50%-14rem+1rem))] z-30 flex size-12 items-center justify-center rounded-full bg-white text-brand shadow-lg ring-1 ring-black/5 transition active:scale-95 ${
-            screen ? 'bottom-8' : 'bottom-28'
+          className={`fixed right-[max(1rem,calc(50%-14rem+1rem))] z-30 flex size-[54px] items-center justify-center rounded-full bg-white text-brand shadow-lg ring-1 ring-black/5 transition active:scale-95 ${
+            screen ? 'bottom-8' : 'bottom-[calc(max(env(safe-area-inset-bottom),0.5rem)_+_84px)]'
           }`}
         >
-          <MessageCircleMore className="size-6" />
+          <MessageCircleMore className="size-7" />
         </button>
 
         {!screen && (

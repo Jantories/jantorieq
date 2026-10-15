@@ -1,4 +1,4 @@
-import { House, FileText, History, SlidersHorizontal, ScanLine } from 'lucide-react'
+import { House, FileText, History, SlidersHorizontal } from 'lucide-react'
 import { nav } from '@/lib/app-content'
 
 export type TabId = 'home' | 'docs' | 'history' | 'settings'
@@ -12,6 +12,17 @@ export const tabs: { id: TabId; label: string; icon: typeof House }[] = [
 
 type Props = { active: TabId; onChange: (t: TabId) => void; onScan: () => void }
 
+function ScanIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 8V6a3 3 0 0 1 3-3h2M16 3h2a3 3 0 0 1 3 3v2M21 16v2a3 3 0 0 1-3 3h-2M8 21H6a3 3 0 0 1-3-3v-2" />
+      <circle cx="8" cy="12" r="0.6" fill="currentColor" />
+      <circle cx="12" cy="12" r="0.6" fill="currentColor" />
+      <circle cx="16" cy="12" r="0.6" fill="currentColor" />
+    </svg>
+  )
+}
+
 export function BottomNav({ active, onChange, onScan }: Props) {
   const renderTab = ({ id, label, icon: Icon }: (typeof tabs)[number]) => {
     const isActive = id === active
@@ -21,11 +32,11 @@ export function BottomNav({ active, onChange, onScan }: Props) {
         type="button"
         onClick={() => onChange(id)}
         aria-current={isActive ? 'page' : undefined}
-        className={`flex flex-1 flex-col items-center gap-1 pt-3 transition ${isActive ? 'text-brand' : 'text-neutral-500 hover:text-neutral-700'}`}
+        className={`flex flex-1 flex-col items-center pt-2.5 transition ${isActive ? 'text-brand' : 'text-neutral-500 hover:text-neutral-700'}`}
       >
-        <Icon className="size-7" strokeWidth={isActive ? 2 : 1.6} />
-        <span className="text-sm">{label}</span>
-        <span className={`h-1 w-10 rounded-full ${isActive ? 'bg-brand' : 'bg-transparent'}`} />
+        <Icon className="size-7" strokeWidth={2} />
+        <span className="mt-1.5 text-sm font-medium leading-[17px]">{label}</span>
+        <span className={`mt-2 h-[3px] w-8 rounded-full ${isActive ? 'bg-brand' : 'bg-transparent'}`} />
       </button>
     )
   }
@@ -35,18 +46,20 @@ export function BottomNav({ active, onChange, onScan }: Props) {
       aria-label="เมนูหลัก"
       className="fixed bottom-0 left-1/2 z-40 w-full max-w-md -translate-x-1/2 border-t border-neutral-200 bg-white pb-[max(env(safe-area-inset-bottom),0.5rem)]"
     >
-      <div className="flex items-end">
+      <div className="flex items-stretch">
         {tabs.slice(0, 2).map(renderTab)}
-        <div className="flex flex-1 flex-col items-center">
+        <div className="relative flex-1">
           <button
             type="button"
             onClick={onScan}
             aria-label={nav.scan}
-            className="-mt-10 flex size-16 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
+            className="absolute -top-7 left-1/2 flex size-[62px] -translate-x-1/2 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
           >
-            <ScanLine className="size-7" strokeWidth={1.75} />
+            <ScanIcon />
           </button>
-          <span className="mt-2 pb-2 text-sm text-neutral-500">{nav.scan}</span>
+          <span className="absolute left-1/2 top-[41px] -translate-x-1/2 text-sm font-medium leading-[17px] text-neutral-500">
+            {nav.scan}
+          </span>
         </div>
         {tabs.slice(2).map(renderTab)}
       </div>
