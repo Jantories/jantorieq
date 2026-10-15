@@ -25,13 +25,13 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
       <button
         type="button"
         onClick={() => fileRef.current?.click()}
-        className="group relative size-14 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
+        className="group relative size-12 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[3px] ring-white"
         aria-label="เปลี่ยนรูปโปรไฟล์"
       >
         {avatar ? (
           <img src={avatar || '/placeholder.svg'} alt="รูปโปรไฟล์" className="size-full object-cover" />
         ) : (
-          <User className="m-auto size-8 text-white" />
+          <User className="m-auto size-6 text-white" />
         )}
       </button>
       <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={handleFile} />
@@ -61,17 +61,17 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
         type="button"
         onClick={onNotifications}
         aria-label="การแจ้งเตือน"
-        className="flex size-14 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
-        <Bell className="size-6" />
+        <Bell className="size-5" />
       </button>
       <button
         type="button"
         onClick={onLogout}
         aria-label="ออกจากระบบ"
-        className="flex size-14 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
-        <Power className="size-6" />
+        <Power className="size-5" />
       </button>
     </header>
   )

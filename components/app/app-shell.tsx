@@ -54,8 +54,7 @@ export function AppShell() {
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
       <main className="flex-1 pb-28">
-        <section className="bg-brand pb-12 pt-0">
-          <div className="h-24 bg-black" aria-hidden="true" />
+        <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),1.25rem)]">
           <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
           <HeroCard photo={photo} onPickPhoto={pickPhoto} onOpenInfo={() => setScreen('cardInfo')} onAction={notify} />
         </section>
