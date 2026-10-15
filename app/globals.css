@@ -49,7 +49,7 @@
   --color-brand-soft: #eef0fb;
   --color-online: #3fbf4a;
   --color-page: #f1f1f8;
-  --color-canvas: #30359a;
+  --color-canvas: #2b2f8f;
 }
 
 :root {
@@ -167,7 +167,7 @@
 body {
   margin: 0;
   min-width: 320px;
-  background: #30359a;
+  background: #2b2f8f;
   color: #151515;
 }
 }
