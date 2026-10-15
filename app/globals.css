@@ -43,6 +43,11 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --font-sans: var(--font-thai), ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #2b2f8f;
+  --color-brand-dark: #1f2270;
+  --color-brand-soft: #eef0fb;
+  --color-online: #3fbf4a;
 }
 
 :root {
