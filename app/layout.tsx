@@ -13,12 +13,26 @@ export const metadata: Metadata = {
   title: 'แอปบริการ',
   description: 'Mobile service app UI with menu, announcements and bottom navigation',
   generator: 'v0.app',
+  icons: {
+    icon: [
+      { url: '/app-icon/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/app-icon/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/app-icon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
+  appleWebApp: {
+    capable: true,
+    title: 'แอปบริการ',
+    statusBarStyle: 'black-translucent',
+  },
 }
 
 export const viewport: Viewport = {
   themeColor: '#2b2f8f',
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: 'cover',
 }
 
