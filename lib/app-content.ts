@@ -53,7 +53,7 @@ export const services = [
 ] as const
 
 export const banners = [
-  { src: '/images/banner-memorial.png', title: 'สถิตอยู่ในใจตราบนิรันดร์', overflow: false },
+  { src: '/images/banner-memorial.png', title: 'สถิตอยู่ในใจตราบนิรันดร์', overflow: true },
   { src: '/images/banner-registration.png', title: 'บริการทะเบียนออนไลน์', overflow: true },
 ]
 
@@ -76,7 +76,17 @@ export const announcements = [
   {
     title: 'ระบบให้บริการประชาชนด้วย ThaID',
     date: '26/04/2566',
-    body: 'รวมช่องทาง ระบบที่ให้บริการประชาชน ที่สามารถเข้าสู่ระบบด้วย แอป ThaID',
+    body: 'รวมช่องทาง ระบบที่ให้บริการประชาชนที่เข้าสู่ระบบด้วย แอป ThaID ได้ที่ https://www.bora.dopa.go.th/thaid_authen_services/',
+  },
+  {
+    title: 'ชื่อแอปพลิเคชันใหม่ ThaID',
+    date: '14/03/2566',
+    body: 'ยกระดับการให้บริการผ่านการพัฒนาระบบพิสูจน์และยืนยันตัวตนทางดิจิทัล จาก "D.DOPA" เป็น "ThaID" รองรับประชาชนคนไทยและชาวต่างชาติ',
+  },
+  {
+    title: 'กรณีลืมรหัสผ่าน',
+    date: '20/01/2566',
+    body: 'หากลืมรหัสผ่าน สามารถสร้างรหัสผ่านใหม่ได้ โดยถ่ายรูปภาพใบหน้าตนเอง หากตรวจสอบแล้วเป็นเจ้าของไอดีจริง จะสามารถตั้งรหัสผ่านใหม่ได้',
   },
 ]
 
