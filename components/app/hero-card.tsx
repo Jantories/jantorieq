@@ -148,10 +148,10 @@ function CardBack({ background }: { background: string | null }) {
 }
 
 const circleBtn =
-  'flex size-12 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
+  'flex size-11 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
 
 const glassBtn =
-  'flex size-12 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
+  'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
 
 type Props = {
   photo: string | null
@@ -191,14 +191,14 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
       <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
       {renderCard()}
-      <div className="mt-5 flex items-center justify-center gap-5">
+      <div className="mt-4 flex items-center justify-center gap-4">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
           <UserRound className="size-5" />
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="flex h-12 items-center gap-2.5 rounded-full bg-brand-dark px-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
+          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark px-5 text-sm text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
           <Maximize2 className="size-5" />
           <span>{card.expandLabel}</span>

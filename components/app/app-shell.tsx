@@ -54,8 +54,7 @@ export function AppShell() {
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
       <main className="flex-1 pb-28">
-        <section className="bg-brand pb-12 pt-0">
-          <div className="h-24 bg-black" aria-hidden="true" />
+        <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),1.5rem)]">
           <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
           <HeroCard photo={photo} onPickPhoto={pickPhoto} onOpenInfo={() => setScreen('cardInfo')} onAction={notify} />
         </section>
@@ -69,8 +68,8 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-dvh bg-page">
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-white shadow-xl">
+    <div className="min-h-dvh bg-black px-0 sm:px-4 sm:py-4">
+      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden rounded-none bg-white shadow-xl sm:min-h-[calc(100dvh-2rem)] sm:rounded-[3rem] sm:border sm:border-neutral-700">
         <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={handlePhoto} />
 
         {renderContent()}
@@ -112,7 +111,7 @@ export function AppShell() {
         <div
           role="status"
           aria-live="polite"
-          className={`pointer-events-none fixed left-1/2 top-6 z-[60] -translate-x-1/2 rounded-full bg-neutral-900/90 px-4 py-2 text-sm text-white transition-all ${
+          className={`pointer-events-none fixed left-1/2 top-[max(env(safe-area-inset-top),1.5rem)] z-[60] -translate-x-1/2 rounded-full bg-neutral-900/90 px-4 py-2 text-sm text-white transition-all ${
             toast ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'
           }`}
         >
