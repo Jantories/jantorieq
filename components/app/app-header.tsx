@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { Bell, Camera, Power, User } from 'lucide-react'
+import { Bell, Camera, Power } from 'lucide-react'
 import { profile } from '@/lib/app-content'
+import { CroppedImage } from './cropped-image'
 
 type Props = { onAction: (msg: string) => void; onNotifications: () => void; onLogout: () => void }
 
@@ -31,7 +32,13 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
         {avatar ? (
           <img src={avatar || '/placeholder.svg'} alt="รูปโปรไฟล์" className="size-full object-cover" />
         ) : (
-          <User className="m-auto size-5 text-white" />
+          <CroppedImage
+            src="/images/source-front.png"
+            natural={{ width: 1279, height: 948 }}
+            crop={{ x: 12, y: 18, width: 130, height: 130 }}
+            alt="รูปโปรไฟล์"
+            className="size-full"
+          />
         )}
       </button>
       <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={handleFile} />

@@ -3,7 +3,7 @@
 export const profile = {
   greeting: 'สวัสดี',
   status: 'ONLINE',
-  name: 'คุณ ชื่อ นามสกุล',
+  name: 'คุณ ไอย์ณพงศ์ ริ้วศรีกุล',
 }
 
 export const card = {

@@ -56,7 +56,7 @@ export function AppShell() {
       <main className="flex-1 pb-28">
         <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),0.75rem)]">
           <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
-          <HeroCard photo={photo} onPickPhoto={pickPhoto} onOpenInfo={() => setScreen('cardInfo')} onAction={notify} />
+          <HeroCard onOpenInfo={() => setScreen('cardInfo')} />
         </section>
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
