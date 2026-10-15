@@ -68,7 +68,7 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-dvh bg-brand px-0 sm:px-3 sm:py-2">
+    <div className="min-h-dvh bg-canvas px-0 sm:px-3 sm:py-2">
       <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden rounded-none bg-white shadow-xl sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem] sm:border sm:border-brand-dark/60">
         <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={handlePhoto} />
 
