@@ -153,6 +153,8 @@ const circleBtn =
 const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
 
+const DOUBLE_TAP_MS = 350
+
 type Props = {
   photo: string | null
   onPickPhoto: () => void
@@ -174,8 +176,27 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
     onAction('อัปเดตพื้นหลังบัตรแล้ว')
   }
 
-  const renderCard = (style?: React.CSSProperties) => (
-    <div className="[container-type:inline-size] [perspective:1200px]" style={style}>
+  const lastTapRef = useRef(0)
+
+  function handleCardTap(e: React.MouseEvent) {
+    if ((e.target as HTMLElement).closest('button, input, [contenteditable]')) return
+    const now = Date.now()
+    if (now - lastTapRef.current < DOUBLE_TAP_MS) {
+      lastTapRef.current = 0
+      setFlipped((v) => !v)
+      setExpanded(true)
+      return
+    }
+    lastTapRef.current = now
+    setFlipped((v) => !v)
+  }
+
+  const renderCard = (style?: React.CSSProperties, interactive = false) => (
+    <div
+      className="[container-type:inline-size] [perspective:1200px]"
+      style={style}
+      onClick={interactive ? handleCardTap : undefined}
+    >
       <div
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-700 [transform-style:preserve-3d]"
         style={{ transform: flipped ? 'rotateY(180deg)' : undefined, borderRadius: '4.5cqw' }}
@@ -190,7 +211,7 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
     <div className="px-5 pt-4">
       <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
-      {renderCard()}
+      {renderCard(undefined, true)}
       <div className="mt-4 flex items-center justify-center gap-4">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
           <UserRound className="size-5" />

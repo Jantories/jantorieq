@@ -1,9 +1,10 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { banners } from '@/lib/app-content'
 
 const SLIDE_GAP = 22
+const AUTO_SLIDE_MS = 5000
 
 export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }) {
   const [index, setIndex] = useState(0)
@@ -24,6 +25,14 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
     trackRef.current?.scrollTo({ left: i * slideWidth(), behavior: 'smooth' })
   }
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const next = (index + 1) % banners.length
+      trackRef.current?.scrollTo({ left: next * slideWidth(), behavior: 'smooth' })
+    }, AUTO_SLIDE_MS)
+    return () => clearTimeout(timer)
+  }, [index])
+
   return (
     <section aria-label="แบนเนอร์" className="mt-2.5">
       <div
@@ -40,7 +49,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
             aria-label={b.title}
             className="block w-[80%] shrink-0 snap-center"
           >
-            <span className="block aspect-[4.3/1] w-full overflow-hidden rounded-2xl">
+            <span className="block aspect-[4/1] w-full overflow-hidden rounded-2xl">
               <img
                 src={b.src}
                 alt=""
