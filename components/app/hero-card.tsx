@@ -1,74 +1,235 @@
 'use client'
 
-import { useState } from 'react'
-import { FileCheck2, Maximize2, RefreshCw, Clock3, UserRound, Wallet } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { ImagePlus, Maximize2, Minimize2, RefreshCcwDot, ShieldCheck, UserRound, X } from 'lucide-react'
+import { card } from '@/lib/app-content'
+
+function Editable({ children, className = '' }: { children: string; className?: string }) {
+  return (
+    <span
+      contentEditable
+      suppressContentEditableWarning
+      spellCheck={false}
+      className={`rounded-sm outline-none focus:bg-white/70 focus:ring-1 focus:ring-brand/40 ${className}`}
+    >
+      {children}
+    </span>
+  )
+}
+
+type FaceProps = { photo: string | null; background: string | null; onPickPhoto: () => void }
+
+function CardFront({ photo, background, onPickPhoto }: FaceProps) {
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden rounded-[4.5cqw] text-[#1c2a6b] [backface-visibility:hidden]"
+      style={
+        background
+          ? { backgroundImage: `url(${background})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+          : {
+              backgroundImage:
+                'radial-gradient(circle at 18% 30%, rgba(255,214,170,.55), transparent 22%), radial-gradient(circle at 70% 35%, rgba(186,170,255,.45), transparent 20%), radial-gradient(circle at 55% 75%, rgba(170,230,255,.6), transparent 25%), radial-gradient(circle at 88% 15%, rgba(200,240,220,.6), transparent 18%), linear-gradient(135deg,#d6ecfb 0%,#c3e1f7 45%,#d9eefc 100%)',
+            }
+      }
+    >
+      <div className="absolute left-0 top-[20%] h-[80%] w-[10%] bg-white/90">
+        <div
+          className="mx-auto mt-[12%] h-[70%] w-[55%]"
+          style={{ backgroundImage: 'repeating-linear-gradient(0deg,#111 0 1.5px,transparent 1.5px 3px,#111 3px 4px,transparent 4px 6px)' }}
+          aria-hidden
+        />
+      </div>
+
+      <div className="absolute left-[4%] top-[5%] flex size-[13cqw] items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-rose-200">
+        <ShieldCheck className="size-[8cqw] text-brand" />
+      </div>
+
+      <div className="absolute left-[19%] right-[3%] top-[5%] flex items-baseline gap-[1.5cqw] whitespace-nowrap">
+        <Editable className="text-[4.6cqw] font-bold">{card.titleTh}</Editable>
+        <Editable className="text-[4.2cqw] font-semibold text-[#3557a8]">{card.titleEn}</Editable>
+      </div>
+
+      <div className="absolute left-[19%] top-[17%] flex items-center gap-[2.5cqw]">
+        <div className="flex flex-col leading-[1.15]">
+          <Editable className="text-[2.1cqw]">{card.numberLabelTh}</Editable>
+          <Editable className="text-[2.1cqw] text-[#3557a8]">{card.numberLabelEn}</Editable>
+        </div>
+        <Editable className="text-[3.8cqw] font-medium tracking-wide">{card.number}</Editable>
+      </div>
+
+      <div className="absolute left-[15%] top-[28%] flex items-baseline gap-[1.5cqw] whitespace-nowrap">
+        <Editable className="text-[2.3cqw]">{card.fullNameLabel}</Editable>
+        <Editable className="text-[4.6cqw] font-bold">{card.fullNameTh}</Editable>
+      </div>
+
+      <div
+        className="absolute left-[14.5%] top-[39%] grid h-[24%] w-[14%] grid-cols-3 grid-rows-3 gap-px overflow-hidden rounded-[1.5cqw] bg-amber-700/50 ring-1 ring-amber-700/60"
+        aria-hidden
+      >
+        {Array.from({ length: 9 }).map((_, i) => (
+          <span key={i} className="bg-gradient-to-br from-amber-200 to-amber-400" />
+        ))}
+      </div>
+
+      <div className="absolute left-[33%] top-[38%] flex flex-col leading-[1.2]">
+        <div className="flex items-baseline gap-[2cqw]">
+          <Editable className="text-[2.3cqw] font-semibold text-[#3557a8]">{card.firstNameLabel}</Editable>
+          <Editable className="text-[3.4cqw] text-[#3557a8]">{card.firstNameEn}</Editable>
+        </div>
+        <div className="flex items-baseline gap-[2cqw]">
+          <Editable className="text-[2.3cqw] font-semibold text-[#3557a8]">{card.lastNameLabel}</Editable>
+          <Editable className="text-[3.4cqw] text-[#3557a8]">{card.lastNameEn}</Editable>
+        </div>
+        <div className="ml-[3cqw] mt-[0.5cqw] flex items-baseline gap-[2cqw]">
+          <Editable className="text-[2.3cqw]">{card.birthLabelTh}</Editable>
+          <Editable className="text-[3.4cqw]">{card.birthTh}</Editable>
+        </div>
+        <div className="ml-[3cqw] flex items-baseline gap-[2cqw]">
+          <Editable className="text-[2.3cqw] text-[#3557a8]">{card.birthLabelEn}</Editable>
+          <Editable className="text-[3.4cqw] text-[#3557a8]">{card.birthEn}</Editable>
+        </div>
+      </div>
+
+      <div className="absolute left-[11%] right-[26%] top-[69%] line-clamp-2 text-[2.8cqw] leading-[1.2]">
+        <Editable>{card.address}</Editable>
+      </div>
+
+      <div className="absolute bottom-[2%] left-[11%] grid w-[60%] grid-cols-2 text-[2cqw] leading-[1.15]">
+        <div className="flex flex-col">
+          <Editable>{card.issueTh}</Editable>
+          <Editable>{card.issueLabelTh}</Editable>
+          <Editable className="mt-[1cqw] text-[2.6cqw] text-[#3557a8]">{card.issueEn}</Editable>
+          <Editable className="text-[#3557a8]">{card.issueLabelEn}</Editable>
+        </div>
+        <div className="flex flex-col">
+          <Editable>{card.expiryTh}</Editable>
+          <Editable>{card.expiryLabelTh}</Editable>
+          <Editable className="mt-[1cqw] text-[2.6cqw] text-[#3557a8]">{card.expiryEn}</Editable>
+          <Editable className="text-[#3557a8]">{card.expiryLabelEn}</Editable>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        onClick={onPickPhoto}
+        aria-label="เปลี่ยนรูปบนบัตร"
+        className="group absolute right-[3%] top-[38%] h-[48%] w-[19%] overflow-hidden bg-neutral-100"
+        style={{ backgroundImage: 'repeating-linear-gradient(180deg,#e5e5e5 0 9%,#9ca3af 9% 9.6%)' }}
+      >
+        {photo ? (
+          <img src={photo || '/placeholder.svg'} alt="รูปบนบัตร" className="size-full object-cover" />
+        ) : (
+          <UserRound className="mx-auto size-[10cqw] text-neutral-400" />
+        )}
+        <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
+          <ImagePlus className="size-[5cqw] text-white" />
+        </span>
+      </button>
+      <div className="absolute right-[3%] top-[87%] w-[22%] text-center text-[2.4cqw]">
+        <Editable>{card.photoCode}</Editable>
+      </div>
+    </div>
+  )
+}
+
+function CardBack({ background }: { background: string | null }) {
+  return (
+    <div
+      className="absolute inset-0 flex flex-col overflow-hidden rounded-[4.5cqw] bg-gradient-to-br from-[#d6ecfb] to-[#c3e1f7] text-[#1c2a6b] [backface-visibility:hidden] [transform:rotateY(180deg)]"
+      style={background ? { backgroundImage: `url(${background})`, backgroundSize: 'cover' } : undefined}
+    >
+      <div className="mt-[8%] h-[16%] w-full bg-neutral-900/85" aria-hidden />
+      <div className="flex flex-1 flex-col justify-center gap-[2cqw] px-[6%]">
+        <Editable className="text-[4.6cqw] font-bold">{card.backTitle}</Editable>
+        <Editable className="text-[3cqw] leading-snug">{card.backNote}</Editable>
+      </div>
+    </div>
+  )
+}
+
+const circleBtn =
+  'flex size-14 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
 
 export function HeroCard({ onAction }: { onAction: (msg: string) => void }) {
+  const [photo, setPhoto] = useState<string | null>(null)
+  const [background, setBackground] = useState<string | null>(null)
+  const [flipped, setFlipped] = useState(false)
   const [expanded, setExpanded] = useState(false)
-  const [spinning, setSpinning] = useState(false)
+  const photoRef = useRef<HTMLInputElement>(null)
+  const bgRef = useRef<HTMLInputElement>(null)
 
-  function refresh() {
-    setSpinning(true)
-    setTimeout(() => {
-      setSpinning(false)
-      onAction('อัปเดตข้อมูลล่าสุดแล้ว')
-    }, 700)
+  function readFile(e: React.ChangeEvent<HTMLInputElement>, set: (url: string) => void, msg: string) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    set(URL.createObjectURL(file))
+    e.target.value = ''
+    onAction(msg)
   }
 
-  const stats = [
-    { icon: FileCheck2, label: 'เอกสาร', value: '5' },
-    { icon: Clock3, label: 'คำขอรอดำเนินการ', value: '2' },
-    { icon: Wallet, label: 'บริการที่ใช้', value: '12' },
-  ]
+  const cardEl = (
+    <div className="[container-type:inline-size] [perspective:1200px]">
+      <div
+        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-700 [transform-style:preserve-3d]"
+        style={{ transform: flipped ? 'rotateY(180deg)' : undefined, borderRadius: '4.5cqw' }}
+      >
+        <CardFront photo={photo} background={background} onPickPhoto={() => photoRef.current?.click()} />
+        <CardBack background={background} />
+      </div>
+    </div>
+  )
+
+  const controls = (
+    <div className="mt-6 flex items-center justify-center gap-6">
+      <button type="button" onClick={() => photoRef.current?.click()} aria-label="เปลี่ยนรูปบนบัตร" className={circleBtn}>
+        <UserRound className="size-6" />
+      </button>
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+        className="flex h-14 items-center gap-3 rounded-full bg-brand-dark px-8 text-lg text-white transition hover:bg-brand-dark/80 active:scale-95"
+      >
+        {expanded ? <Minimize2 className="size-6" /> : <Maximize2 className="size-6" />}
+        <span>{expanded ? card.collapseLabel : card.expandLabel}</span>
+      </button>
+      <button type="button" onClick={() => setFlipped((v) => !v)} aria-label="พลิกบัตร" className={circleBtn}>
+        <RefreshCcwDot className="size-6" />
+      </button>
+    </div>
+  )
 
   return (
     <div className="px-5 pt-5">
-      <div className="rounded-3xl bg-gradient-to-br from-sky-100 via-indigo-50 to-white p-5 shadow-lg">
-        <p className="text-sm font-medium text-brand/70">บัญชีของฉัน</p>
-        <p className="mt-1 text-xl font-bold text-brand">ภาพรวมบริการ</p>
-        <div className={`mt-4 grid grid-cols-3 gap-3 transition-all ${expanded ? '' : ''}`}>
-          {stats.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="flex flex-col items-start rounded-2xl bg-white/80 p-3">
-              <Icon className="size-5 text-brand" />
-              <span className="mt-2 text-2xl font-bold text-neutral-900">{value}</span>
-              <span className="text-xs leading-tight text-neutral-500">{label}</span>
-            </div>
-          ))}
-        </div>
-        {expanded && (
-          <p className="mt-4 rounded-2xl bg-white/80 p-3 text-sm leading-relaxed text-neutral-600">
-            อัปเดตล่าสุดวันนี้ คุณสามารถติดตามสถานะคำขอและเอกสารทั้งหมดได้จากเมนูด้านล่าง
-          </p>
-        )}
-      </div>
+      <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={(e) => readFile(e, setPhoto, 'อัปเดตรูปบนบัตรแล้ว')} />
+      <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={(e) => readFile(e, setBackground, 'อัปเดตพื้นหลังบัตรแล้ว')} />
 
-      <div className="mt-5 flex items-center justify-center gap-3">
-        <button
-          type="button"
-          onClick={() => onAction('เปิดโปรไฟล์')}
-          aria-label="โปรไฟล์"
-          className="flex size-12 items-center justify-center rounded-full bg-brand-dark text-white transition active:scale-95"
-        >
-          <UserRound className="size-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => setExpanded((v) => !v)}
-          aria-expanded={expanded}
-          className="flex h-12 items-center gap-2 rounded-full bg-brand-dark px-6 text-white transition active:scale-95"
-        >
-          <Maximize2 className="size-5" />
-          <span className="font-medium">{expanded ? 'ย่อรายละเอียด' : 'ขยายรายละเอียด'}</span>
-        </button>
-        <button
-          type="button"
-          onClick={refresh}
-          aria-label="รีเฟรช"
-          className="flex size-12 items-center justify-center rounded-full bg-brand-dark text-white transition active:scale-95"
-        >
-          <RefreshCw className={`size-5 ${spinning ? 'animate-spin' : ''}`} />
-        </button>
-      </div>
+      {!expanded && cardEl}
+      {!expanded && controls}
+
+      {expanded && (
+        <div role="dialog" aria-modal="true" aria-label={card.expandLabel} className="fixed inset-0 z-50 flex items-center justify-center bg-brand p-4">
+          <button
+            type="button"
+            onClick={() => setExpanded(false)}
+            aria-label="ปิด"
+            className="absolute right-4 top-[max(env(safe-area-inset-top),1rem)] flex size-11 items-center justify-center rounded-full bg-brand-dark text-white"
+          >
+            <X className="size-5" />
+          </button>
+          <div className="w-full max-w-md">
+            {cardEl}
+            {controls}
+            <button
+              type="button"
+              onClick={() => bgRef.current?.click()}
+              className="mx-auto mt-4 flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm text-white transition hover:bg-white/25"
+            >
+              <ImagePlus className="size-4" />
+              เปลี่ยนพื้นหลังบัตร
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
