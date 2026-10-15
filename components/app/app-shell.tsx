@@ -68,7 +68,7 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-dvh bg-neutral-200">
+    <div className="min-h-dvh bg-page">
       <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-white shadow-xl">
         <input ref={photoRef} type="file" accept="image/*" className="sr-only" onChange={handlePhoto} />
 

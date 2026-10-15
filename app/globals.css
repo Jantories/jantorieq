@@ -163,7 +163,10 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f1f1f8;
+  color: #151515;
+}
 }
