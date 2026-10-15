@@ -23,7 +23,7 @@ export function ServiceMenu() {
   return (
     <section aria-label={sections.services}>
       <div className="flex items-center justify-between px-5">
-        <h2 className="text-2xl font-bold text-neutral-900">{sections.services}</h2>
+        <h2 className="text-[1.65rem] font-bold leading-tight text-neutral-900">{sections.services}</h2>
         <span className="flex items-center gap-0.5 text-lg text-neutral-500">
           {sections.seeAll}
           <ChevronRight className="size-5" />
@@ -37,7 +37,7 @@ export function ServiceMenu() {
               <span className="flex size-16 items-center justify-center rounded-full bg-[#eef0f6] text-brand">
                 <Icon className="size-8" strokeWidth={1.75} />
               </span>
-              <span className="text-balance px-1 text-center text-base leading-snug text-neutral-800">{label}</span>
+              <span className="text-balance px-1 text-center text-[0.95rem] leading-snug text-neutral-800">{label}</span>
             </li>
           )
         })}
