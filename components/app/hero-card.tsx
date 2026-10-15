@@ -187,11 +187,11 @@ export function HeroCard({ photo, onPickPhoto, onOpenInfo, onAction }: Props) {
   )
 
   return (
-    <div className="px-5 pt-5">
+    <div className="px-5 pt-4">
       <input ref={bgRef} type="file" accept="image/*" className="sr-only" onChange={handleBackground} />
 
       {renderCard()}
-      <div className="mt-6 flex items-center justify-center gap-6">
+      <div className="mt-5 flex items-center justify-center gap-5">
         <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
           <UserRound className="size-5" />
         </button>

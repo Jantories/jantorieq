@@ -33,7 +33,7 @@ export function BottomNav({ active, onChange, onScan }: Props) {
   return (
     <nav
       aria-label="เมนูหลัก"
-      className="fixed bottom-0 left-1/2 z-40 w-full max-w-md -translate-x-1/2 border-t border-neutral-200 bg-white pb-[max(env(safe-area-inset-bottom),0.75rem)]"
+      className="fixed bottom-0 left-1/2 z-40 w-full max-w-md -translate-x-1/2 border-t border-neutral-200 bg-white pb-[max(env(safe-area-inset-bottom),0.5rem)]"
     >
       <div className="flex items-end">
         {tabs.slice(0, 2).map(renderTab)}
@@ -42,7 +42,7 @@ export function BottomNav({ active, onChange, onScan }: Props) {
             type="button"
             onClick={onScan}
             aria-label={nav.scan}
-            className="-mt-9 flex size-16 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
+            className="-mt-10 flex size-16 items-center justify-center rounded-full bg-brand text-white shadow-lg transition active:scale-95"
           >
             <ScanLine className="size-7" strokeWidth={1.75} />
           </button>
