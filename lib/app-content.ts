@@ -53,9 +53,8 @@ export const services = [
 ] as const
 
 export const banners = [
-  { src: '/images/banner-1.png', title: 'บริการออนไลน์ครบในที่เดียว', sub: 'ยื่นคำขอได้ทุกที่ ทุกเวลา' },
-  { src: '/images/banner-2.png', title: 'ข่าวสารและกิจกรรม', sub: 'ติดตามประกาศล่าสุดได้ที่นี่' },
-  { src: '/images/banner-1.png', title: 'แบนเนอร์ที่ 3', sub: 'เปลี่ยนรูปและข้อความได้ในไฟล์นี้' },
+  { src: '/images/banner-memorial.png', title: 'สถิตอยู่ในใจตราบนิรันดร์', overflow: false },
+  { src: '/images/banner-registration.png', title: 'บริการทะเบียนออนไลน์', overflow: true },
 ]
 
 export const announcements = [

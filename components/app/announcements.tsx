@@ -4,7 +4,7 @@ import { announcements, sections } from '@/lib/app-content'
 
 export function Announcements({ onAction }: { onAction: (msg: string) => void }) {
   return (
-    <section aria-label={sections.announcements} className="mt-8">
+    <section aria-label={sections.announcements} className="mt-6">
       <SectionHeader title={sections.announcements} onAll={() => onAction(`ดู${sections.announcements}`)} />
       <ul className="mt-5 flex flex-col gap-3 px-5">
         {announcements.map((item) => (
