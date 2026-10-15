@@ -33,13 +33,13 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
         ) : (
           <User className="m-auto size-8 text-white" />
         )}
-        <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
-          <Camera className="size-5 text-white" />
-        </span>
       </button>
       <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={handleFile} />
 
-      <div className="min-w-0 flex-1">
+      <div className="group relative min-w-0 flex-1">
+        <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
+          <Camera className="size-5 text-white" />
+        </span>
         <div className="flex items-center gap-2">
           <span className="text-lg text-white/90">{profile.greeting}</span>
           <span className="rounded-full bg-online px-3 py-0.5 text-xs font-medium leading-tight text-white">
@@ -53,7 +53,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
           id="display-name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full truncate bg-transparent text-2xl font-bold leading-tight text-white outline-none focus:underline"
+          className="w-full truncate bg-transparent text-lg font-bold leading-tight text-white outline-none focus:underline"
         />
       </div>
 
@@ -61,7 +61,7 @@ export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
         type="button"
         onClick={onNotifications}
         aria-label="การแจ้งเตือน"
-        className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95"
+        className="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-dark text-[10px] text-white transition hover:bg-brand-dark/80 active:scale-95"
       >
         <Bell className="size-7" />
       </button>
