@@ -3,7 +3,6 @@
 import { useRef, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
-import { card } from '@/lib/app-content'
 
 const FRONT = { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' }
 const BACK = { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' }
@@ -34,9 +33,9 @@ const glassBtn =
 
 const DOUBLE_TAP_MS = 350
 
-type Props = { onOpenInfo: () => void }
+type Props = { card: { expandLabel: string; infoLabel: string }; onOpenInfo: () => void }
 
-export function HeroCard({ onOpenInfo }: Props) {
+export function HeroCard({ card, onOpenInfo }: Props) {
   const [flipped, setFlipped] = useState(false)
   const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)

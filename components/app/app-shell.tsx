@@ -16,10 +16,13 @@ import { CardInfoScreen } from './card-info-screen'
 import { ChatScreen } from './chat-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
+import { PinScreen } from './pin-screen'
+import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
 
 export function AppShell() {
+  const [authenticatedAs, setAuthenticatedAs] = useState<'first' | 'second' | null>(null)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
   const [chatOpen, setChatOpen] = useState(false)
@@ -35,9 +38,21 @@ export function AppShell() {
 
   const openLogout = () => setLogoutOpen(true)
 
+  if (!authenticatedAs) {
+    return <PinScreen onUnlock={(pin) => {
+      if (pin === '111111') { setAuthenticatedAs('first'); return true }
+      if (pin === '222222') { setAuthenticatedAs('second'); return true }
+      return false
+    }} />
+  }
+
+  const activeProfile = profiles[authenticatedAs]
+  const activeCard = cardProfiles[authenticatedAs]
+  const activeCardInfo = cardInfoProfiles[authenticatedAs]
+
   function renderContent() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
-    if (screen === 'cardInfo') return <CardInfoScreen onBack={() => setScreen(null)} />
+    if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
@@ -45,8 +60,8 @@ export function AppShell() {
     return (
       <main className="flex-1 pb-28">
         <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),0.75rem)]">
-          <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
-          <HeroCard onOpenInfo={() => setScreen('cardInfo')} />
+          <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
+          <HeroCard card={activeCard} onOpenInfo={() => setScreen('cardInfo')} />
         </section>
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
@@ -91,6 +106,7 @@ export function AppShell() {
             onConfirm={() => {
               setLogoutOpen(false)
               setTab('home')
+              setAuthenticatedAs(null)
               notify('ออกจากระบบแล้ว')
             }}
           />

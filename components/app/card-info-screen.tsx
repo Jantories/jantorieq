@@ -1,8 +1,7 @@
 import { UserRound } from 'lucide-react'
-import { cardInfo as c } from '@/lib/app-content'
 import { BackButton } from './page-parts'
 
-type Props = { onBack: () => void }
+type Props = { cardInfo: { title: string; photoTitle: string; photoSub: string; numberLabel: string; number: string; nameTh: string; nameEn: string; addressLabel: string; address: string; birthLabel: string; birth: string; issueLabel: string; issue: string; expiryLabel: string; expiry: string }; onBack: () => void }
 
 function Field({ label, value, align = 'left' }: { label: string; value: string; align?: 'left' | 'right' }) {
   return (
@@ -13,7 +12,7 @@ function Field({ label, value, align = 'left' }: { label: string; value: string;
   )
 }
 
-export function CardInfoScreen({ onBack }: Props) {
+export function CardInfoScreen({ cardInfo: c, onBack }: Props) {
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-brand">
       <header className="grid grid-cols-[3.5rem_1fr_3.5rem] items-center px-5 pb-6 pt-[max(env(safe-area-inset-top),1.5rem)]">

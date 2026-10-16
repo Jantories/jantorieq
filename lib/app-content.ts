@@ -6,6 +6,11 @@ export const profile = {
   name: 'คุณ ไอย์ณพงศ์ ริ้วศรีกุล',
 }
 
+export const profiles = {
+  first: profile,
+  second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สอง' },
+} as const
+
 export const card = {
   titleTh: 'บัตรสมาชิก',
   titleEn: 'Member Card',
@@ -38,6 +43,11 @@ export const card = {
   collapseLabel: 'ย่อรูปบัตร',
   infoLabel: 'ข้อมูลบัตร',
 }
+
+export const cardProfiles = {
+  first: card,
+  second: { ...card, number: '9 8765 43210 98 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่สอง', firstNameEn: 'Mr. Second', lastNameEn: 'User', photoCode: '0000-00-00000002' },
+} as const
 
 export const sections = {
   services: 'เมนูบริการ',
@@ -122,6 +132,11 @@ export const cardInfo = {
   expiryLabel: 'วันที่หมดอายุ',
   expiry: '1 ม.ค. 2575',
 }
+
+export const cardInfoProfiles = {
+  first: cardInfo,
+  second: { ...cardInfo, number: '9-8765-43210-98-7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
+} as const
 
 export const chat = {
   title: 'แชทบอท',
