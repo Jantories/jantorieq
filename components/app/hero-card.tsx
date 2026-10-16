@@ -73,7 +73,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           <button
             type="button"
             onClick={onRequestUnlock}
-            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-neutral-700 transition active:scale-[.98]"
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-neutral-500 transition active:scale-[.98]"
             aria-label="คลิกเพื่อแสดงบัตร"
           >
             <svg className="size-16" viewBox="0 0 64 64" fill="none" aria-hidden="true">
