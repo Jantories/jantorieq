@@ -210,15 +210,16 @@
   background-size: 300% 100%;
   background-repeat: no-repeat;
   background-position: 100% 0;
-  animation: seal-rainbow-wave 6s ease-in-out infinite;
+  animation: seal-rainbow-wave 8s linear infinite;
 }
 
-/* About 3.5s slow sweep left to right, then about 2.5s resting on the original dark blue */
+/* About 5s slow, even sweep left to right (the band is on the card for roughly 3-4s of it),
+   then about 3s resting on the original dark blue */
 @keyframes seal-rainbow-wave {
   0% {
     background-position: 100% 0;
   }
-  58%,
+  62%,
   100% {
     background-position: 0% 0;
   }

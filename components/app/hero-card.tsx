@@ -8,13 +8,13 @@ type CardImage = { small: string; large: string }
 
 // Positions (% of card) of the Department of Provincial Administration seals in the card background
 const SEALS = [
-  { x: 23, y: 24, size: 24, delay: 0 },
-  { x: 46, y: 20, size: 20, delay: 0.8 },
-  { x: 72, y: 17, size: 22, delay: 1.6 },
-  { x: 63, y: 43, size: 22, delay: 0.4 },
-  { x: 45, y: 61, size: 20, delay: 1.2 },
-  { x: 62, y: 82, size: 20, delay: 2 },
-  { x: 13, y: 72, size: 18, delay: 2.4 },
+  { x: 23, y: 24, size: 17, delay: 0 },
+  { x: 46, y: 20, size: 14, delay: 0.8 },
+  { x: 72, y: 17, size: 15, delay: 1.6 },
+  { x: 63, y: 43, size: 15, delay: 0.4 },
+  { x: 45, y: 61, size: 14, delay: 1.2 },
+  { x: 62, y: 82, size: 14, delay: 2 },
+  { x: 13, y: 72, size: 13, delay: 2.4 },
 ]
 
 const SEAL_MASK = SEALS.map(
