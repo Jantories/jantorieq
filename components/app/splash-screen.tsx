@@ -73,7 +73,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
           width={512}
           height={512}
           priority
-          className="absolute w-[min(40vw,calc(100dvh*0.18))]"
+          className="absolute w-[min(32vw,calc(100dvh*0.15))]"
         />
       )}
     </div>
