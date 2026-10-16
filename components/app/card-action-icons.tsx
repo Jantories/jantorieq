@@ -40,8 +40,8 @@ export function ExpandIcon({ className }: IconProps) {
 function CircularArrow() {
   return (
     <>
-      <path d="M5.2 14.5A7 7 0 0 1 15.4 5.9" fill="none" strokeWidth={2} strokeLinecap="round" />
-      <path d="M17.8 7.5L17.5 4.1L14.5 8.4Z" strokeWidth={1.2} strokeLinejoin="round" />
+      <path d="M4.9 14.6A7.2 7.2 0 0 1 15.4 5.9" fill="none" strokeWidth={2.6} strokeLinecap="round" />
+      <path d="M18.4 7.6L16.8 3.5L14 8.3Z" strokeWidth={1.2} strokeLinejoin="round" />
     </>
   )
 }
@@ -55,7 +55,7 @@ export function FlipIcon({ className }: IconProps) {
       aria-hidden="true"
       className={className}
     >
-      <circle cx="12" cy="12" r="2.3" fill="none" strokeWidth={2.2} />
+      <circle cx="12" cy="12" r="2.4" fill="none" strokeWidth={2.4} />
       <CircularArrow />
       <g transform="rotate(180 12 12)">
         <CircularArrow />
