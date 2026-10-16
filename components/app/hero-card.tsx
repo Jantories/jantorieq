@@ -25,7 +25,7 @@ function SealRainbow() {
   return (
     <div
       aria-hidden="true"
-      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-hue"
+      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-multiply"
       style={{ WebkitMaskImage: SEAL_MASK, maskImage: SEAL_MASK }}
     />
   )

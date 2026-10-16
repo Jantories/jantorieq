@@ -193,19 +193,18 @@
   }
 }
 
-/* Transparent everywhere except one soft rainbow band. The layer is 300% wide, so the band
+/* Transparent everywhere except one soft blue band. The layer is 300% wide, so the band
    sits fully outside the card at 0% / 100% and crosses it while the position moves between them. */
 .seal-rainbow {
   background-image: linear-gradient(
     115deg,
-    rgb(255 45 45 / 0) 36%,
-    rgb(255 45 45 / 0.85) 41%,
-    #ffb400 45.5%,
-    #7dff2d 50%,
-    #00e5ff 54.5%,
-    #2d5bff 59%,
-    rgb(214 45 255 / 0.85) 63%,
-    rgb(214 45 255 / 0) 65%
+    rgb(79 195 255 / 0) 36%,
+    rgb(79 195 255 / 0.75) 42%,
+    #2f7bff 47%,
+    #0a2fd0 50%,
+    #2f7bff 53%,
+    rgb(79 195 255 / 0.75) 58%,
+    rgb(79 195 255 / 0) 64%
   );
   background-size: 300% 100%;
   background-repeat: no-repeat;
