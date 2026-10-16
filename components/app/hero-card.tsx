@@ -94,7 +94,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     if (now - lastTapRef.current < DOUBLE_TAP_MS) {
       lastTapRef.current = 0
       flip()
-      openExpanded(flipped)
+      openExpanded(false)
       return
     }
     lastTapRef.current = now
