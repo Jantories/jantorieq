@@ -106,15 +106,13 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} shimmer />
-        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" hiRes={hiRes} shimmer />
+        <CardFace face={card.back} label="บัตรด้านหลัง" back hiRes={hiRes} />
       </div>
       {locked && (
-        <button
-          type="button"
-          onClick={onRequestUnlock}
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-[#4b4b4b] transition active:scale-[.98]"
-          aria-label="คลิกเพื่อแสดงบัตร"
+        <div
+          className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-transparent text-[#4b4b4b]"
+          aria-hidden="true"
         >
           <svg className="size-12" viewBox="0 0 64 64" fill="none" aria-hidden="true">
             <path d="M20 28V19a12 12 0 0 1 24 0v9" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
@@ -125,7 +123,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             />
           </svg>
           <span className="text-xl font-bold">คลิกเพื่อแสดงบัตร</span>
-        </button>
+        </div>
       )}
     </div>
   )
