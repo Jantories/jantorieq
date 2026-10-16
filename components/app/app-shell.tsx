@@ -49,7 +49,7 @@ export function AppShell() {
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
           <BannerCarousel onAction={notify} />
-          <Announcements onAction={notify} />
+          <Announcements />
         </div>
       </main>
     )
