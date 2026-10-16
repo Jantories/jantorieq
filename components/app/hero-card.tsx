@@ -142,9 +142,8 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             setExpandedFlipped(false)
             setExpanded(true)
           }}
-          disabled={locked}
-          aria-disabled={locked}
-          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none disabled:opacity-50"
+  aria-disabled={locked}
+  className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
           <ExpandIcon className="size-5" />
           <span>{card.expandLabel}</span>
