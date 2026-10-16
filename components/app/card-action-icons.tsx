@@ -40,7 +40,7 @@ export function ExpandIcon({ className }: IconProps) {
 function CircularArrow() {
   return (
     <>
-      <path d="M3.9 14.9A8.6 8.6 0 0 1 16.6 4.7" fill="none" strokeWidth={2.4} strokeLinecap="round" />
+      <path d="M3.4 12.3A8.6 8.6 0 0 1 16.6 4.7" fill="none" strokeWidth={2.4} strokeLinecap="round" />
       <path d="M19.5 6.6L17.8 2.2L14.8 6.9Z" strokeWidth={1.2} strokeLinejoin="round" />
     </>
   )
