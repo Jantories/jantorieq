@@ -48,7 +48,7 @@ export function ScanScreen({ onBack }: Props) {
   }, [])
 
   return (
-    <main className="flex flex-1 flex-col bg-white pb-8" aria-label="หน้าสแกน QR Code">
+    <main className="flex flex-1 flex-col bg-neutral-950" aria-label="หน้าสแกน QR Code">
       <header className="flex items-center bg-brand-dark px-5 pb-5 pt-[max(env(safe-area-inset-top),1rem)] text-white">
         <button type="button" onClick={onBack} aria-label="ย้อนกลับ" className="flex size-10 items-center justify-center rounded-full transition hover:bg-white/10 active:scale-95">
           <ArrowLeft className="size-6" aria-hidden="true" />
