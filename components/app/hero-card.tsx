@@ -6,18 +6,81 @@ import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 
 type CardImage = { small: string; large: string }
 
+// Positions (% of card) of the Department of Provincial Administration seals in the card background
+const SEALS = [
+  { x: 23, y: 24, size: 24, delay: 0 },
+  { x: 46, y: 20, size: 20, delay: 0.8 },
+  { x: 72, y: 17, size: 22, delay: 1.6 },
+  { x: 63, y: 43, size: 22, delay: 0.4 },
+  { x: 45, y: 61, size: 20, delay: 1.2 },
+  { x: 62, y: 82, size: 20, delay: 2 },
+  { x: 13, y: 72, size: 18, delay: 2.4 },
+]
+
+const SPARKLES = [
+  { x: 18, y: 18, delay: 0.2 },
+  { x: 29, y: 31, delay: 1.1 },
+  { x: 41, y: 14, delay: 1.9 },
+  { x: 52, y: 27, delay: 0.6 },
+  { x: 78, y: 12, delay: 1.4 },
+  { x: 68, y: 38, delay: 2.2 },
+  { x: 50, y: 56, delay: 0.9 },
+  { x: 40, y: 68, delay: 1.7 },
+  { x: 67, y: 76, delay: 0.3 },
+  { x: 58, y: 88, delay: 2.1 },
+  { x: 10, y: 66, delay: 1.3 },
+  { x: 19, y: 80, delay: 0.7 },
+]
+
+function SealShimmer() {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-soft-light">
+      {SEALS.map((s, i) => (
+        <span
+          key={i}
+          className="seal-shimmer absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            left: `${s.x}%`,
+            top: `${s.y}%`,
+            width: `${s.size}%`,
+            aspectRatio: '1',
+            background:
+              'conic-gradient(from 0deg, #ff7ad9, #ffe36e, #6effc1, #6ec8ff, #b18bff, #ff7ad9)',
+            filter: 'blur(6px)',
+            animation: `seal-shimmer 3.6s ease-in-out ${s.delay}s infinite`,
+          }}
+        />
+      ))}
+      {SPARKLES.map((s, i) => (
+        <span
+          key={i}
+          className="seal-sparkle absolute size-[4.5cqw] -translate-x-1/2 -translate-y-1/2 bg-white"
+          style={{
+            left: `${s.x}%`,
+            top: `${s.y}%`,
+            clipPath: 'polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%)',
+            animation: `seal-sparkle 2.8s ease-in-out ${s.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 function CardFace({
   face,
   label,
   back = false,
   blurred = false,
   hiRes = false,
+  shimmer = false,
 }: {
   face: CardImage
   label: string
   back?: boolean
   blurred?: boolean
   hiRes?: boolean
+  shimmer?: boolean
 }) {
   return (
     <div
@@ -32,6 +95,7 @@ function CardFace({
         decoding="async"
         className="size-full select-none object-cover"
       />
+      {shimmer && !blurred && <SealShimmer />}
     </div>
   )
 }
@@ -76,7 +140,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} shimmer />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
       </div>
       {locked && (
