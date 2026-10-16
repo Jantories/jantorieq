@@ -61,14 +61,14 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
   }
 
   return (
-    <section aria-label="แบนเนอร์" className="mt-2.5">
+    <section aria-label="แบนเนอร์" className="mt-6">
       <div
         ref={containerRef}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerEnd}
         onPointerCancel={handlePointerEnd}
-        className="relative overflow-hidden [touch-action:pan-y]"
+        className="relative overflow-x-clip overflow-y-visible [touch-action:pan-y]"
       >
         <div
           className="relative w-full"
@@ -96,14 +96,31 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
                 className="absolute top-0 block w-[80%]"
                 style={{ left: `calc(10% + ${slot} * ${SLIDE_STEP})` }}
               >
-                <span className="block aspect-[4/1] w-full overflow-hidden rounded-2xl">
-                  <img
-                    src={b.src}
-                    alt=""
-                    draggable={false}
-                    className="block size-full select-none object-cover"
-                  />
-                </span>
+                {b.bleed ? (
+                  <span className="relative block aspect-[4/1] w-full">
+                    <img
+                      src={b.src}
+                      alt=""
+                      draggable={false}
+                      className="absolute max-w-none select-none"
+                      style={{
+                        left: `${b.bleed.left}%`,
+                        top: `${b.bleed.top}%`,
+                        width: `${b.bleed.width}%`,
+                        height: `${b.bleed.height}%`,
+                      }}
+                    />
+                  </span>
+                ) : (
+                  <span className="block aspect-[4/1] w-full overflow-hidden rounded-2xl">
+                    <img
+                      src={b.src}
+                      alt=""
+                      draggable={false}
+                      className="block size-full select-none object-cover"
+                    />
+                  </span>
+                )}
               </button>
             )
           })}
