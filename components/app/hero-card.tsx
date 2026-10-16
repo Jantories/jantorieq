@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { ChevronLeft, LockKeyhole } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 
 const FRONT = { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' }
@@ -76,7 +76,11 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-neutral-700 transition active:scale-[.98]"
             aria-label="คลิกเพื่อแสดงบัตร"
           >
-            <LockKeyhole className="size-14" strokeWidth={2.5} />
+            <svg className="size-16" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+              <path d="M20 28V19a12 12 0 0 1 24 0v9" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
+              <rect x="10" y="25" width="44" height="31" rx="5" fill="currentColor" />
+              <circle cx="32" cy="40" r="5" fill="white" />
+            </svg>
             <span className="text-2xl font-bold">คลิกเพื่อแสดงบัตร</span>
           </button>
         )}
