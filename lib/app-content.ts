@@ -51,16 +51,33 @@ export const card = {
   infoLabel: 'ข้อมูลบัตร',
 }
 
+// The first PIN (11111111) is the template: every other profile inherits it and overrides only identity fields.
+const firstCard = {
+  ...card,
+  number: '1 3099 03735 85 1',
+  fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+  firstNameEn: 'Mr. Ainapong',
+  lastNameEn: 'Riewsrikul',
+  birthTh: '19 พ.ย. 2547',
+  birthEn: '19 Nov. 2004',
+  address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+  issueTh: '19 ธ.ค. 2567',
+  issueEn: '19 Dec. 2024',
+  expiryTh: '18 พ.ย. 2576',
+  expiryEn: '18 Nov. 2033',
+  photoCode: '3001-02-12191346',
+}
+
 export const cardProfiles = {
-  first: card,
-  second: { ...card, number: '9 8765 43210 98 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่สอง', firstNameEn: 'Mr. Second', lastNameEn: 'User', photoCode: '0000-00-00000002' },
-  third: { ...card, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', photoCode: '0000-00-00000003' },
-  fourth: { ...card, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', photoCode: '0000-00-00000004' },
-  fifth: { ...card, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งานคนที่ห้า', photoCode: '0000-00-00000005' },
-  sixth: { ...card, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งานคนที่หก', photoCode: '0000-00-00000006' },
-  seventh: { ...card, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งานคนที่เจ็ด', photoCode: '0000-00-00000007' },
-  eighth: { ...card, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งานคนที่แปด', photoCode: '0000-00-00000008' },
-  ninth: { ...card, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งานคนที่เก้า', photoCode: '0000-00-00000009' },
+  first: firstCard,
+  second: { ...firstCard, number: '9 8765 43210 98 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่สอง', firstNameEn: 'Mr. Second', lastNameEn: 'User', photoCode: '0000-00-00000002' },
+  third: { ...firstCard, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', firstNameEn: 'Mr. Third', lastNameEn: 'User', photoCode: '0000-00-00000003' },
+  fourth: { ...firstCard, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', firstNameEn: 'Mr. Fourth', lastNameEn: 'User', photoCode: '0000-00-00000004' },
+  fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งาน คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
+  sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
+  seventh: { ...firstCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
+  eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
+  ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
 } as const
 
 export const sections = {
@@ -132,8 +149,8 @@ export const logoutDialog = {
 export const cardInfo = {
   title: 'ข้อมูลบัตร',
   photoTitle: 'รูปหน้าบัตร',
-  photoSub: 'รูปหน้าบัตรประจำตัว',
-  numberLabel: 'หมายเลขสมาชิก',
+  photoSub: 'รูปหน้าบัตรประจำตัวประชาชน',
+  numberLabel: 'เลขประจำตัวประชาชน',
   number: '1-2345-67890-12-3',
   nameTh: 'นาย ชื่อ นามสกุล',
   nameEn: 'Mr. Firstname  Lastname',
@@ -147,16 +164,28 @@ export const cardInfo = {
   expiry: '1 ม.ค. 2575',
 }
 
+const firstCardInfo = {
+  ...cardInfo,
+  photo: '/images/card-photo.png',
+  number: '1-3099-03735-85-1',
+  nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+  nameEn: 'Mr. Ainapong  Riewsrikul',
+  address: '376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+  birth: '19 พ.ย. 2547',
+  issue: '19 ธ.ค. 2567',
+  expiry: '18 พ.ย. 2576',
+}
+
 export const cardInfoProfiles = {
-  first: cardInfo,
-  second: { ...cardInfo, number: '9-8765-43210-98-7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
-  third: { ...cardInfo, number: '3-3333-33333-33-3', nameTh: 'นาย ผู้ใช้งาน คนที่สาม', nameEn: 'Mr. Third User' },
-  fourth: { ...cardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
-  fifth: { ...cardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
-  sixth: { ...cardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
-  seventh: { ...cardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
-  eighth: { ...cardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
-  ninth: { ...cardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
+  first: firstCardInfo,
+  second: { ...firstCardInfo, number: '9-8765-43210-98-7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
+  third: { ...firstCardInfo, number: '3-3333-33333-33-3', nameTh: 'นาย ผู้ใช้งาน คนที่สาม', nameEn: 'Mr. Third User' },
+  fourth: { ...firstCardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
+  fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
+  sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
+  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
+  eighth: { ...firstCardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
+  ninth: { ...firstCardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
 } as const
 
 export const chat = {
@@ -219,13 +248,13 @@ export const settingsPage = {
   heading: 'ปรับแต่งฟังก์ชันของแอปพลิเคชัน',
   sub: 'จัดการรหัสผ่าน การเข้าถึง ปรับแต่งสิทธิ์',
   changePin: { title: 'เปลี่ยนรหัสผ่าน', sub: 'เปลี่ยนรหัสผ่านในรูปแบบ PIN' },
-  biometric: { title: 'ใช้งานด้วยอัตลักษณ์บุคคล', sub: 'การเข้าถึงด้วยอัตลักษณ์ เช่น ลายนิ้วมือ ใบหน้า' },
+  biometric: { title: 'ใช้งานด้วยอัตลักษณ์บุคคล', sub: 'การเข้าถึ���ด้วยอัตลักษณ์ เช่น ลายนิ้วมือ ใบหน้า' },
   notifications: { title: 'การแจ้งเตือน', sub: `รายละเอียดอื่น ๆ ของ แอปพลิเคชัน ${appName}` },
-  registration: { title: 'ประวัติการลงทะเบียน', sub: 'ประวัติการลงทะเบียนในอุปกรณ์ที่ผ่านมา' },
+  registration: { title: 'ประวัติ���ารลงทะเบียน', sub: 'ประวัติการลงทะเบียนในอุปกรณ์ที่ผ่านมา' },
   about: { title: 'เกี่ยวกับ', sub: 'เวอร์ชัน 1.0.0 (100001)' },
   moveDevice: { title: 'ย้ายอุปกรณ์', sub: 'แสดง QR Code สำหรับย้ายไปยังอุปกรณ์ใหม่' },
   trust: { title: 'จัดการ Trust Application', sub: 'ให้สิทธิการเข้าถึงโดยไม่ยืนยันตัวตนเพิ่มเติม' },
-  deactivate: { title: 'ยกเลิกการใช้งาน', sub: `ยกเลิกการใช้งาน แอปพลิเคชัน ${appName}` },
+  deactivate: { title: 'ยกเลิกการใช้งาน', sub: `ยกเลิกการใช้ง���น แอปพลิเคชัน ${appName}` },
   logout: { title: 'ออกจากระบบ', sub: 'ออกจากระบบบนอุปกรณ์นี้' },
 }
 

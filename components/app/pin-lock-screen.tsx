@@ -58,7 +58,7 @@ export type UserCard = {
 }
 
 export const users: Record<string, UserCard> = {
-  '111111': { name: 'คุณ ไอย์ณพงศ์ ริ้วศรีกุล', number: '1 2345 67890 12 3', nameTh: 'นาย ชื่อ นามสกุล', nameEn: 'Mr. Firstname Lastname' },
+  '111111': { name: 'คุณ ไอย์ณพงศ์ ริ้วศรีกุล', number: '1 3099 03735 85 1', nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล', nameEn: 'Mr. Ainapong Riewsrikul' },
   '222222': { name: 'คุณ ผู้ใช้งานคนที่สอง', number: '9 8765 43210 98 7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
 }
 
