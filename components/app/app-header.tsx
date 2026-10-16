@@ -1,16 +1,16 @@
 'use client'
 
-import { Bell, Power, UserRound } from 'lucide-react'
+import { Bell, Power } from 'lucide-react'
 import Image from 'next/image'
 import { CroppedImage } from './cropped-image'
 
-type Props = { profile: { greeting: string; status: string; name: string; avatar?: string }; locked?: boolean; onAction: (msg: string) => void; onNotifications: () => void; onLogout: () => void }
+type Props = { profile: { greeting: string; status: string; name: string; avatar?: string }; onAction: (msg: string) => void; onNotifications: () => void; onLogout: () => void }
 
-export function AppHeader({ profile, locked = false, onAction, onNotifications, onLogout }: Props) {
+export function AppHeader({ profile, onAction, onNotifications, onLogout }: Props) {
   return (
     <header className="flex items-center gap-2.5 px-5">
       <div className="relative flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white/20 ring-[1.5px] ring-white">
-        {locked ? <UserRound className="size-6 text-white/70" aria-label="กำลังโหลดโปรไฟล์" /> : profile.avatar ? (
+        {profile.avatar ? (
           <Image src={profile.avatar} alt="รูปโปรไฟล์" fill sizes="40px" className="object-cover object-top" />
         ) : (
           <CroppedImage
@@ -30,7 +30,7 @@ export function AppHeader({ profile, locked = false, onAction, onNotifications, 
             {profile.status}
           </span>
         </div>
-        <p className="truncate text-base font-medium leading-tight text-white">{locked ? 'คุณ' : profile.name}</p>
+        <p className="truncate text-base font-medium leading-tight text-white">{profile.name}</p>
       </div>
 
       <button

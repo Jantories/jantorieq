@@ -77,7 +77,7 @@ export function AppShell() {
     return (
       <main className="flex-1 pb-28">
         <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),0.75rem)]">
-          <AppHeader profile={activeProfile} locked={!cardUnlocked} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
+          <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
           <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={() => setPinOpen(true)} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : setPinOpen(true))} />
         </section>
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
