@@ -9,7 +9,7 @@ export function UnlockLoader() {
       className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/60 animate-in fade-in duration-150"
     >
       <span className="sr-only">กำลังโหลด</span>
-      <svg viewBox="0 0 100 100" className="size-32" aria-hidden>
+      <svg viewBox="0 0 100 100" className="size-40" aria-hidden>
         <defs>
           <clipPath id="unlock-loader-water">
             <circle cx="50" cy="50" r="39" />
