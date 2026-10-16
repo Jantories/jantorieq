@@ -52,7 +52,21 @@ export const card = {
 }
 
 export const cardProfiles = {
-  first: card,
+  first: {
+    ...card,
+    number: '1 3099 03735 85 1',
+    fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+    firstNameEn: 'Mr. Ainapong',
+    lastNameEn: 'Riewsrikul',
+    birthTh: '19 พ.ย. 2547',
+    birthEn: '19 Nov. 2004',
+    address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+    issueTh: '19 ธ.ค. 2567',
+    issueEn: '19 Dec. 2024',
+    expiryTh: '18 พ.ย. 2576',
+    expiryEn: '18 Nov. 2033',
+    photoCode: '3001-02-12191346',
+  },
   second: { ...card, number: '9 8765 43210 98 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่สอง', firstNameEn: 'Mr. Second', lastNameEn: 'User', photoCode: '0000-00-00000002' },
   third: { ...card, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', photoCode: '0000-00-00000003' },
   fourth: { ...card, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', photoCode: '0000-00-00000004' },
@@ -148,7 +162,17 @@ export const cardInfo = {
 }
 
 export const cardInfoProfiles = {
-  first: cardInfo,
+  first: {
+    ...cardInfo,
+    photo: '/images/card-photo.png',
+    number: '1-3099-03735-85-1',
+    nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+    nameEn: 'Mr. Ainapong  Riewsrikul',
+    address: '376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+    birth: '19 พ.ย. 2547',
+    issue: '19 ธ.ค. 2567',
+    expiry: '18 พ.ย. 2576',
+  },
   second: { ...cardInfo, number: '9-8765-43210-98-7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
   third: { ...cardInfo, number: '3-3333-33333-33-3', nameTh: 'นาย ผู้ใช้งาน คนที่สาม', nameEn: 'Mr. Third User' },
   fourth: { ...cardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
@@ -225,7 +249,7 @@ export const settingsPage = {
   about: { title: 'เกี่ยวกับ', sub: 'เวอร์ชัน 1.0.0 (100001)' },
   moveDevice: { title: 'ย้ายอุปกรณ์', sub: 'แสดง QR Code สำหรับย้ายไปยังอุปกรณ์ใหม่' },
   trust: { title: 'จัดการ Trust Application', sub: 'ให้สิทธิการเข้าถึงโดยไม่ยืนยันตัวตนเพิ่มเติม' },
-  deactivate: { title: 'ยกเลิกการใช้งาน', sub: `ยกเลิกการใช้งาน แอปพลิเคชัน ${appName}` },
+  deactivate: { title: 'ยกเลิกการใช้งาน', sub: `ยกเลิกการใช้ง���น แอปพลิเคชัน ${appName}` },
   logout: { title: 'ออกจากระบบ', sub: 'ออกจากระบบบนอุปกรณ์นี้' },
 }
 

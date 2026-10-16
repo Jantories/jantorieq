@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import { UserRound } from 'lucide-react'
 import { BackButton } from './page-parts'
 
-type Props = { cardInfo: { title: string; photoTitle: string; photoSub: string; numberLabel: string; number: string; nameTh: string; nameEn: string; addressLabel: string; address: string; birthLabel: string; birth: string; issueLabel: string; issue: string; expiryLabel: string; expiry: string }; onBack: () => void }
+type Props = { cardInfo: { photo?: string; title: string; photoTitle: string; photoSub: string; numberLabel: string; number: string; nameTh: string; nameEn: string; addressLabel: string; address: string; birthLabel: string; birth: string; issueLabel: string; issue: string; expiryLabel: string; expiry: string }; onBack: () => void }
 
 function Field({ label, value, align = 'left' }: { label: string; value: string; align?: 'left' | 'right' }) {
   return (
@@ -22,16 +23,22 @@ export function CardInfoScreen({ cardInfo: c, onBack }: Props) {
 
       <div className="flex-1 rounded-t-[2rem] bg-white px-5 pb-28 pt-8">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-brand">{c.photoTitle}</h2>
+          <h2 className="text-xl font-medium text-brand">{c.photoTitle}</h2>
           <p className="text-base text-neutral-800">{c.photoSub}</p>
         </div>
 
-        <div
-          className="relative mx-auto mt-6 block aspect-[5/6] w-[72%] overflow-hidden bg-neutral-100"
-          style={{ backgroundImage: 'repeating-linear-gradient(180deg,#ebebef 0 21%,#4b4b4b 21% 21.6%)' }}
-        >
-          <UserRound className="mx-auto size-24 text-neutral-400" />
-        </div>
+        {c.photo ? (
+          <div className="relative mx-auto mt-6 block aspect-[5/6] w-[72%] overflow-hidden bg-neutral-100">
+            <Image src={c.photo} alt={c.photoTitle} fill sizes="(max-width: 448px) 72vw, 320px" className="object-cover" priority />
+          </div>
+        ) : (
+          <div
+            className="relative mx-auto mt-6 block aspect-[5/6] w-[72%] overflow-hidden bg-neutral-100"
+            style={{ backgroundImage: 'repeating-linear-gradient(180deg,#ebebef 0 21%,#4b4b4b 21% 21.6%)' }}
+          >
+            <UserRound className="mx-auto size-24 text-neutral-400" />
+          </div>
+        )}
 
         <div className="mt-6 text-center">
           <p className="text-sm text-neutral-500">{c.numberLabel}</p>
