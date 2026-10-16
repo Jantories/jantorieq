@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { MessageCircleMore } from 'lucide-react'
 import { AppHeader } from './app-header'
 import { HeroCard } from './hero-card'
@@ -20,6 +20,8 @@ import { PinScreen } from './pin-screen'
 import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
+
+const lastProfileKey = 'last-profile'
 
 export function AppShell() {
   const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
@@ -46,9 +48,15 @@ export function AppShell() {
     '77777777': 'seventh', '88888888': 'eighth', '99999999': 'ninth',
   } as const
 
+  useEffect(() => {
+    const saved = window.localStorage.getItem(lastProfileKey)
+    if (saved && saved in profiles) setAuthenticatedAs(saved as keyof typeof profiles)
+  }, [])
+
   const unlock = (pin: string) => {
     const profileId = pinProfiles[pin as keyof typeof pinProfiles]
     if (!profileId) return false
+    window.localStorage.setItem(lastProfileKey, profileId)
     setAuthenticatedAs(profileId)
     setCardUnlocked(true)
     setPinOpen(false)
@@ -116,7 +124,6 @@ export function AppShell() {
             onConfirm={() => {
               setLogoutOpen(false)
               setTab('home')
-              setAuthenticatedAs('first')
               setCardUnlocked(false)
               setPinOpen(false)
               notify('ออกจากระบบแล้ว')
