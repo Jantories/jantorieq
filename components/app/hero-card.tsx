@@ -1,9 +1,8 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, LockKeyhole } from 'lucide-react'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
-import { card } from '@/lib/app-content'
 
 const FRONT = { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' }
 const BACK = { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' }
@@ -34,9 +33,9 @@ const glassBtn =
 
 const DOUBLE_TAP_MS = 350
 
-type Props = { onOpenInfo: () => void }
+type Props = { card: { expandLabel: string; infoLabel: string }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
-export function HeroCard({ onOpenInfo }: Props) {
+export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
   const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
@@ -66,8 +65,21 @@ export function HeroCard({ onOpenInfo }: Props) {
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={FRONT} label="บัตรด้านหน้า" />
-        <CardFace face={BACK} label="บัตรด้านหลัง" back />
+        <div className={locked ? 'blur-[5px]' : ''}>
+          <CardFace face={FRONT} label="บัตรด้านหน้า" />
+          <CardFace face={BACK} label="บัตรด้านหลัง" back />
+        </div>
+        {locked && (
+          <button
+            type="button"
+            onClick={onRequestUnlock}
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-neutral-700 transition active:scale-[.98]"
+            aria-label="คลิกเพื่อแสดงบัตร"
+          >
+            <LockKeyhole className="size-14" strokeWidth={2.5} />
+            <span className="text-2xl font-bold">คลิกเพื่อแสดงบัตร</span>
+          </button>
+        )}
       </div>
     </div>
   )

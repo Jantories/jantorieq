@@ -1,12 +1,11 @@
 'use client'
 
 import { Bell, Power } from 'lucide-react'
-import { profile } from '@/lib/app-content'
 import { CroppedImage } from './cropped-image'
 
-type Props = { onAction: (msg: string) => void; onNotifications: () => void; onLogout: () => void }
+type Props = { profile: { greeting: string; status: string; name: string }; onAction: (msg: string) => void; onNotifications: () => void; onLogout: () => void }
 
-export function AppHeader({ onAction, onNotifications, onLogout }: Props) {
+export function AppHeader({ profile, onAction, onNotifications, onLogout }: Props) {
   return (
     <header className="flex items-center gap-2.5 px-5">
       <div className="relative size-10 shrink-0 overflow-hidden rounded-full bg-white/20 ring-[1.5px] ring-white">

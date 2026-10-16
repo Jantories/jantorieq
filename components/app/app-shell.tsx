@@ -16,10 +16,15 @@ import { CardInfoScreen } from './card-info-screen'
 import { ChatScreen } from './chat-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
+import { PinScreen } from './pin-screen'
+import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
 
 export function AppShell() {
+  const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
+  const [pinOpen, setPinOpen] = useState(false)
+  const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
   const [chatOpen, setChatOpen] = useState(false)
@@ -35,9 +40,28 @@ export function AppShell() {
 
   const openLogout = () => setLogoutOpen(true)
 
+  const pinProfiles = {
+    '11111111': 'first', '22222222': 'second', '33333333': 'third',
+    '44444444': 'fourth', '55555555': 'fifth', '66666666': 'sixth',
+    '77777777': 'seventh', '88888888': 'eighth', '99999999': 'ninth',
+  } as const
+
+  const unlock = (pin: string) => {
+    const profileId = pinProfiles[pin as keyof typeof pinProfiles]
+    if (!profileId) return false
+    setAuthenticatedAs(profileId)
+    setCardUnlocked(true)
+    setPinOpen(false)
+    return true
+  }
+
+  const activeProfile = profiles[authenticatedAs]
+  const activeCard = cardProfiles[authenticatedAs]
+  const activeCardInfo = cardInfoProfiles[authenticatedAs]
+
   function renderContent() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
-    if (screen === 'cardInfo') return <CardInfoScreen onBack={() => setScreen(null)} />
+    if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
@@ -45,8 +69,8 @@ export function AppShell() {
     return (
       <main className="flex-1 pb-28">
         <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),0.75rem)]">
-          <AppHeader onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
-          <HeroCard onOpenInfo={() => setScreen('cardInfo')} />
+          <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
+          <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={() => setPinOpen(true)} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : setPinOpen(true))} />
         </section>
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
@@ -85,12 +109,16 @@ export function AppShell() {
         )}
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
+        {pinOpen && <PinScreen onClose={() => setPinOpen(false)} onUnlock={unlock} />}
         {logoutOpen && (
           <LogoutDialog
             onCancel={() => setLogoutOpen(false)}
             onConfirm={() => {
               setLogoutOpen(false)
               setTab('home')
+              setAuthenticatedAs('first')
+              setCardUnlocked(false)
+              setPinOpen(false)
               notify('ออกจากระบบแล้ว')
             }}
           />
