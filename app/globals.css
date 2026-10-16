@@ -193,34 +193,34 @@
   }
 }
 
-/* Two full hue cycles across 200% width, so shifting by one container width loops seamlessly */
+/* Transparent everywhere except one soft rainbow band. The layer is 300% wide, so the band
+   sits fully outside the card at 0% / 100% and crosses it while the position moves between them. */
 .seal-rainbow {
   background-image: linear-gradient(
     115deg,
-    #ff2d2d,
-    #ffb400,
-    #7dff2d,
-    #00e5ff,
-    #2d5bff,
-    #d62dff,
-    #ff2d2d,
-    #ffb400,
-    #7dff2d,
-    #00e5ff,
-    #2d5bff,
-    #d62dff,
-    #ff2d2d
+    rgb(255 45 45 / 0) 36%,
+    rgb(255 45 45 / 0.85) 41%,
+    #ffb400 45.5%,
+    #7dff2d 50%,
+    #00e5ff 54.5%,
+    #2d5bff 59%,
+    rgb(214 45 255 / 0.85) 63%,
+    rgb(214 45 255 / 0) 65%
   );
-  background-size: 200% 100%;
-  animation: seal-rainbow-wave 4s linear infinite;
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  animation: seal-rainbow-wave 6s ease-in-out infinite;
 }
 
+/* About 3.5s slow sweep left to right, then about 2.5s resting on the original dark blue */
 @keyframes seal-rainbow-wave {
-  from {
-    background-position: 0% 0;
-  }
-  to {
+  0% {
     background-position: 100% 0;
+  }
+  58%,
+  100% {
+    background-position: 0% 0;
   }
 }
 
