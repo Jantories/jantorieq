@@ -22,7 +22,7 @@ import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
 
 export function AppShell() {
-  const [authenticatedAs, setAuthenticatedAs] = useState<'first' | 'second' | null>(null)
+  const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles | null>(null)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
   const [chatOpen, setChatOpen] = useState(false)
@@ -40,8 +40,22 @@ export function AppShell() {
 
   if (!authenticatedAs) {
     return <PinScreen onUnlock={(pin) => {
-      if (pin === '111111') { setAuthenticatedAs('first'); return true }
-      if (pin === '222222') { setAuthenticatedAs('second'); return true }
+      const pinProfiles = {
+        '11111111': 'first',
+        '22222222': 'second',
+        '33333333': 'third',
+        '44444444': 'fourth',
+        '55555555': 'fifth',
+        '66666666': 'sixth',
+        '77777777': 'seventh',
+        '88888888': 'eighth',
+        '99999999': 'ninth',
+      } as const
+      const profileId = pinProfiles[pin as keyof typeof pinProfiles]
+      if (profileId) {
+        setAuthenticatedAs(profileId)
+        return true
+      }
       return false
     }} />
   }

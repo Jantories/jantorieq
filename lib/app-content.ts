@@ -9,6 +9,13 @@ export const profile = {
 export const profiles = {
   first: profile,
   second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สอง' },
+  third: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สาม' },
+  fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สี่' },
+  fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่ห้า' },
+  sixth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่หก' },
+  seventh: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เจ็ด' },
+  eighth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่แปด' },
+  ninth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เก้า' },
 } as const
 
 export const card = {
@@ -47,6 +54,13 @@ export const card = {
 export const cardProfiles = {
   first: card,
   second: { ...card, number: '9 8765 43210 98 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่สอง', firstNameEn: 'Mr. Second', lastNameEn: 'User', photoCode: '0000-00-00000002' },
+  third: { ...card, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', photoCode: '0000-00-00000003' },
+  fourth: { ...card, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', photoCode: '0000-00-00000004' },
+  fifth: { ...card, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งานคนที่ห้า', photoCode: '0000-00-00000005' },
+  sixth: { ...card, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งานคนที่หก', photoCode: '0000-00-00000006' },
+  seventh: { ...card, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งานคนที่เจ็ด', photoCode: '0000-00-00000007' },
+  eighth: { ...card, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งานคนที่แปด', photoCode: '0000-00-00000008' },
+  ninth: { ...card, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งานคนที่เก้า', photoCode: '0000-00-00000009' },
 } as const
 
 export const sections = {
@@ -136,6 +150,13 @@ export const cardInfo = {
 export const cardInfoProfiles = {
   first: cardInfo,
   second: { ...cardInfo, number: '9-8765-43210-98-7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
+  third: { ...cardInfo, number: '3-3333-33333-33-3', nameTh: 'นาย ผู้ใช้งาน คนที่สาม', nameEn: 'Mr. Third User' },
+  fourth: { ...cardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
+  fifth: { ...cardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
+  sixth: { ...cardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
+  seventh: { ...cardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
+  eighth: { ...cardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
+  ninth: { ...cardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
 } as const
 
 export const chat = {
