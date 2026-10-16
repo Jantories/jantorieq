@@ -65,7 +65,7 @@ function CardFace({
 }
 
 const circleBtn =
-  'flex size-11 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95'
+  'flex size-11 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
 
 const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
@@ -78,6 +78,13 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const [flipped, setFlipped] = useState(false)
   const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
+  const [expandedFlipped, setExpandedFlipped] = useState(false)
+  const flipExpanded = () => setExpandedFlipped((f) => !f)
+
+  const openExpanded = (startFlipped = flipped) => {
+    setExpandedFlipped(startFlipped)
+    setExpanded(true)
+  }
 
   const lastTapRef = useRef(0)
 
@@ -87,22 +94,37 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     if (now - lastTapRef.current < DOUBLE_TAP_MS) {
       lastTapRef.current = 0
       flip()
-      setExpanded(true)
+      openExpanded(flipped)
       return
     }
     lastTapRef.current = now
     flip()
   }
 
-  const renderCard = (style?: React.CSSProperties, interactive = false, hiRes = false) => (
+  function handleExpandedTap(e: React.MouseEvent) {
+    if ((e.target as HTMLElement).closest('button, input, [contenteditable]')) return
+    flipExpanded()
+  }
+
+  const renderCard = ({
+    style,
+    onTap,
+    hiRes = false,
+    isFlipped,
+  }: {
+    style?: React.CSSProperties
+    onTap?: (e: React.MouseEvent) => void
+    hiRes?: boolean
+    isFlipped: boolean
+  }) => (
     <div
-      className="relative [container-type:inline-size] [perspective:1200px]"
+      className={`relative [container-type:inline-size] [perspective:1200px] ${onTap ? 'cursor-pointer' : ''}`}
       style={style}
-      onClick={interactive ? handleCardTap : undefined}
+      onClick={onTap}
     >
       <div
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
-        style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
+        style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} shimmer />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
@@ -130,20 +152,21 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
 
   return (
     <div className="px-5 pt-4">
-      {renderCard(undefined, true)}
+      {renderCard({ onTap: handleCardTap, isFlipped: flipped })}
       <div className="mt-4 flex items-center justify-center gap-[18px]">
-        <button type="button" onClick={onOpenInfo} aria-label={card.infoLabel} className={circleBtn}>
+        <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} className={circleBtn}>
           <PersonIcon className="size-[22px]" />
         </button>
         <button
           type="button"
-          onClick={() => setExpanded(true)}
-          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
+          onClick={() => openExpanded()}
+          disabled={locked}
+          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none"
         >
           <ExpandIcon className="size-5" />
           <span>{card.expandLabel}</span>
         </button>
-        <button type="button" onClick={flip} aria-label="พลิกบัตร" className={circleBtn}>
+        <button type="button" onClick={flip} disabled={locked} aria-label="พลิกบัตร" className={circleBtn}>
           <FlipIcon className="size-[22px]" />
         </button>
       </div>
@@ -159,11 +182,18 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
               <ChevronLeft className="size-8" strokeWidth={2.5} />
             </button>
-            <button type="button" onClick={flip} aria-label="พลิกบัตร" className={glassBtn}>
+            <button type="button" onClick={flipExpanded} aria-label="พลิกบัตร" className={glassBtn}>
               <FlipIcon className="size-7" />
             </button>
           </div>
-          <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' }, false, true)}</div>
+          <div className="rotate-90">
+            {renderCard({
+              style: { width: 'min(78dvh, 140vw, 40rem)' },
+              onTap: handleExpandedTap,
+              hiRes: true,
+              isFlipped: expandedFlipped,
+            })}
+          </div>
         </div>
       )}
     </div>
