@@ -4,8 +4,7 @@ import { useRef, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 
-const FRONT = { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' }
-const BACK = { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' }
+type CardImage = { small: string; large: string }
 
 function CardFace({
   face,
@@ -13,7 +12,7 @@ function CardFace({
   back = false,
   blurred = false,
 }: {
-  face: typeof FRONT
+  face: CardImage
   label: string
   back?: boolean
   blurred?: boolean
@@ -43,7 +42,7 @@ const glassBtn =
 
 const DOUBLE_TAP_MS = 350
 
-type Props = { card: { expandLabel: string; infoLabel: string }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
+type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
 export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
@@ -75,8 +74,8 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={FRONT} label="บัตรด้านหน้า" blurred={locked} />
-        <CardFace face={BACK} label="บัตรด้านหลัง" back blurred={locked} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} />
+        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} />
       </div>
       {locked && (
         <button
