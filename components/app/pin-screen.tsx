@@ -41,7 +41,6 @@ export function PinScreen({ onUnlock, onClose }: { onUnlock: (pin: string) => bo
     <main className="fixed inset-0 z-50 flex items-end justify-center bg-neutral-950/70 px-0 py-0 backdrop-blur-[2px] sm:px-6 sm:py-8" onClick={onClose}>
       <section className="flex min-h-[78dvh] w-full max-w-md flex-col items-center rounded-t-[2.75rem] bg-white px-6 pb-10 pt-8 shadow-xl animate-in slide-in-from-bottom duration-300 sm:min-h-0 sm:rounded-[2.75rem] sm:py-10" onClick={(event) => event.stopPropagation()}>
         <div className="h-1.5 w-16 rounded-full bg-neutral-300" aria-hidden />
-        <div className="mb-5 mt-8 flex size-14 items-center justify-center rounded-2xl bg-brand text-2xl font-bold text-white">M</div>
         <h1 className="text-2xl font-bold text-brand-dark">ระบุรหัสผ่าน</h1>
         <p className="mt-2 text-center text-sm text-neutral-600">กรุณาใส่รหัส PIN 8 หลักเพื่อเข้าสู่ระบบ</p>
 
