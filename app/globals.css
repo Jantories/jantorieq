@@ -225,8 +225,46 @@
   }
 }
 
+.unlock-loader-arc {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: unlock-loader-arc 600ms ease-in-out forwards;
+}
+
+.unlock-loader-wave {
+  animation: unlock-loader-wave 1.1s linear infinite;
+}
+
+.unlock-loader-wave-back {
+  animation: unlock-loader-wave 1.7s linear infinite reverse;
+}
+
+/* The arc starts centred at the bottom and travels clockwise up to the top */
+@keyframes unlock-loader-arc {
+  from {
+    transform: rotate(45deg);
+  }
+  to {
+    transform: rotate(225deg);
+  }
+}
+
+@keyframes unlock-loader-wave {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .seal-rainbow {
+    animation: none;
+  }
+
+  .unlock-loader-wave,
+  .unlock-loader-wave-back {
     animation: none;
   }
 }

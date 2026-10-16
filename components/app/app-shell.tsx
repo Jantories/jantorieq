@@ -17,15 +17,18 @@ import { ChatScreen } from './chat-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
+import { UnlockLoader } from './unlock-loader'
 import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
 
 const lastProfileKey = 'last-profile'
+const pinLoaderDurationMs = 650
 
 export function AppShell() {
   const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
   const [pinOpen, setPinOpen] = useState(false)
+  const [pinLoading, setPinLoading] = useState(false)
   const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
@@ -47,6 +50,19 @@ export function AppShell() {
     '44444444': 'fourth', '55555555': 'fifth', '66666666': 'sixth',
     '77777777': 'seventh', '88888888': 'eighth', '99999999': 'ninth',
   } as const
+
+  useEffect(() => {
+    if (!pinLoading) return
+    const id = window.setTimeout(() => {
+      setPinLoading(false)
+      setPinOpen(true)
+    }, pinLoaderDurationMs)
+    return () => window.clearTimeout(id)
+  }, [pinLoading])
+
+  const requestPin = () => {
+    if (!pinOpen && !pinLoading) setPinLoading(true)
+  }
 
   useEffect(() => {
     const saved = window.localStorage.getItem(lastProfileKey)
@@ -78,7 +94,7 @@ export function AppShell() {
       <main className="flex-1 pb-28">
         <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),0.75rem)]">
           <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
-          <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={() => setPinOpen(true)} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : setPinOpen(true))} />
+          <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
         </section>
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
@@ -117,6 +133,7 @@ export function AppShell() {
         )}
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
+        {pinLoading && <UnlockLoader />}
         {pinOpen && <PinScreen onClose={() => setPinOpen(false)} onUnlock={unlock} />}
         {logoutOpen && (
           <LogoutDialog
