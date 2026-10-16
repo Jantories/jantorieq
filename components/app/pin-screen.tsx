@@ -5,7 +5,7 @@ import { useState } from 'react'
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 const keyClass =
-  'flex size-21 items-center justify-center rounded-full bg-brand/10 text-4xl font-medium text-brand-dark transition active:scale-95 active:bg-brand/20 disabled:opacity-60'
+  'flex size-23 items-center justify-center rounded-full bg-brand/10 text-4xl font-medium text-brand-dark transition active:scale-95 active:bg-brand/20 disabled:opacity-60'
 
 function BackspaceIcon() {
   return (
@@ -75,11 +75,11 @@ export function PinScreen({ onUnlock, onClose }: { onUnlock: (pin: string) => bo
           <button type="button" disabled={checking} onClick={() => addDigit('0')} className={keyClass} aria-label="เลข 0">
             0
           </button>
-          <button type="button" disabled={checking} onClick={removeDigit} className="flex size-21 items-center justify-center text-brand-dark transition active:scale-95 disabled:opacity-60" aria-label="ลบ">
+          <button type="button" disabled={checking} onClick={removeDigit} className="flex size-23 items-center justify-center text-brand-dark transition active:scale-95 disabled:opacity-60" aria-label="ลบ">
             <BackspaceIcon />
           </button>
         </div>
-        <button type="button" className="mt-9 rounded-full bg-brand/10 px-6 py-1.5 text-sm font-medium text-brand-dark transition active:bg-brand/20" onClick={() => setError(false)}>
+        <button type="button" className="mt-14 rounded-full bg-brand/10 px-6 py-1.5 text-sm font-medium text-brand-dark transition active:bg-brand/20" onClick={() => setError(false)}>
           ลืมรหัสผ่าน
         </button>
       </section>
