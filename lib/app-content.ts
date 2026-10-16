@@ -8,7 +8,7 @@ export const profile = {
 
 export const profiles = {
   first: profile,
-  second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สอง' },
+  second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ภัทรชนน รัตนภาส', avatar: '/images/card-photo-2.png' },
   third: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สาม' },
   fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สี่' },
   fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่ห้า' },
@@ -66,11 +66,29 @@ const firstCard = {
   expiryTh: '18 พ.ย. 2576',
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
+  front: { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' },
+  back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
 }
 
 export const cardProfiles = {
   first: firstCard,
-  second: { ...firstCard, number: '9 8765 43210 98 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่สอง', firstNameEn: 'Mr. Second', lastNameEn: 'User', photoCode: '0000-00-00000002' },
+  second: {
+    ...firstCard,
+    number: '1 1014 02398 10 4',
+    fullNameTh: 'นาย ภัทรชนน รัตนภาส',
+    firstNameEn: 'Mr. Phatchanon',
+    lastNameEn: 'Ratthanaphas',
+    birthTh: '15 เม.ย. 2549',
+    birthEn: '15 Apr. 2006',
+    address: 'ที่อยู่ 9/139 ซ.พหลโยธิน 9 ถ.พหลโยธิน แขวงพญาไท เขตพญาไท กรุงเทพมหานคร',
+    issueTh: '25 พ.ค. 2567',
+    issueEn: '25 May 2024',
+    expiryTh: '14 เม.ย. 2576',
+    expiryEn: '14 Apr. 2033',
+    photoCode: '1014-02-05251541',
+    front: { small: '/images/card-front-2-640.png', large: '/images/card-front-2-1100.png' },
+    back: { small: '/images/card-back-2-640.png', large: '/images/card-back-2-1100.png' },
+  },
   third: { ...firstCard, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', firstNameEn: 'Mr. Third', lastNameEn: 'User', photoCode: '0000-00-00000003' },
   fourth: { ...firstCard, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', firstNameEn: 'Mr. Fourth', lastNameEn: 'User', photoCode: '0000-00-00000004' },
   fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งาน คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
@@ -178,7 +196,17 @@ const firstCardInfo = {
 
 export const cardInfoProfiles = {
   first: firstCardInfo,
-  second: { ...firstCardInfo, number: '9-8765-43210-98-7', nameTh: 'นาย ผู้ใช้งาน คนที่สอง', nameEn: 'Mr. Second User' },
+  second: {
+    ...firstCardInfo,
+    photo: '/images/card-photo-2.png',
+    number: '1-1014-02398-10-4',
+    nameTh: 'นาย ภัทรชนน รัตนภาส',
+    nameEn: 'Mr. Phatchanon  Ratthanaphas',
+    address: '9/139 ซ.พหลโยธิน 9 ถ.พหลโยธิน แขวงพญาไท เขตพญาไท กรุงเทพมหานคร',
+    birth: '15 เม.ย. 2549',
+    issue: '25 พ.ค. 2567',
+    expiry: '14 เม.ย. 2576',
+  },
   third: { ...firstCardInfo, number: '3-3333-33333-33-3', nameTh: 'นาย ผู้ใช้งาน คนที่สาม', nameEn: 'Mr. Third User' },
   fourth: { ...firstCardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
   fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
@@ -225,7 +253,7 @@ export const historyPage = {
     {
       date: '12 ตุลาคม พ.ศ. 2569',
       items: [
-        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีการร้องขอให้ท่านยืนยันตัวตน' },
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีการร้องขอให้ท��านยืนยันตัวตน' },
         { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'แพลตฟอร์ม App 02 มีการร้องขอให้ท่านยืนยันตัวตน' },
       ],
     },
@@ -247,7 +275,7 @@ export const settingsPage = {
   title: 'การตั้งค่า',
   heading: 'ปรับแต่งฟังก์ชันของแอปพลิเคชัน',
   sub: 'จัดการรหัสผ่าน การเข้าถึง ปรับแต่งสิทธิ์',
-  changePin: { title: 'เปลี่ยนรหัสผ่าน', sub: 'เปลี่ยนรหัสผ่านในรูปแบบ PIN' },
+  changePin: { title: 'เปลี่ย���รหัสผ่าน', sub: 'เปลี่ยนรหัสผ่านในรูปแบบ PIN' },
   biometric: { title: 'ใช้งานด้วยอัตลักษณ์บุคคล', sub: 'การเข้าถึ���ด้วยอัตลักษณ์ เช่น ลายนิ้วมือ ใบหน้า' },
   notifications: { title: 'การแจ้งเตือน', sub: `รายละเอียดอื่น ๆ ของ แอปพลิเคชัน ${appName}` },
   registration: { title: 'ประวัติ���ารลงทะเบียน', sub: 'ประวัติการลงทะเบียนในอุปกรณ์ที่ผ่านมา' },
