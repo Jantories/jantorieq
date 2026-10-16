@@ -7,8 +7,8 @@ type Props = { cardInfo: { photo?: string; title: string; photoTitle: string; ph
 function Field({ label, value, align = 'left' }: { label: string; value: string; align?: 'left' | 'right' }) {
   return (
     <div className={align === 'right' ? 'text-right' : undefined}>
-      <p className="text-lg font-bold text-neutral-900">{label}</p>
-      <p className="text-lg text-neutral-700">{value}</p>
+      <p className="text-base font-bold text-neutral-900">{label}</p>
+      <p className="text-base text-neutral-700">{value}</p>
     </div>
   )
 }
@@ -42,7 +42,7 @@ export function CardInfoScreen({ cardInfo: c, onBack }: Props) {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-neutral-500">{c.numberLabel}</p>
-          <p className="text-3xl tracking-wide text-neutral-800">{c.number}</p>
+          <p className="text-2xl tracking-wide text-neutral-800">{c.number}</p>
         </div>
         <div className="mx-auto my-5 flex w-2/3 items-center gap-2 text-neutral-300" aria-hidden>
           <span className="h-px flex-1 bg-current" />
@@ -52,8 +52,8 @@ export function CardInfoScreen({ cardInfo: c, onBack }: Props) {
 
         <div className="flex flex-col gap-5 rounded-3xl bg-page p-6">
           <div className="text-center">
-            <p className="text-3xl font-medium text-[#1c2a6b]">{c.nameTh}</p>
-            <p className="whitespace-pre text-xl text-neutral-700">{c.nameEn}</p>
+            <p className="text-2xl font-medium text-[#1c2a6b]">{c.nameTh}</p>
+            <p className="whitespace-pre text-lg text-neutral-700">{c.nameEn}</p>
           </div>
           <Field label={c.addressLabel} value={c.address} />
           <Field label={c.birthLabel} value={c.birth} />
