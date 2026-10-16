@@ -56,24 +56,21 @@ export function ScanScreen({ onBack }: Props) {
         <h1 className="flex-1 pr-10 text-center text-xl font-semibold tracking-wide">QR CODE</h1>
       </header>
 
-      <section className="flex flex-1 flex-col items-center px-6 pt-16 text-center">
-        <div className="relative size-72 overflow-hidden rounded-2xl bg-neutral-950" aria-label="พื้นที่สำหรับสแกน QR Code">
+      <section className="relative flex flex-1 overflow-hidden text-center">
+        <div className="absolute inset-0 bg-neutral-950" aria-label="พื้นที่สำหรับสแกน QR Code">
           <video ref={videoRef} className="size-full object-cover" autoPlay muted playsInline aria-label="ภาพจากกล้องสำหรับสแกน QR Code" />
-          <div className="pointer-events-none absolute inset-5 rounded-xl border-2 border-white/30" />
-          <span className="pointer-events-none absolute left-5 top-5 size-10 rounded-tl-xl border-l-4 border-t-4 border-brand" />
-          <span className="pointer-events-none absolute right-5 top-5 size-10 rounded-tr-xl border-r-4 border-t-4 border-brand" />
-          <span className="pointer-events-none absolute bottom-5 left-5 size-10 rounded-bl-xl border-b-4 border-l-4 border-brand" />
-          <span className="pointer-events-none absolute bottom-5 right-5 size-10 rounded-br-xl border-b-4 border-r-4 border-brand" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 size-64 -translate-x-1/2 -translate-y-1/2 border-2 border-white" />
           {cameraState !== 'ready' && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-neutral-950/90 px-6 text-white">
               {cameraState === 'starting' ? <Camera className="size-8" aria-hidden="true" /> : <CameraOff className="size-8" aria-hidden="true" />}
               <p className="text-sm leading-relaxed">{cameraState === 'starting' ? 'กำลังเปิดกล้อง…' : 'ไม่สามารถเปิดกล้องได้ กรุณาอนุญาตการใช้งานกล้อง'}</p>
             </div>
           )}
+          <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-1 bg-neutral-950/80 px-4 py-4 text-white">
+            <h2 className="text-base font-semibold">สแกน QR CODE</h2>
+            <p className="text-xs leading-relaxed text-white/80">วาง QR Code ให้อยู่ในพื้นที่ที่กำหนด</p>
+          </div>
         </div>
-
-        <h2 className="mt-10 text-2xl font-semibold text-brand-dark">สแกน QR</h2>
-        <p className="mt-3 max-w-xs text-base leading-relaxed text-neutral-600">วาง QR Code ให้อยู่ในพื้นที่ที่กำหนด</p>
       </section>
     </main>
   )
