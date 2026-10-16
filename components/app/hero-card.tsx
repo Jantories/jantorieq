@@ -65,7 +65,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <div className={locked ? 'blur-[5px]' : ''}>
+        <div className={locked ? 'relative size-full overflow-hidden rounded-[4.5cqw] bg-sky-100/40 blur-[5px]' : ''}>
           <CardFace face={FRONT} label="บัตรด้านหน้า" />
           <CardFace face={BACK} label="บัตรด้านหลัง" back />
         </div>
@@ -73,7 +73,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           <button
             type="button"
             onClick={onRequestUnlock}
-            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 text-neutral-700 transition active:scale-[.98]"
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-neutral-700 transition active:scale-[.98]"
             aria-label="คลิกเพื่อแสดงบัตร"
           >
             <LockKeyhole className="size-14" strokeWidth={2.5} />
