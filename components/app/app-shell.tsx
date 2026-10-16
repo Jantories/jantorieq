@@ -17,7 +17,6 @@ import { ChatScreen } from './chat-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
-import { PrivacyShield, usePrivacyShield } from './privacy-shield'
 import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
@@ -34,7 +33,6 @@ export function AppShell() {
   const [logoutOpen, setLogoutOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const shield = usePrivacyShield()
 
   const notify = useCallback((message: string) => {
     setToast(message)
@@ -143,7 +141,6 @@ export function AppShell() {
           {toast}
         </div>
       </div>
-      <PrivacyShield mode={shield} />
     </div>
   )
 }
