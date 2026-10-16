@@ -76,7 +76,9 @@ type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage;
 
 export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
+  const [expandedFlipped, setExpandedFlipped] = useState(false)
   const flip = () => setFlipped((f) => !f)
+  const flipExpanded = () => setExpandedFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
 
   const lastTapRef = useRef(0)
@@ -94,7 +96,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     flip()
   }
 
-  const renderCard = (style?: React.CSSProperties, interactive = false, hiRes = false) => (
+  const renderCard = (style?: React.CSSProperties, interactive = false, hiRes = false, isFlipped = flipped) => (
     <div
       className="relative [container-type:inline-size] [perspective:1200px]"
       style={style}
@@ -102,7 +104,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     >
       <div
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
-        style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
+        style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} shimmer />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
@@ -137,7 +139,10 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         </button>
         <button
           type="button"
-          onClick={() => setExpanded(true)}
+          onClick={() => {
+            setExpandedFlipped(false)
+            setExpanded(true)
+          }}
           className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
         >
           <ExpandIcon className="size-5" />
@@ -159,11 +164,11 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
               <ChevronLeft className="size-8" strokeWidth={2.5} />
             </button>
-            <button type="button" onClick={flip} aria-label="พลิกบัตร" className={glassBtn}>
+            <button type="button" onClick={flipExpanded} aria-label="พลิกบัตร" className={glassBtn}>
               <FlipIcon className="size-7" />
             </button>
           </div>
-          <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' }, false, true)}</div>
+          <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' }, false, true, expandedFlipped)}</div>
         </div>
       )}
     </div>
