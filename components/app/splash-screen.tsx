@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
-const logoMs = 100
+const logoMs = 250
 const firstStepMs = logoMs + 350
 const secondStepMs = logoMs + 1500
 const leaveMs = logoMs + 2800
