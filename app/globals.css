@@ -230,3 +230,9 @@
     animation: none;
   }
 }
+
+@media print {
+  body {
+    display: none !important;
+  }
+}
