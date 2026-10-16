@@ -14,7 +14,7 @@ export function Announcements() {
               type="button"
               disabled
               aria-label={`${item.title} ยังไม่พร้อมใช้งาน`}
-              className="w-full cursor-not-allowed rounded-[24px] border border-neutral-300 px-5 py-3 text-left opacity-70"
+              className="w-full cursor-not-allowed rounded-[24px] border border-neutral-300 px-5 py-3 text-left"
             >
               <div className="flex items-center gap-2">
                 <Image
