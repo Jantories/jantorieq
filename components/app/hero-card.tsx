@@ -11,11 +11,13 @@ function CardFace({
   label,
   back = false,
   blurred = false,
+  hiRes = false,
 }: {
   face: CardImage
   label: string
   back?: boolean
   blurred?: boolean
+  hiRes?: boolean
 }) {
   return (
     <div
@@ -24,7 +26,7 @@ function CardFace({
       <img
         src={face.large}
         srcSet={`${face.small} 640w, ${face.large} 1100w`}
-        sizes="640px"
+        sizes={hiRes ? '1100px' : '640px'}
         alt={label}
         draggable={false}
         decoding="async"
@@ -64,7 +66,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     flip()
   }
 
-  const renderCard = (style?: React.CSSProperties, interactive = false) => (
+  const renderCard = (style?: React.CSSProperties, interactive = false, hiRes = false) => (
     <div
       className="relative [container-type:inline-size] [perspective:1200px]"
       style={style}
@@ -74,8 +76,8 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} />
-        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} />
+        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
       </div>
       {locked && (
         <button
@@ -133,7 +135,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
               <FlipIcon className="size-7" />
             </button>
           </div>
-          <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' })}</div>
+          <div className="rotate-90">{renderCard({ width: 'min(78dvh, 140vw, 40rem)' }, false, true)}</div>
         </div>
       )}
     </div>
