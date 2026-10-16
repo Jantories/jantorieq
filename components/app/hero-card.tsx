@@ -65,7 +65,7 @@ function CardFace({
 }
 
 const circleBtn =
-  'flex size-11 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
+  'flex size-10 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
 
 const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
@@ -153,7 +153,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   return (
     <div className="px-5 pt-4">
       {renderCard({ onTap: handleCardTap, isFlipped: flipped })}
-      <div className="mt-4 flex items-center justify-center gap-[18px]">
+      <div className="mt-3 flex items-center justify-center gap-4">
         <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} className={circleBtn}>
           <PersonIcon className="size-[22px]" />
         </button>

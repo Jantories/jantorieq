@@ -18,6 +18,7 @@ import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
 import { UnlockLoader } from './unlock-loader'
+import { SplashScreen } from './splash-screen'
 import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 type Screen = 'notifications' | 'cardInfo' | 'scan' | null
@@ -27,6 +28,7 @@ const pinLoaderDurationMs = 650
 
 export function AppShell() {
   const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
+  const [splashVisible, setSplashVisible] = useState(true)
   const [pinOpen, setPinOpen] = useState(false)
   const [pinLoading, setPinLoading] = useState(false)
   const [cardUnlocked, setCardUnlocked] = useState(false)
@@ -44,6 +46,7 @@ export function AppShell() {
   }, [])
 
   const openLogout = () => setLogoutOpen(true)
+  const finishSplash = useCallback(() => setSplashVisible(false), [])
 
   const pinProfiles = {
     '11111111': 'first', '22222222': 'second', '33333333': 'third',
@@ -134,6 +137,7 @@ export function AppShell() {
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
         {pinLoading && <UnlockLoader />}
+        {splashVisible && <SplashScreen onDone={finishSplash} />}
         {pinOpen && <PinScreen onClose={() => setPinOpen(false)} onUnlock={unlock} />}
         {logoutOpen && (
           <LogoutDialog

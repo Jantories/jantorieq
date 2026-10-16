@@ -112,9 +112,14 @@ export const services = [
 ] as const
 
 export const banners = [
-  { src: '/images/banner-memorial.png', title: 'สถิตอยู่ในใจตราบนิรันดร์', overflow: true },
-  { src: '/images/banner-registration.png', title: 'บริการทะเบียนออนไลน์', overflow: true },
-]
+  { src: '/images/banner-memorial.png', title: 'สถิตอยู่ในใจตราบนิรันดร์', bleed: null },
+  {
+    src: '/images/banner-registration.png',
+    title: 'บริการทะเบียนออนไลน์',
+    // Placement (% of the 4:1 banner box) that maps the artwork's blue panel onto the box so the cards poke out above it
+    bleed: { left: -0.254, top: -17.03, width: 100.38, height: 118.13 },
+  },
+] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null }[]
 
 export const announcements = [
   {
@@ -125,7 +130,7 @@ export const announcements = [
   {
     title: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',
     date: '23/07/2566',
-    body: 'กรมการปกครอง ไม่มีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น่าเชื่อถือ',
+    body: 'กรมการปกครอง ไม่มีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น��าเชื่อถือ',
   },
   {
     title: 'BORA WEB PORTAL',
@@ -253,7 +258,7 @@ export const historyPage = {
     {
       date: '12 ตุลาคม พ.ศ. 2569',
       items: [
-        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีการร้องขอให้ท��านยืนยันตัวตน' },
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีก���รร้องขอให้ท��านยืนยันตัวตน' },
         { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'แพลตฟอร์ม App 02 มีการร้องขอให้ท่านยืนยันตัวตน' },
       ],
     },
