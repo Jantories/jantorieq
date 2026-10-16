@@ -32,6 +32,13 @@ function CardFace({
         decoding="async"
         className="size-full select-none object-cover"
       />
+      {!back && (
+        <div
+          aria-hidden="true"
+          className="holo-seal pointer-events-none absolute rounded-full"
+          style={{ left: '3.3%', top: '4.5%', width: '12.3%', height: '18.5%', opacity: 0.7 }}
+        />
+      )}
     </div>
   )
 }
