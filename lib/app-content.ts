@@ -8,7 +8,7 @@ export const profile = {
 
 export const profiles = {
   first: profile,
-  second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ภัทรชนน รัตนภาส', avatar: '/images/card-photo-2.png' },
+  second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ภัทรชนน รัตธนภาส', avatar: '/images/card-photo-2.png' },
   third: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สาม' },
   fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สี่' },
   fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่ห้า' },
@@ -75,7 +75,7 @@ export const cardProfiles = {
   second: {
     ...firstCard,
     number: '1 1014 02398 10 4',
-    fullNameTh: 'นาย ภัทรชนน รัตนภาส',
+    fullNameTh: 'นาย ภัทรชนน รัตธนภาส',
     firstNameEn: 'Mr. Phatchanon',
     lastNameEn: 'Ratthanaphas',
     birthTh: '15 เม.ย. 2549',
@@ -200,7 +200,7 @@ export const cardInfoProfiles = {
     ...firstCardInfo,
     photo: '/images/card-photo-2.png',
     number: '1-1014-02398-10-4',
-    nameTh: 'นาย ภัทรชนน รัตนภาส',
+    nameTh: 'นาย ภัทรชนน รัตธนภาส',
     nameEn: 'Mr. Phatchanon  Ratthanaphas',
     address: '9/139 ซ.พหลโยธิน 9 ถ.พหลโยธิน แขวงพญาไท เขตพญาไท กรุงเทพมหานคร',
     birth: '15 เม.ย. 2549',
