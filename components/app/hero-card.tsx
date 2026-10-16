@@ -17,53 +17,17 @@ const SEALS = [
   { x: 13, y: 72, size: 18, delay: 2.4 },
 ]
 
-const SPARKLES = [
-  { x: 18, y: 18, delay: 0.2 },
-  { x: 29, y: 31, delay: 1.1 },
-  { x: 41, y: 14, delay: 1.9 },
-  { x: 52, y: 27, delay: 0.6 },
-  { x: 78, y: 12, delay: 1.4 },
-  { x: 68, y: 38, delay: 2.2 },
-  { x: 50, y: 56, delay: 0.9 },
-  { x: 40, y: 68, delay: 1.7 },
-  { x: 67, y: 76, delay: 0.3 },
-  { x: 58, y: 88, delay: 2.1 },
-  { x: 10, y: 66, delay: 1.3 },
-  { x: 19, y: 80, delay: 0.7 },
-]
+const SEAL_MASK = SEALS.map(
+  (s) => `radial-gradient(circle ${s.size / 2}cqw at ${s.x}% ${s.y}%, #000 82%, transparent 100%)`,
+).join(', ')
 
-function SealShimmer() {
+function SealRainbow() {
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden mix-blend-soft-light">
-      {SEALS.map((s, i) => (
-        <span
-          key={i}
-          className="seal-shimmer absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            width: `${s.size}%`,
-            aspectRatio: '1',
-            background:
-              'conic-gradient(from 0deg, #ff7ad9, #ffe36e, #6effc1, #6ec8ff, #b18bff, #ff7ad9)',
-            filter: 'blur(6px)',
-            animation: `seal-shimmer 3.6s ease-in-out ${s.delay}s infinite`,
-          }}
-        />
-      ))}
-      {SPARKLES.map((s, i) => (
-        <span
-          key={i}
-          className="seal-sparkle absolute size-[4.5cqw] -translate-x-1/2 -translate-y-1/2 bg-white"
-          style={{
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            clipPath: 'polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%)',
-            animation: `seal-sparkle 2.8s ease-in-out ${s.delay}s infinite`,
-          }}
-        />
-      ))}
-    </div>
+    <div
+      aria-hidden="true"
+      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-hue"
+      style={{ WebkitMaskImage: SEAL_MASK, maskImage: SEAL_MASK }}
+    />
   )
 }
 
@@ -95,7 +59,7 @@ function CardFace({
         decoding="async"
         className="size-full select-none object-cover"
       />
-      {shimmer && !blurred && <SealShimmer />}
+      {shimmer && !blurred && <SealRainbow />}
     </div>
   )
 }

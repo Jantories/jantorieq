@@ -193,34 +193,39 @@
   }
 }
 
-@keyframes seal-shimmer {
-  0%,
-  100% {
-    opacity: 0.15;
-    transform: scale(0.92) rotate(0deg);
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(1.04) rotate(25deg);
-  }
+/* Two full hue cycles across 200% width, so shifting by one container width loops seamlessly */
+.seal-rainbow {
+  background-image: linear-gradient(
+    115deg,
+    #ff2d2d,
+    #ffb400,
+    #7dff2d,
+    #00e5ff,
+    #2d5bff,
+    #d62dff,
+    #ff2d2d,
+    #ffb400,
+    #7dff2d,
+    #00e5ff,
+    #2d5bff,
+    #d62dff,
+    #ff2d2d
+  );
+  background-size: 200% 100%;
+  animation: seal-rainbow-wave 4s linear infinite;
 }
 
-@keyframes seal-sparkle {
-  0%,
-  100% {
-    opacity: 0;
-    transform: scale(0.2) rotate(0deg);
+@keyframes seal-rainbow-wave {
+  from {
+    background-position: 0% 0;
   }
-  50% {
-    opacity: 1;
-    transform: scale(1) rotate(90deg);
+  to {
+    background-position: 100% 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .seal-shimmer,
-  .seal-sparkle {
-    animation: none !important;
-    opacity: 0.4;
+  .seal-rainbow {
+    animation: none;
   }
 }
