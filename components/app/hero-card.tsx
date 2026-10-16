@@ -84,7 +84,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const lastTapRef = useRef(0)
 
   function handleCardTap(e: React.MouseEvent) {
-    if ((e.target as HTMLElement).closest('button, input, [contenteditable]')) return
+    if (locked || (e.target as HTMLElement).closest('button, input, [contenteditable]')) return
     const now = Date.now()
     if (now - lastTapRef.current < DOUBLE_TAP_MS) {
       lastTapRef.current = 0
@@ -140,10 +140,13 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         <button
           type="button"
           onClick={() => {
+            if (locked) return
             setExpandedFlipped(false)
             setExpanded(true)
           }}
-          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95"
+          disabled={locked}
+          aria-disabled={locked}
+          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none disabled:opacity-50"
         >
           <ExpandIcon className="size-5" />
           <span>{card.expandLabel}</span>
