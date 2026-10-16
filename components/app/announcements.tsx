@@ -3,17 +3,18 @@ import { ChevronRight } from 'lucide-react'
 import { SectionHeader } from './service-menu'
 import { announcements, sections } from '@/lib/app-content'
 
-export function Announcements({ onAction }: { onAction: (msg: string) => void }) {
+export function Announcements() {
   return (
     <section aria-label={sections.announcements} className="mt-5">
-      <SectionHeader title={sections.announcements} onAll={() => onAction(`ดู${sections.announcements}`)} />
+      <SectionHeader title={sections.announcements} disabled />
       <ul className="mt-3 flex flex-col gap-2 px-5">
         {announcements.map((item) => (
           <li key={item.title}>
             <button
               type="button"
-              onClick={() => onAction(item.title)}
-              className="w-full rounded-[24px] border border-neutral-300 px-5 py-3 text-left transition active:bg-neutral-50"
+              disabled
+              aria-label={`${item.title} ยังไม่พร้อมใช้งาน`}
+              className="w-full cursor-not-allowed rounded-[24px] border border-neutral-300 px-5 py-3 text-left opacity-70"
             >
               <div className="flex items-center gap-2">
                 <Image

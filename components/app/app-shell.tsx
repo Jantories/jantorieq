@@ -15,8 +15,9 @@ import { NotificationsScreen } from './notifications-screen'
 import { CardInfoScreen } from './card-info-screen'
 import { ChatScreen } from './chat-screen'
 import { LogoutDialog } from './logout-dialog'
+import { ScanScreen } from './scan-screen'
 
-type Screen = 'notifications' | 'cardInfo' | null
+type Screen = 'notifications' | 'cardInfo' | 'scan' | null
 
 export function AppShell() {
   const [tab, setTab] = useState<TabId>('home')
@@ -37,6 +38,7 @@ export function AppShell() {
   function renderContent() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen onBack={() => setScreen(null)} />
+    if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
@@ -49,7 +51,7 @@ export function AppShell() {
         <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
           <ServiceMenu />
           <BannerCarousel onAction={notify} />
-          <Announcements onAction={notify} />
+          <Announcements />
         </div>
       </main>
     )
@@ -78,7 +80,7 @@ export function AppShell() {
               setTab(t)
               window.scrollTo({ top: 0 })
             }}
-            onScan={() => notify('เปิดกล้องสแกน')}
+            onScan={() => setScreen('scan')}
           />
         )}
 

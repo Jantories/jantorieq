@@ -10,14 +10,15 @@ const icons = {
   soon: '/icons/svc-soon.png',
 }
 
-export function SectionHeader({ title, onAll }: { title: string; onAll: () => void }) {
+export function SectionHeader({ title, onAll, disabled = false }: { title: string; onAll?: () => void; disabled?: boolean }) {
   return (
     <div className="flex items-center justify-between px-5">
       <h2 className="text-lg font-bold leading-6 text-neutral-900">{title}</h2>
       <button
         type="button"
         onClick={onAll}
-        className="flex items-center gap-0.5 text-sm text-neutral-500 transition hover:text-brand"
+        disabled={disabled}
+        className="flex items-center gap-0.5 text-sm text-neutral-500 transition hover:text-brand disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
       >
         {sections.seeAll}
         <ChevronRight className="size-4" />
