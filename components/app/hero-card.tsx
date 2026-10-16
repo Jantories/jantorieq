@@ -25,7 +25,7 @@ function SealRainbow() {
   return (
     <div
       aria-hidden="true"
-      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-multiply"
+      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-hue"
       style={{ WebkitMaskImage: SEAL_MASK, maskImage: SEAL_MASK }}
     />
   )
@@ -114,7 +114,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-[#4b4b4b] transition active:scale-[.98]"
           aria-label="คลิกเพื่อแสดงบัตร"
         >
-          <svg className="size-16" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <svg className="size-12" viewBox="0 0 64 64" fill="none" aria-hidden="true">
             <path d="M20 28V19a12 12 0 0 1 24 0v9" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
             <path
               fill="currentColor"
@@ -122,7 +122,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
               d="M15 25h34a5 5 0 0 1 5 5v21a5 5 0 0 1-5 5H15a5 5 0 0 1-5-5V30a5 5 0 0 1 5-5ZM32 35a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"
             />
           </svg>
-          <span className="text-2xl font-bold">คลิกเพื่อแสดงบัตร</span>
+          <span className="text-xl font-bold">คลิกเพื่อแสดงบัตร</span>
         </button>
       )}
     </div>
