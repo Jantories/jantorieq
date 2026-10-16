@@ -6,18 +6,45 @@ import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 
 type CardImage = { small: string; large: string }
 
+// Positions (% of card) of the Department of Provincial Administration seals in the card background
+const SEALS = [
+  { x: 22.8, y: 24.5, size: 15, delay: 0 },
+  { x: 44, y: 20.5, size: 12.5, delay: 0.8 },
+  { x: 75, y: 18, size: 14, delay: 1.6 },
+  { x: 63, y: 42.5, size: 14.5, delay: 0.4 },
+  { x: 42.5, y: 65, size: 14, delay: 1.2 },
+  { x: 61, y: 83, size: 12, delay: 2 },
+  { x: 13.5, y: 74, size: 13, delay: 2.4 },
+]
+
+const SEAL_MASK = SEALS.map(
+  (s) => `radial-gradient(circle ${s.size / 2}cqw at ${s.x}% ${s.y}%, #000 82%, transparent 100%)`,
+).join(', ')
+
+function SealRainbow() {
+  return (
+    <div
+      aria-hidden="true"
+      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-hue"
+      style={{ WebkitMaskImage: SEAL_MASK, maskImage: SEAL_MASK }}
+    />
+  )
+}
+
 function CardFace({
   face,
   label,
   back = false,
   blurred = false,
   hiRes = false,
+  shimmer = false,
 }: {
   face: CardImage
   label: string
   back?: boolean
   blurred?: boolean
   hiRes?: boolean
+  shimmer?: boolean
 }) {
   return (
     <div
@@ -32,6 +59,7 @@ function CardFace({
         decoding="async"
         className="size-full select-none object-cover"
       />
+      {shimmer && !blurred && <SealRainbow />}
     </div>
   )
 }
@@ -76,7 +104,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${flipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} shimmer />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
       </div>
       {locked && (
@@ -86,7 +114,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-[4.5cqw] bg-sky-100/10 text-[#4b4b4b] transition active:scale-[.98]"
           aria-label="คลิกเพื่อแสดงบัตร"
         >
-          <svg className="size-16" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <svg className="size-12" viewBox="0 0 64 64" fill="none" aria-hidden="true">
             <path d="M20 28V19a12 12 0 0 1 24 0v9" stroke="currentColor" strokeWidth="7" strokeLinecap="round" />
             <path
               fill="currentColor"
@@ -94,7 +122,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
               d="M15 25h34a5 5 0 0 1 5 5v21a5 5 0 0 1-5 5H15a5 5 0 0 1-5-5V30a5 5 0 0 1 5-5ZM32 35a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"
             />
           </svg>
-          <span className="text-2xl font-bold">คลิกเพื่อแสดงบัตร</span>
+          <span className="text-xl font-bold">คลิกเพื่อแสดงบัตร</span>
         </button>
       )}
     </div>
