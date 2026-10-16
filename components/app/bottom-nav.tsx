@@ -42,7 +42,7 @@ export function BottomNav({ active, onChange, onScan }: Props) {
         className={`flex flex-1 flex-col items-center pt-2.5 transition ${isActive ? 'text-[#1f1bc9]' : 'text-[#666666] hover:text-neutral-800'}`}
       >
         <MaskIcon src={icon} className="size-7" />
-        <span className="mt-1.5 text-sm font-medium leading-[17px]">{label}</span>
+        <span className="mt-1.5 text-[13px] font-semibold leading-[17px]">{label}</span>
         <span className="mt-2 h-[3px] w-8 rounded-full bg-transparent" />
       </button>
     )
@@ -64,7 +64,7 @@ export function BottomNav({ active, onChange, onScan }: Props) {
           >
             <MaskIcon src="/icons/nav-scan.png" className="size-[37px]" />
           </button>
-          <span className="absolute left-1/2 top-[41px] -translate-x-1/2 text-sm font-medium leading-[17px] text-[#666666]">
+          <span className="absolute left-1/2 top-[41px] -translate-x-1/2 text-[13px] font-semibold leading-[17px] text-[#666666]">
             {nav.scan}
           </span>
         </div>
