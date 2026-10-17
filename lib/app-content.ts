@@ -66,7 +66,10 @@ const firstCard = {
   expiryTh: '18 พ.ย. 2576',
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
-  front: { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' },
+  front: {
+    small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+    large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+  },
   back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
 }
 
@@ -86,7 +89,10 @@ export const cardProfiles = {
     expiryTh: '14 เม.ย. 2576',
     expiryEn: '14 Apr. 2033',
     photoCode: '1014-02-05251541',
-    front: { small: '/images/card-front-2-640.png', large: '/images/card-front-2-1100.png' },
+    front: {
+      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+    },
     back: { small: '/images/card-back-2-640.png', large: '/images/card-back-2-1100.png' },
   },
   third: { ...firstCard, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', firstNameEn: 'Mr. Third', lastNameEn: 'User', photoCode: '0000-00-00000003' },
@@ -130,7 +136,7 @@ export const announcements = [
   {
     title: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',
     date: '23/07/2566',
-    body: 'กรมการปกครอง ไม่มีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น��าเชื่อถือ',
+    body: 'กรมการปกครอง ไม่��ีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น��าเชื่อถือ',
   },
   {
     title: 'BORA WEB PORTAL',
@@ -253,12 +259,12 @@ export const documentsPage = {
 } as const
 
 export const historyPage = {
-  title: 'ประวัติการทำรายการ',
+  title: 'ปร��วัติการทำรายการ',
   groups: [
     {
       date: '12 ตุลาคม พ.ศ. 2569',
       items: [
-        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีก���รร้องขอให้ท��านยืนยันตัวตน' },
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีก���รร้องขอ���ห้ท��านยืนยันตัวตน' },
         { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'แพลตฟอร์ม App 02 มีการร้องขอให้ท่านยืนยันตัวตน' },
       ],
     },
