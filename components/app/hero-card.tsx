@@ -7,27 +7,29 @@ import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 type CardImage = { small: string; large: string }
 
 // Positions (% of card) of the Department of Provincial Administration seals in the card background
+// x / y are the circle centre in % of the card, size is the diameter in % of the card width
 const SEALS = [
-  { x: 22.8, y: 24.5, size: 18.5, delay: 0 },
-  { x: 44, y: 20.5, size: 12.5, delay: 0.8 },
-  { x: 75, y: 18, size: 16.5, delay: 1.6 },
-  { x: 63, y: 42.5, size: 17.5, delay: 0.4 },
-  { x: 42.5, y: 65, size: 14.5, delay: 1.2 },
-  { x: 61, y: 83, size: 11.5, delay: 2 },
-  { x: 13.5, y: 74, size: 15.5, delay: 2.4 },
+  { x: 22.8, y: 26.2, size: 14.9 },
+  { x: 45.1, y: 20, size: 12.6 },
+  { x: 74.3, y: 18, size: 15.1 },
+  { x: 63.1, y: 43, size: 15.4 },
+  { x: 42.4, y: 65, size: 14.6 },
+  { x: 61.5, y: 84.2, size: 14.1 },
+  { x: 14.8, y: 74.5, size: 14.2 },
+  { x: -1.4, y: 20, size: 11.4 },
 ]
-
-const SEAL_MASK = SEALS.map(
-  (s) => `radial-gradient(circle ${s.size / 2}cqw at ${s.x}% ${s.y}%, #000 82%, rgb(0 0 0 / 0.72) 91%, transparent 100%)`,
-).join(', ')
 
 function SealRainbow() {
   return (
-    <div
-      aria-hidden="true"
-      className="seal-rainbow pointer-events-none absolute inset-0 mix-blend-hue"
-      style={{ WebkitMaskImage: SEAL_MASK, maskImage: SEAL_MASK }}
-    />
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+      {SEALS.map((s) => (
+        <div
+          key={`${s.x}-${s.y}`}
+          className="seal-rainbow absolute rounded-full mix-blend-hue"
+          style={{ left: `${s.x}%`, top: `${s.y}%`, width: `${s.size}cqw`, height: `${s.size}cqw`, transform: 'translate(-50%, -50%)' }}
+        />
+      ))}
+    </div>
   )
 }
 
