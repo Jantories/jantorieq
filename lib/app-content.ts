@@ -58,18 +58,15 @@ const firstCard = {
   fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   firstNameEn: 'Mr. Ainapong',
   lastNameEn: 'Riewsrikul',
-  birthTh: '19 พ.ย. 2547',
-  birthEn: '19 Nov. 2004',
+  birthTh: '19 พ.ย. 2549',
+  birthEn: '19 Nov. 2006',
   address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
   issueTh: '19 ธ.ค. 2567',
   issueEn: '19 Dec. 2024',
   expiryTh: '18 พ.ย. 2576',
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
-  front: {
-    small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
-    large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
-  },
+  front: { small: '/images/card-front-1.png', large: '/images/card-front-1.png' },
   back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
 }
 
@@ -131,7 +128,7 @@ export const announcements = [
   {
     title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ ไปใช้สิทธิ',
     date: '6/02/2569',
-    body: 'กรมการปกครองขอเชิญชวนผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
+    body: 'กรมการปกครองขอเชิญชว���ผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
   },
   {
     title: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',
@@ -200,7 +197,7 @@ const firstCardInfo = {
   nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   nameEn: 'Mr. Ainapong  Riewsrikul',
   address: '376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
-  birth: '19 พ.ย. 2547',
+  birth: '19 พ.ย. 2549',
   issue: '19 ธ.ค. 2567',
   expiry: '18 พ.ย. 2576',
 }
@@ -244,7 +241,7 @@ export const documentsPage = {
     [{ id: 'idcard', title: 'บัตรประจำตัว', sub: 'บัตรประจำตัว', tone: 'blue' }],
     [
       { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
-      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานที่เกิด บิดา มารดา', tone: 'green' },
+      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานท���่เกิด บิดา มารดา', tone: 'green' },
     ],
     [
       { id: 'marriage', title: 'ทะเบียนสมรส', sub: 'ทะเบียนการสมรส', tone: 'red' },
