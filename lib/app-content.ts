@@ -67,7 +67,7 @@ const firstCard = {
   seals: [
     { x: -1.93, y: 19.96, size: 11.84, angle: 0 },
     { x: 22.1, y: 25.19, size: 15.22, angle: 135 },
-    { x: 46.62, y: 17.63, size: 14.5, angle: 270 },
+    { x: 44.57, y: 21.07, size: 14.49, angle: 270 },
     { x: 73.79, y: 17.45, size: 15.46, angle: 45 },
     { x: 63.52, y: 42.64, size: 14.5, angle: 225 },
     { x: 42.27, y: 64.73, size: 15.22, angle: 90 },
@@ -109,7 +109,7 @@ export const cardProfiles = {
     seals: [
       { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
       { x: 22.55, y: 26.21, size: 15.04, angle: 315 },
-      { x: 45.11, y: 17.84, size: 13.84, angle: 90 },
+      { x: 44.63, y: 22.12, size: 14.08, angle: 90 },
       { x: 73.63, y: 18.59, size: 15.04, angle: 225 },
       { x: 62.89, y: 42.94, size: 15.04, angle: 45 },
       { x: 42.72, y: 63.75, size: 15.04, angle: 270 },
