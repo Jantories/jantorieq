@@ -52,21 +52,41 @@ export const card = {
 }
 
 // The first PIN (11111111) is the template: every other profile inherits it and overrides only identity fields.
+export type CardSeal = {
+  /** Circle centre, % of card width / height */
+  x: number
+  y: number
+  /** Circle diameter, % of card width */
+  size: number
+  /** Direction (deg) the rainbow band travels across this circle */
+  angle: number
+}
+
 const firstCard = {
   ...card,
+  seals: [
+    { x: -1.93, y: 19.96, size: 11.84, angle: 0 },
+    { x: 22.1, y: 25.19, size: 15.22, angle: 135 },
+    { x: 46.62, y: 17.63, size: 14.5, angle: 270 },
+    { x: 73.79, y: 17.45, size: 15.46, angle: 45 },
+    { x: 63.52, y: 42.64, size: 14.5, angle: 225 },
+    { x: 42.27, y: 64.73, size: 15.22, angle: 90 },
+    { x: 60.75, y: 85.66, size: 14.25, angle: 315 },
+    { x: 16.42, y: 77.9, size: 12.56, angle: 180 },
+  ] as CardSeal[],
   number: '1 3099 03735 85 1',
   fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   firstNameEn: 'Mr. Ainapong',
   lastNameEn: 'Riewsrikul',
-  birthTh: '19 พ.ย. 2547',
-  birthEn: '19 Nov. 2004',
+  birthTh: '19 พ.ย. 2549',
+  birthEn: '19 Nov. 2006',
   address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
   issueTh: '19 ธ.ค. 2567',
   issueEn: '19 Dec. 2024',
   expiryTh: '18 พ.ย. 2576',
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
-  front: { small: '/images/card-front-640.png', large: '/images/card-front-1100.png' },
+  front: { small: '/images/card-front-1-trim.png', large: '/images/card-front-1-trim.png' },
   back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
 }
 
@@ -86,7 +106,20 @@ export const cardProfiles = {
     expiryTh: '14 เม.ย. 2576',
     expiryEn: '14 Apr. 2033',
     photoCode: '1014-02-05251541',
-    front: { small: '/images/card-front-2-640.png', large: '/images/card-front-2-1100.png' },
+    seals: [
+      { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
+      { x: 22.55, y: 26.21, size: 15.04, angle: 315 },
+      { x: 45.11, y: 17.84, size: 13.84, angle: 90 },
+      { x: 73.63, y: 18.59, size: 15.04, angle: 225 },
+      { x: 62.89, y: 42.94, size: 15.04, angle: 45 },
+      { x: 42.72, y: 63.75, size: 15.04, angle: 270 },
+      { x: 60.74, y: 84.01, size: 14.1, angle: 135 },
+      { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
+    ] as CardSeal[],
+    front: {
+      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+    },
     back: { small: '/images/card-back-2-640.png', large: '/images/card-back-2-1100.png' },
   },
   third: { ...firstCard, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', firstNameEn: 'Mr. Third', lastNameEn: 'User', photoCode: '0000-00-00000003' },
@@ -123,14 +156,14 @@ export const banners = [
 
 export const announcements = [
   {
-    title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ ไปใช้สิทธิ',
+    title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประช��มติ ไปใช้สิทธิ',
     date: '6/02/2569',
-    body: 'กรมการปกครองขอเชิญชวนผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
+    body: 'กรมการปกครองขอเชิญชว���ผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
   },
   {
     title: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',
     date: '23/07/2566',
-    body: 'กรมการปกครอง ไม่มีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น��าเชื่อถือ',
+    body: 'กรมการปกครอง ไม่��ีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น��าเชื่อถือ',
   },
   {
     title: 'BORA WEB PORTAL',
@@ -194,7 +227,7 @@ const firstCardInfo = {
   nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   nameEn: 'Mr. Ainapong  Riewsrikul',
   address: '376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
-  birth: '19 พ.ย. 2547',
+  birth: '19 พ.ย. 2549',
   issue: '19 ธ.ค. 2567',
   expiry: '18 พ.ย. 2576',
 }
@@ -238,7 +271,7 @@ export const documentsPage = {
     [{ id: 'idcard', title: 'บัตรประจำตัว', sub: 'บัตรประจำตัว', tone: 'blue' }],
     [
       { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
-      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานที่เกิด บิดา มารดา', tone: 'green' },
+      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานท���่เกิด บิดา มารดา', tone: 'green' },
     ],
     [
       { id: 'marriage', title: 'ทะเบียนสมรส', sub: 'ทะเบียนการสมรส', tone: 'red' },
@@ -246,19 +279,19 @@ export const documentsPage = {
     ],
     [{ id: 'disability', title: 'บัตรประจำตัวคนพิการ', sub: 'บัตรประจำตัวคนพิการ', tone: 'blue' }],
     [
-      { id: 'license', title: 'ใบอนุญาต', sub: 'รายการใบอนุญาตต่าง ๆ', tone: 'blue' },
+      { id: 'license', title: 'ใบอนุญาต', sub: 'ร��ยการใบอนุญาตต่าง ๆ', tone: 'blue' },
       { id: 'other', title: 'เอกสารอื่น ๆ', sub: 'เอกสารเพิ่มเติม', tone: 'blue' },
     ],
   ],
 } as const
 
 export const historyPage = {
-  title: 'ประวัติการทำรายการ',
+  title: 'ปร��วัติการทำรายการ',
   groups: [
     {
       date: '12 ตุลาคม พ.ศ. 2569',
       items: [
-        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีก���รร้องขอให้ท��านยืนยันตัวตน' },
+        { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'ยืนยันตัวตนแพลตฟอร์ม App 01 มีก���รร้องขอ���ห้ท��านยืนยันตัวตน' },
         { title: 'ยืนยันตัวตน', status: 'ยินยอม', body: 'แพลตฟอร์ม App 02 มีการร้องขอให้ท่านยืนยันตัวตน' },
       ],
     },
