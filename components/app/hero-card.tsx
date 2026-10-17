@@ -18,7 +18,7 @@ const SEALS = [
 ]
 
 const SEAL_MASK = SEALS.map(
-  (s) => `radial-gradient(circle ${s.size / 2}cqw at ${s.x}% ${s.y}%, #000 90%, transparent 100%)`,
+  (s) => `radial-gradient(circle ${s.size / 2}cqw at ${s.x}% ${s.y}%, #000 82%, rgb(0 0 0 / 0.72) 91%, transparent 100%)`,
 ).join(', ')
 
 function SealRainbow() {
