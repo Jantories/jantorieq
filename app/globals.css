@@ -215,24 +215,52 @@ body {
   height: 400%;
   background-image: linear-gradient(
     90deg,
-    rgb(255 232 120 / 0) 40%,
-    rgb(255 232 120 / 0.28) 46%,
-    rgb(255 236 130 / 0.5) 50%,
-    rgb(255 232 120 / 0.28) 54%,
-    rgb(255 232 120 / 0) 60%
+    rgb(255 238 150 / 0) 39%,
+    rgb(255 225 105 / 0.34) 45%,
+    rgb(255 230 120 / 0.58) 50%,
+    rgb(255 225 105 / 0.34) 55%,
+    rgb(255 238 150 / 0) 61%
   );
-  transform: rotate(var(--seal-angle, 0deg)) translateX(-26%);
-  animation: seal-rainbow-wave 12s linear infinite;
+  transform: rotate(var(--seal-angle, 0deg)) translateX(-30%);
+  animation: seal-rainbow-wave 23s linear infinite;
+  mix-blend-mode: color;
 }
 
-/* Slow pass (about 8s), then a quiet rest on the original blue. */
+/* Two slow U-shaped passes, followed by a three-second quiet interval. */
 @keyframes seal-rainbow-wave {
   0% {
-    transform: rotate(var(--seal-angle, 0deg)) translateX(-26%);
+    transform: rotate(var(--seal-angle, 0deg)) translateX(-30%) scaleX(1.35);
   }
-  68%,
+  10.9% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(-18%) scaleX(0.72);
+  }
+  21.7% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(0%) scaleX(0.52);
+  }
+  32.6% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(18%) scaleX(0.72);
+  }
+  43.5% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(30%) scaleX(1.35);
+  }
+  43.5001% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(-30%) scaleX(1.35);
+  }
+  54.3% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(-18%) scaleX(0.72);
+  }
+  65.2% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(0%) scaleX(0.52);
+  }
+  76.1% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(18%) scaleX(0.72);
+  }
+  87% {
+    transform: rotate(var(--seal-angle, 0deg)) translateX(30%) scaleX(1.35);
+  }
+  87.1%,
   100% {
-    transform: rotate(var(--seal-angle, 0deg)) translateX(26%);
+    transform: rotate(var(--seal-angle, 0deg)) translateX(30%) scaleX(1.35);
   }
 }
 
