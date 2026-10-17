@@ -65,14 +65,14 @@ export type CardSeal = {
 const firstCard = {
   ...card,
   seals: [
-    { x: -1.19, y: 20.63, size: 11.67, angle: 0 },
-    { x: 22.5, y: 25.65, size: 15.0, angle: 135 },
-    { x: 46.67, y: 18.4, size: 14.29, angle: 270 },
-    { x: 73.45, y: 18.22, size: 15.24, angle: 45 },
-    { x: 63.33, y: 42.38, size: 14.29, angle: 225 },
-    { x: 42.38, y: 63.57, size: 15.0, angle: 90 },
-    { x: 60.6, y: 83.64, size: 14.05, angle: 315 },
-    { x: 16.9, y: 76.2, size: 12.38, angle: 180 },
+    { x: -1.93, y: 19.96, size: 11.84, angle: 0 },
+    { x: 22.1, y: 25.19, size: 15.22, angle: 135 },
+    { x: 46.62, y: 17.63, size: 14.5, angle: 270 },
+    { x: 73.79, y: 17.45, size: 15.46, angle: 45 },
+    { x: 63.52, y: 42.64, size: 14.5, angle: 225 },
+    { x: 42.27, y: 64.73, size: 15.22, angle: 90 },
+    { x: 60.75, y: 85.66, size: 14.25, angle: 315 },
+    { x: 16.42, y: 77.9, size: 12.56, angle: 180 },
   ] as CardSeal[],
   number: '1 3099 03735 85 1',
   fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
@@ -86,7 +86,7 @@ const firstCard = {
   expiryTh: '18 พ.ย. 2576',
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
-  front: { small: '/images/card-front-1.png', large: '/images/card-front-1.png' },
+  front: { small: '/images/card-front-1-trim.png', large: '/images/card-front-1-trim.png' },
   back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
 }
 
