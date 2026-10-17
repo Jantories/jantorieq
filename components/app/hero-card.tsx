@@ -2,32 +2,22 @@
 
 import { useRef, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
+import type { CardSeal } from '@/lib/app-content'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 
 type CardImage = { small: string; large: string }
 
-// Positions (% of card) of the Department of Provincial Administration seals in the card background
-// x / y are the circle centre in % of the card, size is the diameter in % of the card width
-const SEALS = [
-  { x: 22.8, y: 26.2, size: 14.9 },
-  { x: 45.1, y: 20, size: 12.6 },
-  { x: 74.3, y: 18, size: 15.1 },
-  { x: 63.1, y: 43, size: 15.4 },
-  { x: 42.4, y: 65, size: 14.6 },
-  { x: 61.5, y: 84.2, size: 14.1 },
-  { x: 14.8, y: 74.5, size: 14.2 },
-  { x: -1.4, y: 20, size: 11.4 },
-]
-
-function SealRainbow() {
+function SealRainbow({ seals }: { seals: readonly CardSeal[] }) {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-      {SEALS.map((s) => (
+      {seals.map((s) => (
         <div
           key={`${s.x}-${s.y}`}
-          className="seal-rainbow absolute rounded-full mix-blend-hue"
+          className="seal-rainbow absolute overflow-hidden rounded-full mix-blend-hue"
           style={{ left: `${s.x}%`, top: `${s.y}%`, width: `${s.size}cqw`, height: `${s.size}cqw`, transform: 'translate(-50%, -50%)' }}
-        />
+        >
+          <div className="seal-rainbow-band" style={{ '--seal-angle': `${s.angle}deg` } as React.CSSProperties} />
+        </div>
       ))}
     </div>
   )
@@ -39,14 +29,14 @@ function CardFace({
   back = false,
   blurred = false,
   hiRes = false,
-  shimmer = false,
+  seals,
 }: {
   face: CardImage
   label: string
   back?: boolean
   blurred?: boolean
   hiRes?: boolean
-  shimmer?: boolean
+  seals?: readonly CardSeal[]
 }) {
   return (
     <div
@@ -61,7 +51,7 @@ function CardFace({
         decoding="async"
         className="size-full scale-[1.012] select-none object-cover"
       />
-      {shimmer && !blurred && <SealRainbow />}
+      {seals && !blurred && <SealRainbow seals={seals} />}
     </div>
   )
 }
@@ -74,7 +64,7 @@ const glassBtn =
 
 const DOUBLE_TAP_MS = 350
 
-type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
+type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; seals: readonly CardSeal[] }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
 export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
@@ -128,7 +118,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} shimmer />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} seals={card.seals} />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
       </div>
       {locked && (

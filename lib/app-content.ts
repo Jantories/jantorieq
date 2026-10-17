@@ -52,8 +52,28 @@ export const card = {
 }
 
 // The first PIN (11111111) is the template: every other profile inherits it and overrides only identity fields.
+export type CardSeal = {
+  /** Circle centre, % of card width / height */
+  x: number
+  y: number
+  /** Circle diameter, % of card width */
+  size: number
+  /** Direction (deg) the rainbow band travels across this circle */
+  angle: number
+}
+
 const firstCard = {
   ...card,
+  seals: [
+    { x: -1.19, y: 20.63, size: 11.67, angle: 0 },
+    { x: 22.5, y: 25.65, size: 15.0, angle: 135 },
+    { x: 46.67, y: 18.4, size: 14.29, angle: 270 },
+    { x: 73.45, y: 18.22, size: 15.24, angle: 45 },
+    { x: 63.33, y: 42.38, size: 14.29, angle: 225 },
+    { x: 42.38, y: 63.57, size: 15.0, angle: 90 },
+    { x: 60.6, y: 83.64, size: 14.05, angle: 315 },
+    { x: 16.9, y: 76.2, size: 12.38, angle: 180 },
+  ] as CardSeal[],
   number: '1 3099 03735 85 1',
   fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   firstNameEn: 'Mr. Ainapong',
@@ -86,6 +106,16 @@ export const cardProfiles = {
     expiryTh: '14 เม.ย. 2576',
     expiryEn: '14 Apr. 2033',
     photoCode: '1014-02-05251541',
+    seals: [
+      { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
+      { x: 22.55, y: 26.21, size: 15.04, angle: 315 },
+      { x: 45.11, y: 17.84, size: 13.84, angle: 90 },
+      { x: 73.63, y: 18.59, size: 15.04, angle: 225 },
+      { x: 62.89, y: 42.94, size: 15.04, angle: 45 },
+      { x: 42.72, y: 63.75, size: 15.04, angle: 270 },
+      { x: 60.74, y: 84.01, size: 14.1, angle: 135 },
+      { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
+    ] as CardSeal[],
     front: {
       small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
       large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
@@ -126,7 +156,7 @@ export const banners = [
 
 export const announcements = [
   {
-    title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ ไปใช้สิทธิ',
+    title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประช��มติ ไปใช้สิทธิ',
     date: '6/02/2569',
     body: 'กรมการปกครองขอเชิญชว���ผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
   },
@@ -249,7 +279,7 @@ export const documentsPage = {
     ],
     [{ id: 'disability', title: 'บัตรประจำตัวคนพิการ', sub: 'บัตรประจำตัวคนพิการ', tone: 'blue' }],
     [
-      { id: 'license', title: 'ใบอนุญาต', sub: 'รายการใบอนุญาตต่าง ๆ', tone: 'blue' },
+      { id: 'license', title: 'ใบอนุญาต', sub: 'ร��ยการใบอนุญาตต่าง ๆ', tone: 'blue' },
       { id: 'other', title: 'เอกสารอื่น ๆ', sub: 'เอกสารเพิ่มเติม', tone: 'blue' },
     ],
   ],
