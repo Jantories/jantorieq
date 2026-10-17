@@ -117,8 +117,8 @@ export const cardProfiles = {
       { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
     ] as CardSeal[],
     front: {
-      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
-      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%B1%E0%B8%87%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%95%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%8A%E0%B8%B7%E0%B9%88%E0%B8%AD-ygaz74WQOg8AaZ02UaSJlu4VLPSvap.png',
+      small: '/images/card-front-2-provided.png',
+      large: '/images/card-front-2-provided.png',
     },
     back: { small: '/images/card-back-2-640.png', large: '/images/card-back-2-1100.png' },
   },
