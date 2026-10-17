@@ -57,7 +57,7 @@ function CardFace({
         alt={label}
         draggable={false}
         decoding="async"
-        className="size-full select-none object-cover"
+        className="size-full scale-[1.012] select-none object-cover"
       />
       {shimmer && !blurred && <SealRainbow />}
     </div>
