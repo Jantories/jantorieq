@@ -76,8 +76,8 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false })
   const flipExpanded = () => setExpandedFlipped((f) => !f)
 
-  const openExpanded = (startFlipped = flipped) => {
-    setExpandedFlipped(startFlipped)
+  const openExpanded = () => {
+    setExpandedFlipped(false)
     setZoom(1)
     setPan({ x: 0, y: 0 })
     touchRef.current.moved = false
@@ -92,7 +92,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     if (now - lastTapRef.current < DOUBLE_TAP_MS) {
       lastTapRef.current = 0
       flip()
-      openExpanded(false)
+      openExpanded()
       return
     }
     lastTapRef.current = now
@@ -124,7 +124,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
       e.preventDefault()
       const [first, second] = [e.touches[0], e.touches[1]]
       const distance = Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY)
-      const nextZoom = Math.min(1.7, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
+      const nextZoom = Math.min(1.8, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
       touchRef.current.moved = true
       setZoom(nextZoom)
     } else if (e.touches.length === 1 && zoom > 1) {
@@ -212,7 +212,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           role="dialog"
           aria-modal="true"
           aria-label={card.expandLabel}
-          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none"
+          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none [overscroll-behavior:none]"
           onTouchStart={handleExpandedTouchStart}
           onTouchMove={handleExpandedTouchMove}
           onTouchEnd={handleExpandedTouchEnd}
@@ -226,7 +226,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             </button>
           </div>
           <div
-            className="touch-none"
+            className="touch-none [will-change:transform]"
             style={{ transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom}) rotate(90deg)`, transformOrigin: 'center' }}
           >
             {renderCard({
