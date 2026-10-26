@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
 import type { CardSeal } from '@/lib/app-content'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
@@ -105,37 +105,71 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
   const [expandedFlipped, setExpandedFlipped] = useState(false)
-  const [zoom, setZoom] = useState(1)
-  const [pan, setPan] = useState({ x: 0, y: 0 })
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false, focalX: 0, focalY: 0 })
+  // viewRef is the gesture target; shownRef eases towards it each frame and is written straight to the DOM.
   const viewRef = useRef({ zoom: 1, x: 0, y: 0 })
+  const shownRef = useRef({ zoom: 1, x: 0, y: 0 })
+  const contentRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef(0)
   const flipExpanded = () => setExpandedFlipped((f) => !f)
+
+  const paintView = () => {
+    const target = viewRef.current
+    const shown = shownRef.current
+    const ease = 0.4
+    shown.zoom += (target.zoom - shown.zoom) * ease
+    shown.x += (target.x - shown.x) * ease
+    shown.y += (target.y - shown.y) * ease
+    const settled =
+      Math.abs(target.zoom - shown.zoom) < 0.002 && Math.abs(target.x - shown.x) < 0.3 && Math.abs(target.y - shown.y) < 0.3
+    if (settled) shownRef.current = { ...target }
+    const { zoom, x, y } = shownRef.current
+    if (contentRef.current) {
+      contentRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${zoom}) rotate(90deg)`
+    }
+    frameRef.current = settled || !contentRef.current ? 0 : requestAnimationFrame(paintView)
+  }
 
   const applyView = (nextZoom: number, nextPan: { x: number; y: number }) => {
     viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
-    setZoom(nextZoom)
-    setPan(nextPan)
+    if (!frameRef.current) frameRef.current = requestAnimationFrame(paintView)
   }
 
-  const openExpanded = (startFlipped = false) => {
-    setExpandedFlipped(startFlipped)
-    applyView(1, { x: 0, y: 0 })
+  useEffect(() => () => cancelAnimationFrame(frameRef.current), [])
+
+  const openExpanded = () => {
+    cancelAnimationFrame(frameRef.current)
+    frameRef.current = 0
+    viewRef.current = { zoom: 1, x: 0, y: 0 }
+    shownRef.current = { zoom: 1, x: 0, y: 0 }
+    setExpandedFlipped(false)
     touchRef.current.moved = false
     setExpanded(true)
   }
 
   const lastTapRef = useRef(0)
+  const flipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  useEffect(() => () => {
+    if (flipTimerRef.current) clearTimeout(flipTimerRef.current)
+  }, [])
+
+  // A single tap flips after the double-tap window; a second tap cancels it and expands the front face instead.
   function handleCardTap(e: React.MouseEvent) {
     if ((e.target as HTMLElement).closest('button, input, [contenteditable]')) return
     const now = Date.now()
-    if (now - lastTapRef.current < DOUBLE_TAP_MS) {
+    if (flipTimerRef.current && now - lastTapRef.current < DOUBLE_TAP_MS) {
+      clearTimeout(flipTimerRef.current)
+      flipTimerRef.current = null
       lastTapRef.current = 0
-      openExpanded(flipped)
+      openExpanded()
       return
     }
     lastTapRef.current = now
-    flip()
+    flipTimerRef.current = setTimeout(() => {
+      flipTimerRef.current = null
+      flip()
+    }, DOUBLE_TAP_MS)
   }
 
   function handleExpandedTap(e: React.MouseEvent) {
@@ -297,8 +331,9 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             </button>
           </div>
           <div
+            ref={contentRef}
             className="touch-none [will-change:transform]"
-            style={{ transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom}) rotate(90deg)`, transformOrigin: 'center' }}
+            style={{ transform: 'translate3d(0px, 0px, 0) scale(1) rotate(90deg)', transformOrigin: 'center' }}
           >
             {renderCard({
               style: { width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)' },
