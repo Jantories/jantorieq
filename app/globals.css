@@ -321,3 +321,11 @@ body {
     display: none !important;
   }
 }
+
+/* Keeps the app in portrait layout when the phone is rotated (see OrientationLock). */
+html[data-forced-portrait] .min-h-dvh {
+  min-height: var(--app-h);
+}
+html[data-forced-portrait] .min-h-\[80dvh\] {
+  min-height: calc(var(--app-h) * 0.8);
+}

@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Noto_Sans_Thai } from 'next/font/google'
+import { OrientationLock } from '@/components/app/orientation-lock'
 import './globals.css'
 
 const notoThai = Noto_Sans_Thai({
@@ -44,6 +45,7 @@ export default function RootLayout({
   return (
     <html lang="th" className={`${notoThai.variable} bg-white`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
+        <OrientationLock />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
