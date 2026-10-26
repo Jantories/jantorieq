@@ -63,6 +63,12 @@ const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
 
 const DOUBLE_TAP_MS = 350
+const MAX_CARD_ZOOM = 2.4
+
+function clampPan(value: number, zoom: number) {
+  const maxOffset = Math.max(0, (zoom - 1) * 115)
+  return Math.max(-maxOffset, Math.min(maxOffset, value))
+}
 
 type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; seals: readonly CardSeal[] }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
@@ -124,15 +130,21 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
       e.preventDefault()
       const [first, second] = [e.touches[0], e.touches[1]]
       const distance = Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY)
-      const nextZoom = Math.min(1.8, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
+      const nextZoom = Math.min(MAX_CARD_ZOOM, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
       touchRef.current.moved = true
       setZoom(nextZoom)
+      setPan((currentPan) => ({
+        x: clampPan(currentPan.x, nextZoom),
+        y: clampPan(currentPan.y, nextZoom),
+      }))
     } else if (e.touches.length === 1 && zoom > 1) {
       e.preventDefault()
       touchRef.current.moved = true
+      const nextPanX = touchRef.current.panX + e.touches[0].clientX - touchRef.current.x
+      const nextPanY = touchRef.current.panY + e.touches[0].clientY - touchRef.current.y
       setPan({
-        x: touchRef.current.panX + e.touches[0].clientX - touchRef.current.x,
-        y: touchRef.current.panY + e.touches[0].clientY - touchRef.current.y,
+        x: clampPan(nextPanX, zoom),
+        y: clampPan(nextPanY, zoom),
       })
     }
   }
@@ -212,7 +224,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           role="dialog"
           aria-modal="true"
           aria-label={card.expandLabel}
-          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none [overscroll-behavior:none]"
+          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none [overscroll-behavior:none] [touch-action:none]"
           onTouchStart={handleExpandedTouchStart}
           onTouchMove={handleExpandedTouchMove}
           onTouchEnd={handleExpandedTouchEnd}
