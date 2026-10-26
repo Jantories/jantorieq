@@ -65,9 +65,37 @@ const glassBtn =
 const DOUBLE_TAP_MS = 350
 const MAX_CARD_ZOOM = 2.4
 
-function clampPan(value: number, zoom: number) {
-  const maxOffset = Math.max(0, (zoom - 1) * 115)
-  return Math.max(-maxOffset, Math.min(maxOffset, value))
+const EDGE_OVERSHOOT = 28
+const CARD_RATIO = 1.585
+
+function getAppViewport() {
+  const rotation = document.documentElement.getAttribute('data-forced-portrait')
+  const { innerWidth, innerHeight } = window
+  return rotation
+    ? { width: Math.min(innerHeight, 448), height: innerWidth, rotation }
+    : { width: Math.min(innerWidth, 448), height: innerHeight, rotation: null }
+}
+
+// The card is rotated 90deg, so its long side runs vertically on screen.
+// Vertical pan may reach the screen centre; horizontal pan stops just past the screen edge.
+function clampPan(pan: { x: number; y: number }, zoom: number) {
+  const viewport = getAppViewport()
+  const long = Math.min(viewport.height * 0.78, window.innerWidth * 1.4, 640)
+  const short = long / CARD_RATIO
+  const ease = Math.min(1, Math.max(0, (zoom - 1) / 0.5))
+  const maxY = (long * zoom * ease) / 2
+  const maxX = Math.max(0, (short * zoom - viewport.width) / 2 + EDGE_OVERSHOOT) * ease
+  return {
+    x: Math.max(-maxX, Math.min(maxX, pan.x)),
+    y: Math.max(-maxY, Math.min(maxY, pan.y)),
+  }
+}
+
+function toContentDelta(dx: number, dy: number) {
+  const rotation = document.documentElement.getAttribute('data-forced-portrait')
+  if (rotation === 'cw') return { x: dy, y: -dx }
+  if (rotation === 'ccw') return { x: -dy, y: dx }
+  return { x: dx, y: dy }
 }
 
 type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; seals: readonly CardSeal[] }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
@@ -133,25 +161,23 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
       const nextZoom = Math.min(MAX_CARD_ZOOM, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
       touchRef.current.moved = true
       setZoom(nextZoom)
-      setPan((currentPan) => ({
-        x: clampPan(currentPan.x, nextZoom),
-        y: clampPan(currentPan.y, nextZoom),
-      }))
-    } else if (e.touches.length === 1 && zoom > 1) {
+      setPan((currentPan) => clampPan(currentPan, nextZoom))
+    } else if (e.touches.length === 1 && zoom > 1 && !touchRef.current.pinching) {
       e.preventDefault()
       touchRef.current.moved = true
-      const nextPanX = touchRef.current.panX + e.touches[0].clientX - touchRef.current.x
-      const nextPanY = touchRef.current.panY + e.touches[0].clientY - touchRef.current.y
-      setPan({
-        x: clampPan(nextPanX, zoom),
-        y: clampPan(nextPanY, zoom),
-      })
+      const delta = toContentDelta(e.touches[0].clientX - touchRef.current.x, e.touches[0].clientY - touchRef.current.y)
+      setPan(clampPan({ x: touchRef.current.panX + delta.x, y: touchRef.current.panY + delta.y }, zoom))
     }
   }
 
-  function handleExpandedTouchEnd() {
-    touchRef.current.pinching = false
+  function handleExpandedTouchEnd(e: React.TouchEvent<HTMLDivElement>) {
     touchRef.current.distance = 0
+    if (e.touches.length === 1) {
+      // One finger stays down after a pinch: restart panning from here so the card does not jump.
+      touchRef.current = { ...touchRef.current, x: e.touches[0].clientX, y: e.touches[0].clientY, panX: pan.x, panY: pan.y, pinching: true }
+    } else if (e.touches.length === 0) {
+      touchRef.current.pinching = false
+    }
   }
 
   const renderCard = ({
@@ -242,7 +268,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             style={{ transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom}) rotate(90deg)`, transformOrigin: 'center' }}
           >
             {renderCard({
-              style: { width: 'min(78dvh, 140vw, 40rem)' },
+              style: { width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)' },
               onTap: handleExpandedTap,
               hiRes: true,
               isFlipped: expandedFlipped,
