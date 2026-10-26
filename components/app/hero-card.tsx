@@ -71,10 +71,16 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const flip = () => setFlipped((f) => !f)
   const [expanded, setExpanded] = useState(false)
   const [expandedFlipped, setExpandedFlipped] = useState(false)
+  const [zoom, setZoom] = useState(1)
+  const [pan, setPan] = useState({ x: 0, y: 0 })
+  const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false })
   const flipExpanded = () => setExpandedFlipped((f) => !f)
 
   const openExpanded = (startFlipped = flipped) => {
     setExpandedFlipped(startFlipped)
+    setZoom(1)
+    setPan({ x: 0, y: 0 })
+    touchRef.current.moved = false
     setExpanded(true)
   }
 
@@ -94,8 +100,46 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   }
 
   function handleExpandedTap(e: React.MouseEvent) {
-    if ((e.target as HTMLElement).closest('button, input, [contenteditable]')) return
+    if ((e.target as HTMLElement).closest('button, input, [contenteditable]') || touchRef.current.moved) return
     flipExpanded()
+  }
+
+  function handleExpandedTouchStart(e: React.TouchEvent<HTMLDivElement>) {
+    if (e.touches.length === 2) {
+      const [first, second] = [e.touches[0], e.touches[1]]
+      touchRef.current = {
+        ...touchRef.current,
+        distance: Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY),
+        zoom,
+        pinching: true,
+        moved: false,
+      }
+    } else if (e.touches.length === 1) {
+      touchRef.current = { ...touchRef.current, x: e.touches[0].clientX, y: e.touches[0].clientY, panX: pan.x, panY: pan.y, pinching: false, moved: false }
+    }
+  }
+
+  function handleExpandedTouchMove(e: React.TouchEvent<HTMLDivElement>) {
+    if (e.touches.length === 2) {
+      e.preventDefault()
+      const [first, second] = [e.touches[0], e.touches[1]]
+      const distance = Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY)
+      const nextZoom = Math.min(1.7, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
+      touchRef.current.moved = true
+      setZoom(nextZoom)
+    } else if (e.touches.length === 1 && zoom > 1) {
+      e.preventDefault()
+      touchRef.current.moved = true
+      setPan({
+        x: touchRef.current.panX + e.touches[0].clientX - touchRef.current.x,
+        y: touchRef.current.panY + e.touches[0].clientY - touchRef.current.y,
+      })
+    }
+  }
+
+  function handleExpandedTouchEnd() {
+    touchRef.current.pinching = false
+    touchRef.current.distance = 0
   }
 
   const renderCard = ({
@@ -168,7 +212,10 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           role="dialog"
           aria-modal="true"
           aria-label={card.expandLabel}
-          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px]"
+          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none"
+          onTouchStart={handleExpandedTouchStart}
+          onTouchMove={handleExpandedTouchMove}
+          onTouchEnd={handleExpandedTouchEnd}
         >
           <div className="absolute inset-x-5 top-[max(env(safe-area-inset-top),1.25rem)] z-10 flex justify-between">
             <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
@@ -178,7 +225,10 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
               <FlipIcon className="size-7" />
             </button>
           </div>
-          <div className="rotate-90">
+          <div
+            className="touch-none"
+            style={{ transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom}) rotate(90deg)`, transformOrigin: 'center' }}
+          >
             {renderCard({
               style: { width: 'min(78dvh, 140vw, 40rem)' },
               onTap: handleExpandedTap,
