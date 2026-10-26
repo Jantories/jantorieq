@@ -63,7 +63,7 @@ const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
 
 const DOUBLE_TAP_MS = 350
-const MAX_CARD_ZOOM = 2.4
+const MAX_CARD_ZOOM = 2.45
 
 const EDGE_OVERSHOOT = 28
 const CARD_RATIO = 1.585
@@ -107,13 +107,19 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const [expandedFlipped, setExpandedFlipped] = useState(false)
   const [zoom, setZoom] = useState(1)
   const [pan, setPan] = useState({ x: 0, y: 0 })
-  const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false })
+  const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false, focalX: 0, focalY: 0 })
+  const viewRef = useRef({ zoom: 1, x: 0, y: 0 })
   const flipExpanded = () => setExpandedFlipped((f) => !f)
 
-  const openExpanded = () => {
-    setExpandedFlipped(false)
-    setZoom(1)
-    setPan({ x: 0, y: 0 })
+  const applyView = (nextZoom: number, nextPan: { x: number; y: number }) => {
+    viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
+    setZoom(nextZoom)
+    setPan(nextPan)
+  }
+
+  const openExpanded = (startFlipped = false) => {
+    setExpandedFlipped(startFlipped)
+    applyView(1, { x: 0, y: 0 })
     touchRef.current.moved = false
     setExpanded(true)
   }
@@ -125,8 +131,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     const now = Date.now()
     if (now - lastTapRef.current < DOUBLE_TAP_MS) {
       lastTapRef.current = 0
-      flip()
-      openExpanded()
+      openExpanded(flipped)
       return
     }
     lastTapRef.current = now
@@ -138,35 +143,63 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     flipExpanded()
   }
 
+  // Midpoint of two fingers, relative to the dialog centre and expressed in card (content) coordinates.
+  function getFocal(e: React.TouchEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - (rect.left + rect.width / 2)
+    const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - (rect.top + rect.height / 2)
+    return toContentDelta(mx, my)
+  }
+
   function handleExpandedTouchStart(e: React.TouchEvent<HTMLDivElement>) {
     if (e.touches.length === 2) {
       const [first, second] = [e.touches[0], e.touches[1]]
+      const focal = getFocal(e)
       touchRef.current = {
         ...touchRef.current,
         distance: Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY),
-        zoom,
+        zoom: viewRef.current.zoom,
+        focalX: focal.x,
+        focalY: focal.y,
         pinching: true,
         moved: false,
       }
     } else if (e.touches.length === 1) {
-      touchRef.current = { ...touchRef.current, x: e.touches[0].clientX, y: e.touches[0].clientY, panX: pan.x, panY: pan.y, pinching: false, moved: false }
+      touchRef.current = { ...touchRef.current, x: e.touches[0].clientX, y: e.touches[0].clientY, panX: viewRef.current.x, panY: viewRef.current.y, pinching: false, moved: false }
     }
   }
 
   function handleExpandedTouchMove(e: React.TouchEvent<HTMLDivElement>) {
+    const view = viewRef.current
     if (e.touches.length === 2) {
       e.preventDefault()
       const [first, second] = [e.touches[0], e.touches[1]]
       const distance = Math.hypot(second.clientX - first.clientX, second.clientY - first.clientY)
       const nextZoom = Math.min(MAX_CARD_ZOOM, Math.max(1, touchRef.current.zoom * (distance / touchRef.current.distance)))
+      const focal = getFocal(e)
       touchRef.current.moved = true
-      setZoom(nextZoom)
-      setPan((currentPan) => clampPan(currentPan, nextZoom))
-    } else if (e.touches.length === 1 && zoom > 1 && !touchRef.current.pinching) {
+
+      let nextPan: { x: number; y: number }
+      if (nextZoom >= view.zoom) {
+        // Zooming in keeps the point between the fingers fixed, so any spot on the card can be magnified.
+        const scale = nextZoom / view.zoom
+        nextPan = {
+          x: focal.x - scale * (touchRef.current.focalX - view.x),
+          y: focal.y - scale * (touchRef.current.focalY - view.y),
+        }
+      } else {
+        // Zooming out glides back towards the centre and lands exactly there at 1x.
+        const shrink = view.zoom > 1 ? (nextZoom - 1) / (view.zoom - 1) : 0
+        nextPan = { x: view.x * shrink, y: view.y * shrink }
+      }
+      touchRef.current.focalX = focal.x
+      touchRef.current.focalY = focal.y
+      applyView(nextZoom, clampPan(nextPan, nextZoom))
+    } else if (e.touches.length === 1 && view.zoom > 1 && !touchRef.current.pinching) {
       e.preventDefault()
       touchRef.current.moved = true
       const delta = toContentDelta(e.touches[0].clientX - touchRef.current.x, e.touches[0].clientY - touchRef.current.y)
-      setPan(clampPan({ x: touchRef.current.panX + delta.x, y: touchRef.current.panY + delta.y }, zoom))
+      applyView(view.zoom, clampPan({ x: touchRef.current.panX + delta.x, y: touchRef.current.panY + delta.y }, view.zoom))
     }
   }
 
@@ -174,7 +207,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     touchRef.current.distance = 0
     if (e.touches.length === 1) {
       // One finger stays down after a pinch: restart panning from here so the card does not jump.
-      touchRef.current = { ...touchRef.current, x: e.touches[0].clientX, y: e.touches[0].clientY, panX: pan.x, panY: pan.y, pinching: true }
+      touchRef.current = { ...touchRef.current, x: e.touches[0].clientX, y: e.touches[0].clientY, panX: viewRef.current.x, panY: viewRef.current.y, pinching: true }
     } else if (e.touches.length === 0) {
       touchRef.current.pinching = false
     }
