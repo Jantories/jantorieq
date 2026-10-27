@@ -9,7 +9,7 @@ export const profile = {
 export const profiles = {
   first: profile,
   second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ภัทรชนน รัตธนภาส', avatar: '/images/card-photo-2.png' },
-  third: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สาม' },
+  third: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ธรรมเชษฐ์ เชาว์วิศวชัย', avatar: '/images/card-photo-3.png' },
   fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่สี่' },
   fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่ห้า' },
   sixth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่หก' },
@@ -90,6 +90,18 @@ const firstCard = {
   back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
 }
 
+// Seal positions for cards built from a provided full-card image (same template).
+const providedCardSeals: CardSeal[] = [
+  { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
+  { x: 22.55, y: 26.21, size: 15.04, angle: 315 },
+  { x: 44.63, y: 22.12, size: 14.08, angle: 90 },
+  { x: 73.63, y: 18.59, size: 15.04, angle: 225 },
+  { x: 62.89, y: 42.94, size: 15.04, angle: 45 },
+  { x: 42.72, y: 63.75, size: 15.04, angle: 270 },
+  { x: 60.74, y: 84.01, size: 14.1, angle: 135 },
+  { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
+]
+
 export const cardProfiles = {
   first: firstCard,
   second: {
@@ -106,23 +118,31 @@ export const cardProfiles = {
     expiryTh: '14 เม.ย. 2576',
     expiryEn: '14 Apr. 2033',
     photoCode: '1014-02-05251541',
-    seals: [
-      { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
-      { x: 22.55, y: 26.21, size: 15.04, angle: 315 },
-      { x: 44.63, y: 22.12, size: 14.08, angle: 90 },
-      { x: 73.63, y: 18.59, size: 15.04, angle: 225 },
-      { x: 62.89, y: 42.94, size: 15.04, angle: 45 },
-      { x: 42.72, y: 63.75, size: 15.04, angle: 270 },
-      { x: 60.74, y: 84.01, size: 14.1, angle: 135 },
-      { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
-    ] as CardSeal[],
+    seals: providedCardSeals,
     front: {
       small: '/images/card-front-2-provided.png',
       large: '/images/card-front-2-provided.png',
     },
     back: { small: '/images/card-back-2-640.png', large: '/images/card-back-2-1100.png' },
   },
-  third: { ...firstCard, number: '3 3333 33333 33 3', fullNameTh: 'นาย ผู้ใช้งาน คนที่สาม', firstNameEn: 'Mr. Third', lastNameEn: 'User', photoCode: '0000-00-00000003' },
+  third: {
+    ...firstCard,
+    number: '1 1008 01640 48 0',
+    fullNameTh: 'นาย ธรรมเชษฐ์ เชาว์วิศวชัย',
+    firstNameEn: 'Mr. Tamachate',
+    lastNameEn: 'Chaovisawachai',
+    birthTh: '20 ม.ค. 2549',
+    birthEn: '20 Jan. 2006',
+    address: 'ที่อยู่ 217/9 ซ.ประชาอุทิศ 33 แยก 7 แขวงบางมด เขตทุ่งครุ กรุงเทพมหานคร',
+    issueTh: '27 ต.ค. 2569',
+    issueEn: '27 Oct. 2026',
+    expiryTh: '19 ม.ค. 2578',
+    expiryEn: '19 Jan. 2035',
+    photoCode: '1007-04-10271552',
+    seals: providedCardSeals,
+    front: { small: '/images/card-front-3.png', large: '/images/card-front-3.png' },
+    back: { small: '/images/card-back-3.png', large: '/images/card-back-3.png' },
+  },
   fourth: { ...firstCard, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', firstNameEn: 'Mr. Fourth', lastNameEn: 'User', photoCode: '0000-00-00000004' },
   fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งาน คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
   sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
@@ -245,7 +265,17 @@ export const cardInfoProfiles = {
     issue: '25 พ.ค. 2567',
     expiry: '14 เม.ย. 2576',
   },
-  third: { ...firstCardInfo, number: '3-3333-33333-33-3', nameTh: 'นาย ผู้ใช้งาน คนที่สาม', nameEn: 'Mr. Third User' },
+  third: {
+    ...firstCardInfo,
+    photo: '/images/card-photo-3.png',
+    number: '1-1008-01640-48-0',
+    nameTh: 'นาย ธรรมเชษฐ์ เชาว์วิศวชัย',
+    nameEn: 'Mr. Tamachate  Chaovisawachai',
+    address: '217/9 ซ.ประชาอุทิศ 33 แยก 7 แขวงบางมด เขตทุ่งครุ กรุงเทพมหานคร',
+    birth: '20 ม.ค. 2549',
+    issue: '27 ต.ค. 2569',
+    expiry: '19 ม.ค. 2578',
+  },
   fourth: { ...firstCardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
   fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
   sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
@@ -268,10 +298,10 @@ export const documentsPage = {
   sub: 'แสดงรายการเอกสารทั้งหมด',
   // tone: blue | green | red
   groups: [
-    [{ id: 'idcard', title: 'บัตรประจำตั���', sub: 'บัตรประจำตัว', tone: 'blue' }],
+    [{ id: 'idcard', title: 'บัตรปร���จำตั���', sub: 'บัตรประจำตัว', tone: 'blue' }],
     [
       { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
-      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานท����่เกิด บิดา มารดา', tone: 'green' },
+      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานท����่เก��ด บิดา มารดา', tone: 'green' },
     ],
     [
       { id: 'marriage', title: 'ทะเบียนสมรส', sub: 'ทะเบียนการสมรส', tone: 'red' },
