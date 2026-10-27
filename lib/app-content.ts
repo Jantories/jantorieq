@@ -140,7 +140,10 @@ export const cardProfiles = {
     expiryEn: '19 Jan. 2035',
     photoCode: '1007-04-10271552',
     seals: providedCardSeals,
-    front: { small: '/images/card-front-3.png', large: '/images/card-front-3.png' },
+    front: {
+      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/638000945334321300-EANfo6wSEeD0Z1bPSjEym9dVsV2y97.jpg',
+      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/638000945334321300-EANfo6wSEeD0Z1bPSjEym9dVsV2y97.jpg',
+    },
     back: { small: '/images/card-back-3.png', large: '/images/card-back-3.png' },
   },
   fourth: { ...firstCard, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', firstNameEn: 'Mr. Fourth', lastNameEn: 'User', photoCode: '0000-00-00000004' },
@@ -287,7 +290,7 @@ export const cardInfoProfiles = {
 export const chat = {
   title: 'แชทบอท',
   badge: 'Bot',
-  greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู่ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัยของท่าน?',
+  greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู��ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัยของท่าน?',
   reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
   placeholder: 'พิมพ์ข้อความ...',
 }
