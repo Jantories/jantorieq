@@ -49,7 +49,7 @@ function CardFace({
         alt={label}
         draggable={false}
         decoding="async"
-        className="size-full scale-[1.012] select-none object-cover"
+        className="size-full select-none rounded-[3.3cqw] object-fill"
       />
       {seals && !blurred && <SealRainbow seals={seals} />}
     </div>
