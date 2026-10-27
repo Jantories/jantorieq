@@ -40,7 +40,7 @@ function CardFace({
 }) {
   return (
     <div
-      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
+      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] bg-white p-[1.2cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
     >
       <img
         src={face.large}
@@ -49,7 +49,7 @@ function CardFace({
         alt={label}
         draggable={false}
         decoding="async"
-        className="size-full scale-[1.012] select-none object-cover"
+        className="size-full select-none rounded-[3.3cqw] object-cover"
       />
       {seals && !blurred && <SealRainbow seals={seals} />}
     </div>
