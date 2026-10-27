@@ -40,7 +40,7 @@ function CardFace({
 }) {
   return (
     <div
-      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] bg-white p-[1.2cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
+      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
     >
       <img
         src={face.large}
