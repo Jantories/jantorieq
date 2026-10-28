@@ -5,7 +5,7 @@ import { ChevronLeft } from 'lucide-react'
 import type { CardSeal } from '@/lib/app-content'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 
-type CardImage = { small: string; large: string; cropScale?: number }
+type CardImage = { small: string; large: string; cropScale?: number; cropRotate?: number }
 
 function SealRainbow({ seals }: { seals: readonly CardSeal[] }) {
   return (
@@ -49,8 +49,8 @@ function CardFace({
         alt={label}
         draggable={false}
         decoding="async"
-        className="size-full select-none rounded-[3.3cqw] object-fill"
-        style={face.cropScale ? { transform: `scale(${face.cropScale})` } : undefined}
+        className={`size-full select-none rounded-[3.3cqw] ${face.cropRotate ? 'object-contain' : 'object-fill'}`}
+        style={face.cropScale || face.cropRotate ? { transform: `rotate(${face.cropRotate ?? 0}deg) scale(${face.cropScale ?? 1})` } : undefined}
       />
       {seals && !blurred && <SealRainbow seals={seals} />}
     </div>
