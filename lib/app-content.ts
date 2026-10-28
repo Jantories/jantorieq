@@ -128,18 +128,18 @@ export const cardProfiles = {
     fullNameTh: 'นาย ธรรมเชษฐ์ เชาว์วิศวชัย',
     firstNameEn: 'Mr. Tamachate',
     lastNameEn: 'Chaovisawachai',
-    birthTh: '20 ม.ค. 2549',
-    birthEn: '20 Jan. 2006',
+    birthTh: '29 ต.ค. 2549',
+    birthEn: '29 Oct. 2006',
     address: 'ที่อยู่ 217/9 ซ.ประชาอุทิศ 33 แยก 7 แขวงบางมด เขตทุ่งครุ กรุงเทพมหานคร',
     issueTh: '27 ต.ค. 2569',
     issueEn: '27 Oct. 2026',
-    expiryTh: '19 ม.ค. 2578',
-    expiryEn: '19 Jan. 2035',
+    expiryTh: '28 ต.ค. 2578',
+    expiryEn: '28 Oct. 2035',
     photoCode: '1007-04-10271552',
     seals: providedCardSeals,
     front: {
-      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/638000945334321300-EANfo6wSEeD0Z1bPSjEym9dVsV2y97.jpg',
-      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/638000945334321300-EANfo6wSEeD0Z1bPSjEym9dVsV2y97.jpg',
+      small: '/images/card-front-3-provided.png',
+      large: '/images/card-front-3-provided.png',
     },
     back: { small: '/images/card-back-3.png', large: '/images/card-back-3.png' },
   },
@@ -153,7 +153,7 @@ export const cardProfiles = {
 
 export const sections = {
   services: 'เมนูบริการ',
-  announcements: 'ประกาศทั้งหมด',
+  announcements: 'ประกาศท��้งหมด',
   seeAll: 'ทั้งหมด',
 }
 
@@ -272,9 +272,9 @@ export const cardInfoProfiles = {
     nameTh: 'นาย ธรรมเชษฐ์ เชาว์วิศวชัย',
     nameEn: 'Mr. Tamachate  Chaovisawachai',
     address: '217/9 ซ.ประชาอุทิศ 33 แยก 7 แขวงบางมด เขตทุ่งครุ กรุงเทพมหานคร',
-    birth: '20 ม.ค. 2549',
+    birth: '29 ต.ค. 2549',
     issue: '27 ต.ค. 2569',
-    expiry: '19 ม.ค. 2578',
+    expiry: '28 ต.ค. 2578',
   },
   fourth: { ...firstCardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
   fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใ��้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
@@ -287,7 +287,7 @@ export const cardInfoProfiles = {
 export const chat = {
   title: 'แชทบอท',
   badge: 'Bot',
-  greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู��ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัยของท่าน?',
+  greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู��ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัย���องท่าน?',
   reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
   placeholder: 'พิมพ์ข้อความ...',
 }
