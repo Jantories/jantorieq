@@ -62,40 +62,6 @@ export type CardSeal = {
   angle: number
 }
 
-const firstCard = {
-  ...card,
-  seals: [
-    { x: -1.93, y: 19.96, size: 11.84, angle: 0 },
-    { x: 22.1, y: 25.19, size: 15.22, angle: 135 },
-    { x: 44.57, y: 21.07, size: 14.49, angle: 270 },
-    { x: 73.79, y: 17.45, size: 15.46, angle: 45 },
-    { x: 63.52, y: 42.64, size: 14.5, angle: 225 },
-    { x: 42.27, y: 64.73, size: 15.22, angle: 90 },
-    { x: 60.75, y: 85.66, size: 14.25, angle: 315 },
-    { x: 16.42, y: 77.9, size: 12.56, angle: 180 },
-  ] as CardSeal[],
-  number: '1 3099 03735 85 1',
-  fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
-  firstNameEn: 'Mr. Ainapong',
-  lastNameEn: 'Riewsrikul',
-  birthTh: '19 พ.ย. 2549',
-  birthEn: '19 Nov. 2006',
-  address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
-  issueTh: '19 ธ.ค. 2567',
-  issueEn: '19 Dec. 2024',
-  expiryTh: '18 พ.ย. 2576',
-  expiryEn: '18 Nov. 2033',
-  photoCode: '3001-02-12191346',
-  front: {
-    small: '/images/card-front-1-cropped.png',
-    large: '/images/card-front-1-cropped.png',
-  },
-  back: {
-    small: '/images/card-back-1-cropped.png',
-    large: '/images/card-back-1-cropped.png',
-  },
-}
-
 // Seal positions for cards built from a provided full-card image (same template).
 const providedCardSeals: CardSeal[] = [
   { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
@@ -107,6 +73,31 @@ const providedCardSeals: CardSeal[] = [
   { x: 60.74, y: 84.01, size: 14.1, angle: 135 },
   { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
 ]
+
+const firstCard = {
+  ...card,
+  seals: providedCardSeals,
+  number: '1 3099 03735 85 1',
+  fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+  firstNameEn: 'Mr. Ainapong',
+  lastNameEn: 'Riewsrikul',
+  birthTh: '19 พ.ย. 2548',
+  birthEn: '19 Nov. 2005',
+  address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+  issueTh: '19 ธ.ค. 2567',
+  issueEn: '19 Dec. 2024',
+  expiryTh: '18 พ.ย. 2576',
+  expiryEn: '18 Nov. 2033',
+  photoCode: '3001-02-12191346',
+  front: {
+    small: '/images/card-front-1-ainapong.png',
+    large: '/images/card-front-1-ainapong.png',
+  },
+  back: {
+    small: '/images/card-back-1-cropped.png',
+    large: '/images/card-back-1-cropped.png',
+  },
+}
 
 export const cardProfiles = {
   first: firstCard,
@@ -156,7 +147,7 @@ export const cardProfiles = {
   fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งา��� คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
   sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
   seventh: { ...firstCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
-  eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
+  eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แป���', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
   ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
 } as const
 
