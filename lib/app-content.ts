@@ -90,8 +90,8 @@ const firstCard = {
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
   front: {
-    small: '/images/card-front-1-ainapong.png',
-    large: '/images/card-front-1-ainapong.png',
+    small: '/images/card-front-1-new.png',
+    large: '/images/card-front-1-new.png',
   },
   back: {
     small: '/images/card-back-1-cropped.png',
