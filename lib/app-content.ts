@@ -86,8 +86,14 @@ const firstCard = {
   expiryTh: '18 พ.ย. 2576',
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
-  front: { small: '/images/card-front-1-trim.png', large: '/images/card-front-1-trim.png' },
-  back: { small: '/images/card-back-640.png', large: '/images/card-back-1100.png' },
+  front: {
+    small: '/images/card-front-1-cropped.png',
+    large: '/images/card-front-1-cropped.png',
+  },
+  back: {
+    small: '/images/card-back-1-cropped.png',
+    large: '/images/card-back-1-cropped.png',
+  },
 }
 
 // Seal positions for cards built from a provided full-card image (same template).
@@ -147,7 +153,7 @@ export const cardProfiles = {
     back: { small: '/images/card-back-3.png', large: '/images/card-back-3.png' },
   },
   fourth: { ...firstCard, number: '4 4444 44444 44 4', fullNameTh: 'นาย ผู้ใช้งาน คนที่สี่', firstNameEn: 'Mr. Fourth', lastNameEn: 'User', photoCode: '0000-00-00000004' },
-  fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งาน คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
+  fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งา��� คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
   sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
   seventh: { ...firstCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
   eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
@@ -280,7 +286,7 @@ export const cardInfoProfiles = {
     expiry: '19 ม.ค. 2578',
   },
   fourth: { ...firstCardInfo, number: '4-4444-44444-44-4', nameTh: 'นาย ผู้ใช้งาน คนที่สี่', nameEn: 'Mr. Fourth User' },
-  fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
+  fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใ��้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
   sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
   seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
   eighth: { ...firstCardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
