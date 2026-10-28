@@ -91,10 +91,8 @@ const firstCard = {
     large: '/images/card-front-1-cropped.png',
   },
   back: {
-    small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-10-28%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2016.22.29-NlZSM9k34xfYkNVeQv6kxcenXqKV40.png',
-    large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-10-28%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2016.22.29-NlZSM9k34xfYkNVeQv6kxcenXqKV40.png',
-    cropScale: 1.02,
-    cropRotate: 90,
+    small: '/images/card-back-1-cropped.png',
+    large: '/images/card-back-1-cropped.png',
   },
 }
 
