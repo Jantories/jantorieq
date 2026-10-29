@@ -296,7 +296,7 @@ export const cardInfoProfiles = {
   },
   fourth: {
     ...firstCardInfo,
-    photo: '/images/card-front-4.png',
+    photo: '/images/user-4-photo.jpg',
     number: '1-1034-00183-78-1',
     nameTh: 'นาย คุณธรรม พิพัฒน์ธรรมคุณ',
     nameEn: 'Mr. Khunnatham  Phiphatthammakhun',
@@ -307,7 +307,7 @@ export const cardInfoProfiles = {
   },
   fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใ��้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
   sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
-  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู��ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
+  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู��ใช้งาน ค���ที่เจ็ด', nameEn: 'Mr. Seventh User' },
   eighth: { ...firstCardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
   ninth: { ...firstCardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
 } as const
