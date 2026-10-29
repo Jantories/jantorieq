@@ -166,16 +166,16 @@ export const cardProfiles = {
       large: '/images/card-back-4.png',
     },
   },
-  fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งา��� คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
+  fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งาน คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
   sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
   seventh: { ...firstCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
-  eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แป���', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
+  eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
   ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
 } as const
 
 export const sections = {
   services: 'เมนูบริการ',
-  announcements: 'ประกาศท��้งหมด',
+  announcements: 'ประกาศทั้งหมด',
   seeAll: 'ทั้งหมด',
 }
 
@@ -245,9 +245,9 @@ export const logoutDialog = {
 }
 
 export const cardInfo = {
-  title: 'ข้อ��ูลบัตร',
+  title: 'ข้อมูลบัตร',
   photoTitle: 'รูปหน้าบัตร',
-  photoSub: '��ูปหน้าบัตรประจำตัวประชาชน',
+  photoSub: 'รูปหน้าบัตรประจำตัวประชาชน',
   numberLabel: 'เลขประจำตัวประชาชน',
   number: '1-2345-67890-12-3',
   nameTh: 'นาย ชื่อ นามสกุล',
@@ -309,9 +309,9 @@ export const cardInfoProfiles = {
     issue: '14 พ.ค. 2569',
     expiry: '25 เม.ย. 2578',
   },
-  fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใ��้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
-  sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่���ก', nameEn: 'Mr. Sixth User' },
-  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู��ใช้งาน ค�����ที่เจ็ด', nameEn: 'Mr. Seventh User' },
+  fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใช้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
+  sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
+  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
   eighth: { ...firstCardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
   ninth: { ...firstCardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
 } as const
@@ -319,8 +319,8 @@ export const cardInfoProfiles = {
 export const chat = {
   title: 'แชทบอท',
   badge: 'Bot',
-  greeting: 'สวัสดีครับ/ค่ะ ยิน���ีต้อนรับสู��ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัย���องท่าน?',
-  reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติด��่อกลับโดยเร็วที่สุด',
+  greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู่ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัยของท่าน',
+  reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
   placeholder: 'พิมพ์ข้อความ...',
 }
 
