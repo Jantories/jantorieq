@@ -138,8 +138,8 @@ export const cardProfiles = {
     photoCode: '1007-04-10271552',
     seals: providedCardSeals,
     front: {
-      small: '/images/card-front-3-provided.png',
-      large: '/images/card-front-3-provided.png',
+      small: '/images/card-front-3-new.png',
+      large: '/images/card-front-3-new.png',
     },
     back: { small: '/images/card-back-3.png', large: '/images/card-back-3.png' },
   },
@@ -288,7 +288,7 @@ export const chat = {
   title: 'แชทบอท',
   badge: 'Bot',
   greeting: 'สวัสดีครับ/ค่ะ ยินดีต้อนรับสู��ระบบให้บริการอัตโนมัติ เราพร้อมให้ความช่วยเหลือและตอบข้อสงสัย���องท่าน?',
-  reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด',
+  reply: 'ขอบคุณสำหรับข้อความ เจ้าหน้าที่จะติด��่อกลับโดยเร็วที่สุด',
   placeholder: 'พิมพ์ข้อความ...',
 }
 
