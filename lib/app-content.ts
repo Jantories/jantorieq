@@ -161,6 +161,10 @@ export const cardProfiles = {
       small: '/images/card-front-4.png',
       large: '/images/card-front-4.png',
     },
+    back: {
+      small: '/images/card-back-4.jpg',
+      large: '/images/card-back-4.jpg',
+    },
   },
   fifth: { ...firstCard, number: '5 5555 55555 55 5', fullNameTh: 'นาย ผู้ใช้งา��� คนที่ห้า', firstNameEn: 'Mr. Fifth', lastNameEn: 'User', photoCode: '0000-00-00000005' },
   sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
@@ -241,7 +245,7 @@ export const logoutDialog = {
 }
 
 export const cardInfo = {
-  title: 'ข้อมูลบัตร',
+  title: 'ข้อ��ูลบัตร',
   photoTitle: 'รูปหน้าบัตร',
   photoSub: 'รูปหน้าบัตรประจำตัวประชาชน',
   numberLabel: 'เลขประจำตัวประชาชน',
