@@ -247,7 +247,7 @@ export const logoutDialog = {
 export const cardInfo = {
   title: 'ข้อ��ูลบัตร',
   photoTitle: 'รูปหน้าบัตร',
-  photoSub: 'รูปหน้าบัตรประจำตัวประชาชน',
+  photoSub: '��ูปหน้าบัตรประจำตัวประชาชน',
   numberLabel: 'เลขประจำตัวประชาชน',
   number: '1-2345-67890-12-3',
   nameTh: 'นาย ชื่อ นามสกุล',
@@ -269,7 +269,7 @@ const firstCardInfo = {
   nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   nameEn: 'Mr. Ainapong  Riewsrikul',
   address: '376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
-  birth: '19 พ.ย. 2549',
+  birth: '19 พ.ย. 2548',
   issue: '19 ธ.ค. 2567',
   expiry: '18 พ.ย. 2576',
 }
@@ -305,7 +305,7 @@ export const cardInfoProfiles = {
     nameTh: 'นาย คุณธรรม พิพัฒน์ธรรมคุณ',
     nameEn: 'Mr. Khunnatham  Phiphatthammakhun',
     address: '274 ถ.พหลแสน ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
-    birth: '26 เม.��. 2549',
+    birth: '26 เม.���. 2549',
     issue: '14 พ.ค. 2569',
     expiry: '25 เม.ย. 2578',
   },
