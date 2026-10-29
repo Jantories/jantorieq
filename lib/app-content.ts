@@ -10,7 +10,7 @@ export const profiles = {
   first: profile,
   second: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ภัทรชนน รัตธนภาส', avatar: '/images/card-photo-2.png' },
   third: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ธรรมเชษฐ์ เชาว์วิศวชัย', avatar: '/images/card-photo-3.png' },
-  fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ คุณธรรม พิพัฒน์ธรรมคุณ' },
+  fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ คุณธรรม พิพัฒน์ธรรมคุณ', avatar: '/images/user-4-photo.jpg' },
   fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่ห้า' },
   sixth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่หก' },
   seventh: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เจ็ด' },
@@ -307,7 +307,7 @@ export const cardInfoProfiles = {
   },
   fifth: { ...firstCardInfo, number: '5-5555-55555-55-5', nameTh: 'นาย ผู้ใ��้งาน คนที่ห้า', nameEn: 'Mr. Fifth User' },
   sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
-  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู��ใช้งาน ค���ที่เจ็ด', nameEn: 'Mr. Seventh User' },
+  seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู��ใช้งาน ค�����ที่เจ็ด', nameEn: 'Mr. Seventh User' },
   eighth: { ...firstCardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
   ninth: { ...firstCardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
 } as const
