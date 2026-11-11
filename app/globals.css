@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  --font-thai: 'Noto Sans Thai';
+}
+
 html,
 body {
   background: #fff;
