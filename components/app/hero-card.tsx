@@ -58,7 +58,7 @@ function CardFace({
 }
 
 const circleBtn =
-  'flex size-7 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
+  'flex size-8 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
 
 const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
@@ -303,7 +303,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           type="button"
           onClick={() => openExpanded()}
           disabled={locked}
-          className="flex h-7 items-center gap-2 rounded-full bg-brand-dark pl-[19px] pr-[13px] text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none"
+          className="flex h-8 items-center gap-2 rounded-full bg-brand-dark pl-[19px] pr-[13px] text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none"
         >
           <ExpandIcon className="size-5" strokeWidth={1.4} />
           <span className="text-xs font-medium">{card.expandLabel}</span>

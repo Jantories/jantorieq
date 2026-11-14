@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const activateDistance = 6
-const dampingFactor = 0.5
-const maxPull = 110
+const maxPull = 140
 const refreshThreshold = 64
 const refreshHoldOffset = 56
 const refreshDurationMs = 900
@@ -51,7 +50,7 @@ export function usePullToRefresh(enabled: boolean) {
         setPulling(true)
         document.body.style.userSelect = 'none'
       }
-      pulled = Math.min(maxPull, distance * dampingFactor)
+      pulled = (distance * maxPull) / (maxPull + distance)
       setOffset(pulled)
       return true
     }
