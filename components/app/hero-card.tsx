@@ -286,7 +286,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
               d="M15 25h34a5 5 0 0 1 5 5v21a5 5 0 0 1-5 5H15a5 5 0 0 1-5-5V30a5 5 0 0 1 5-5ZM32 35a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"
             />
           </svg>
-          <span className="text-xl font-bold">คลิกเพื่อแสดงบัตร</span>
+          <span className="text-xl font-semibold">คลิกเพื่อแสดงบัตร</span>
         </button>
       )}
     </div>

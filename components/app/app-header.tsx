@@ -30,7 +30,7 @@ export function AppHeader({ profile, onAction, onNotifications, onLogout }: Prop
             {profile.status}
           </span>
         </div>
-        <p className="truncate text-base font-medium leading-tight text-white">{profile.name}</p>
+        <p className="truncate text-base font-semibold leading-tight text-white">{profile.name}</p>
       </div>
 
       <button
