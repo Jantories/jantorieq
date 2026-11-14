@@ -1,18 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const activateDistance = 6
 const maxPull = 140
-const refreshThreshold = 64
-const refreshHoldOffset = 56
-const refreshDurationMs = 900
 
-export function usePullToRefresh(enabled: boolean) {
+export function usePullDown(enabled: boolean) {
   const [offset, setOffset] = useState(0)
   const [pulling, setPulling] = useState(false)
-  const [refreshing, setRefreshing] = useState(false)
-  const refreshingRef = useRef(false)
 
   useEffect(() => {
     if (!enabled) {
@@ -25,13 +20,12 @@ export function usePullToRefresh(enabled: boolean) {
     let active = false
     let pulled = 0
     let suppressClick = false
-    let refreshTimer: number | undefined
 
     const isBlocked = (target: EventTarget | null) =>
       target instanceof Element && target.closest('.touch-none, input, textarea') !== null
 
     const begin = (y: number, target: EventTarget | null) => {
-      if (refreshingRef.current || window.scrollY > 0 || isBlocked(target)) return
+      if (window.scrollY > 0 || isBlocked(target)) return
       startY = y
       active = false
       pulled = 0
@@ -63,18 +57,8 @@ export function usePullToRefresh(enabled: boolean) {
       if (!wasActive) return
       document.body.style.userSelect = ''
       setPulling(false)
-      if (pulled >= refreshThreshold) {
-        refreshingRef.current = true
-        setRefreshing(true)
-        setOffset(refreshHoldOffset)
-        refreshTimer = window.setTimeout(() => {
-          refreshingRef.current = false
-          setRefreshing(false)
-          setOffset(0)
-        }, refreshDurationMs)
-      } else {
-        setOffset(0)
-      }
+      pulled = 0
+      setOffset(0)
     }
 
     const onTouchStart = (e: TouchEvent) => begin(e.touches[0].clientY, e.target)
@@ -114,14 +98,11 @@ export function usePullToRefresh(enabled: boolean) {
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', end)
       window.removeEventListener('click', onClickCapture, true)
-      window.clearTimeout(refreshTimer)
       document.body.style.userSelect = ''
-      refreshingRef.current = false
-      setRefreshing(false)
       setPulling(false)
       setOffset(0)
     }
   }, [enabled])
 
-  return { offset, pulling, refreshing, threshold: refreshThreshold }
+  return { offset, pulling }
 }
