@@ -1,7 +1,8 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { MessageCircleMore } from 'lucide-react'
+import { Loader2, MessageCircleMore } from 'lucide-react'
+import { usePullToRefresh } from './use-pull-to-refresh'
 import { AppHeader } from './app-header'
 import { HeroCard } from './hero-card'
 import { ServiceMenu } from './service-menu'
@@ -82,6 +83,10 @@ export function AppShell() {
     return true
   }
 
+  const pull = usePullToRefresh(
+    tab === 'home' && !screen && !splashVisible && !pinOpen && !pinLoading && !chatOpen && !logoutOpen,
+  )
+
   const activeProfile = profiles[authenticatedAs]
   const activeCard = cardProfiles[authenticatedAs]
   const activeCardInfo = cardInfoProfiles[authenticatedAs]
@@ -95,14 +100,30 @@ export function AppShell() {
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
       <main className="flex-1 pb-28">
-        <section className="bg-brand pb-9 pt-[max(env(safe-area-inset-top),0.75rem)]">
+        <div className="sticky top-0 z-20 bg-brand pt-[max(env(safe-area-inset-top),0.75rem)]">
           <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
-          <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
-        </section>
-        <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-          <ServiceMenu />
-          <BannerCarousel onAction={notify} />
-          <Announcements />
+        </div>
+        <div
+          className="relative"
+          style={{ top: pull.offset, transition: pull.pulling ? 'none' : 'top 280ms cubic-bezier(0.22, 1, 0.36, 1)' }}
+        >
+          <div aria-hidden className="absolute inset-x-0 -top-12 flex h-12 items-center justify-center text-brand">
+            <Loader2
+              className={`size-6 ${pull.refreshing ? 'animate-spin' : ''}`}
+              style={{
+                opacity: Math.min(1, pull.offset / pull.threshold),
+                transform: pull.refreshing ? undefined : `rotate(${pull.offset * 4}deg)`,
+              }}
+            />
+          </div>
+          <section className="bg-brand pb-9">
+            <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
+          </section>
+          <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
+            <ServiceMenu />
+            <BannerCarousel onAction={notify} />
+            <Announcements />
+          </div>
         </div>
       </main>
     )
@@ -110,7 +131,7 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh bg-canvas px-0 sm:px-3 sm:py-2">
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden rounded-none bg-[linear-gradient(to_bottom,var(--color-brand)_3rem,white_3rem)] sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
+      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-[linear-gradient(to_bottom,var(--color-brand)_3rem,white_3rem)] sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
         {renderContent()}
 
         <button
