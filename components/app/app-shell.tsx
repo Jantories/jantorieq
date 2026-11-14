@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Loader2, MessageCircleMore } from 'lucide-react'
+import { MessageCircleMore } from 'lucide-react'
 import { usePullToRefresh } from './use-pull-to-refresh'
 import { AppHeader } from './app-header'
 import { HeroCard } from './hero-card'
@@ -105,17 +105,12 @@ export function AppShell() {
         </div>
         <div
           className="relative"
-          style={{ top: pull.offset, transition: pull.pulling ? 'none' : 'top 280ms cubic-bezier(0.22, 1, 0.36, 1)' }}
+          style={{
+            transform: pull.offset > 0 ? `translate3d(0, ${pull.offset}px, 0)` : undefined,
+            transition: pull.pulling ? 'none' : 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1)',
+          }}
         >
-          <div aria-hidden className="absolute inset-x-0 -top-12 flex h-12 items-center justify-center text-brand">
-            <Loader2
-              className={`size-6 ${pull.refreshing ? 'animate-spin' : ''}`}
-              style={{
-                opacity: Math.min(1, pull.offset / pull.threshold),
-                transform: pull.refreshing ? undefined : `rotate(${pull.offset * 4}deg)`,
-              }}
-            />
-          </div>
+          <div aria-hidden className="absolute inset-x-0 bottom-full h-40 bg-brand" />
           <section className="bg-brand pb-9">
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
