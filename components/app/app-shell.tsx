@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { MessageCircleMore } from 'lucide-react'
-import { usePullToRefresh } from './use-pull-to-refresh'
+import { usePullDown } from './use-pull-down'
 import { AppHeader } from './app-header'
 import { HeroCard } from './hero-card'
 import { ServiceMenu } from './service-menu'
@@ -83,7 +83,7 @@ export function AppShell() {
     return true
   }
 
-  const pull = usePullToRefresh(
+  const pull = usePullDown(
     tab === 'home' && !screen && !splashVisible && !pinOpen && !pinLoading && !chatOpen && !logoutOpen,
   )
 
@@ -110,7 +110,6 @@ export function AppShell() {
             transition: pull.pulling ? 'none' : 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         >
-          <div aria-hidden className="absolute inset-x-0 bottom-full h-40 bg-brand" />
           <section className="bg-brand pb-9">
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
@@ -127,6 +126,13 @@ export function AppShell() {
   return (
     <div className="min-h-dvh bg-canvas px-0 sm:px-3 sm:py-2">
       <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-[linear-gradient(to_bottom,var(--color-brand)_3rem,white_3rem)] sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
+        <div
+          aria-hidden
+          className={`pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] ${
+            screen === 'scan' ? 'bg-brand-dark' : 'bg-brand'
+          }`}
+        />
+
         {renderContent()}
 
         <button
