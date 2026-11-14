@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="th" className={`${notoThai.variable} bg-white`}>
+    <html lang="th" className={`${notoThai.variable}`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <OrientationLock />
         {children}

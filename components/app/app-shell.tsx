@@ -125,7 +125,7 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh bg-canvas px-0 sm:px-3 sm:py-2">
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-[linear-gradient(to_bottom,var(--color-brand)_3rem,white_3rem)] sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
+      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-white sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
         <div
           aria-hidden
           className={`pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] ${
