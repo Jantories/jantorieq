@@ -58,7 +58,7 @@ function CardFace({
 }
 
 const circleBtn =
-  'flex size-10 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
+  'flex size-7 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
 
 const glassBtn =
   'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
@@ -297,19 +297,19 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
       {renderCard({ onTap: handleCardTap, isFlipped: flipped })}
       <div className="mt-3 flex items-center justify-center gap-4">
         <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} className={circleBtn}>
-          <PersonIcon className="size-[22px]" />
+          <PersonIcon className="size-[18px]" />
         </button>
         <button
           type="button"
           onClick={() => openExpanded()}
           disabled={locked}
-          className="flex h-11 items-center gap-2 rounded-full bg-brand-dark pl-7 pr-6 text-base text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none"
+          className="flex h-7 items-center gap-2 rounded-full bg-brand-dark pl-[19px] pr-[13px] text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none"
         >
-          <ExpandIcon className="size-5" />
-          <span>{card.expandLabel}</span>
+          <ExpandIcon className="size-5" strokeWidth={1.4} />
+          <span className="text-xs font-medium">{card.expandLabel}</span>
         </button>
         <button type="button" onClick={flip} disabled={locked} aria-label="พลิกบัตร" className={circleBtn}>
-          <FlipIcon className="size-[22px]" />
+          <FlipIcon className="size-[18px]" />
         </button>
       </div>
 

@@ -1,4 +1,4 @@
-type IconProps = { className?: string }
+type IconProps = { className?: string; strokeWidth?: number }
 
 export function PersonIcon({ className }: IconProps) {
   return (
@@ -17,13 +17,13 @@ export function PersonIcon({ className }: IconProps) {
   )
 }
 
-export function ExpandIcon({ className }: IconProps) {
+export function ExpandIcon({ className, strokeWidth = 2.4 }: IconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2.4}
+      strokeWidth={strokeWidth}
       strokeLinecap="butt"
       strokeLinejoin="miter"
       aria-hidden="true"

@@ -52,6 +52,8 @@ body {
   --color-brand: #2b2f8f;
   --color-brand-dark: #1f2270;
   --color-brand-soft: #eef0fb;
+  --color-keypad: #eef5ff;
+  --color-keypad-active: #dcebff;
   --color-online: #3fbf4a;
   --color-page: #f1f1f8;
   --color-canvas: #2b2f8f;
@@ -173,6 +175,7 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
     touch-action: pan-x pan-y;
+    overscroll-behavior-y: none;
     -webkit-text-size-adjust: 100%;
   }
   html::-webkit-scrollbar,
