@@ -293,7 +293,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   )
 
   return (
-    <div className="px-5 pt-4">
+    <div className="px-5">
       {renderCard({ onTap: handleCardTap, isFlipped: flipped })}
       <div className="mt-3 flex items-center justify-center gap-4">
         <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} className={circleBtn}>

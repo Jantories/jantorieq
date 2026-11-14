@@ -100,9 +100,10 @@ export function AppShell() {
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
       <main className="flex-1 pb-28">
-        <div className="sticky top-0 z-20 bg-brand pt-[max(env(safe-area-inset-top),0.75rem)]">
+        <div className="sticky top-0 z-20 bg-brand pb-4 pt-[max(env(safe-area-inset-top),0.75rem)]">
           <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
         </div>
+        <div className="bg-white">
         <div
           className="relative"
           style={{
@@ -118,6 +119,7 @@ export function AppShell() {
             <BannerCarousel onAction={notify} />
             <Announcements />
           </div>
+        </div>
         </div>
       </main>
     )
