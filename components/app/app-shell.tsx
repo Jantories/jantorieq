@@ -95,7 +95,7 @@ export function AppShell() {
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
       <main className="flex-1 pb-28">
-        <section className="bg-brand pb-12 pt-[max(env(safe-area-inset-top),0.75rem)]">
+        <section className="bg-brand pb-9 pt-[max(env(safe-area-inset-top),0.75rem)]">
           <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
           <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
         </section>
