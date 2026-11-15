@@ -320,6 +320,19 @@ export const checkRequestsPage = {
   version: '2.2.4',
 } as const
 
+// The "การรับรองเอกสาร" (certify documents) screen reuses the signed-in profile's name and photo like the check screen.
+export const certifyPage = {
+  title: 'การรับรองเอกสาร',
+  heading: 'การคัดรับรองเอกสาร',
+  sectionTitle: 'ทะเบียนราษฎร',
+  documents: [
+    { id: 'person', title: 'คัดรับรองรายการบุคคล (ท.ร.14/1)', sub: 'รายการทะเบียนราษฎร' },
+    { id: 'history', title: 'คัดรับรองรายการประวัติบุคคล (ท.ร.12/2)', sub: 'ข้อมูลทะเบียนประวัติราษฎร' },
+    { id: 'birth', title: 'ทะเบียนการเกิด (ท.ร.1/ก)', sub: 'รายการทะเบียนคนเกิด (สูติบัตร)' },
+  ],
+  notice: 'เลือกเอกสารที่ต้องการคัดรับรอง',
+} as const
+
 export const logoutDialog = {
   title: 'แจ้งเตือน',
   message: 'คุณต้องการออกจากระบบใช่หรือไม่?',
