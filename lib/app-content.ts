@@ -253,36 +253,76 @@ export const banners = [
   },
 ] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null }[]
 
+export const announcementPage = {
+  title: 'ประกาศ',
+  back: 'ย้อนกลับ',
+}
+
+// Only announcements with a `detail` open the "ประกาศ" detail screen; the rest stay disabled in the list.
 export const announcements = [
   {
     title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ ไปใช้สิทธิ',
     date: '6/02/2569',
     body: 'กรมการปกครองขอเชิญชวนผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
+    detail: {
+      heading: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ',
+      received: 'ได้รับเมื่อ 6 ก.พ. 69 15:46 น.',
+      body: 'กรมการปกครองขอเชิญชวนผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น. สามารถตรวจสอบสิทธิ ได้ที่',
+      link: 'https://boraservices.bora.dopa.go.th/election/',
+    },
   },
   {
     title: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',
     date: '23/07/2566',
     body: 'กรมการปกครอง ไม่มีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับข้อความที่ไม่น่าเชื่อถือ',
+    detail: {
+      heading: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',
+      received: 'ได้รับเมื่อ 23 ก.ค. 66 17:08 น.',
+      body: 'กรมการปกครอง ไม่มีนโยบายในการส่งข้อความ SMS ไปยังประชาชนแต่อย่างใด โดยขอประชาสัมพันธ์ ห้ามกดลิงก์ที่แนบมากับ SMS โดยเด็ดขาด!!! ดูรายละเอียดเพิ่มเติมที่เฟสบุ๊ค dopa fanpage',
+    },
   },
   {
     title: 'BORA WEB PORTAL',
     date: '13/05/2566',
     body: 'ระบบการให้บริการงานทะเบียนออนไลน์ ผ่านเว็บไซต์ https://thportal.bora.dopa.go.th โดยยืนยันตัวตนผ่านแอปพลิเคชัน ThaID',
+    detail: {
+      heading: 'BORA WEB PORTAL',
+      received: 'ได้รับเมื่อ 13 พ.ค. 66 15:36 น.',
+      body: 'ระบบการให้บริการงานทะเบียนออนไลน์ ผ่านเว็บไซต์',
+      link: 'https://thportal.bora.dopa.go.th',
+      afterLink: 'โดยยืนยันตัวตนผ่านแอปพลิเคชัน ThaID',
+    },
   },
   {
     title: 'ระบบให้บริการประชาชนด้วย ThaID',
     date: '26/04/2566',
     body: 'รวมช่องทาง ระบบที่ให้บริการประชาชนที่เข้าสู่ระบบด้วย แอป ThaID ได้ที่ https://www.bora.dopa.go.th/thaid_authen_services/',
+    detail: {
+      heading: 'ระบบให้บริการประชาชนด้วย ThaID',
+      received: 'ได้รับเมื่อ 26 เม.ย. 66 10:40 น.',
+      body: 'รวมช่องทาง ระบบที่ให้บริการประชาชนที่เข้าสู่ระบบด้วย แอป ThaID ได้ที่',
+      link: 'https://www.bora.dopa.go.th/thaid_authen_services/',
+    },
   },
   {
     title: 'ชื่อแอปพลิเคชันใหม่ ThaID',
     date: '14/03/2566',
-    body: 'ยกระดับการให้บริการผ่านการพัฒนาระบบพิสูจน์และยืนยันตัวตนทางดิจิทัล จาก "D.DOPA" เป็น "ThaID" รองรับประชาชนคนไทยและชาวต่างชาติ',
+    body: 'ยกระดับการให้บริการผ่านการพัฒนาระบบการพิสูจน์และยืนยันตัวตนทางดิจิทัล จาก "D.DOPA" เป็น "ThaID" รองรับประชาชนคนไทยทั้งประเทศ',
+    detail: {
+      heading: 'ชื่อแอปพลิเคชันใหม่ ThaID',
+      received: 'ได้รับเมื่อ 14 มี.ค. 66 07:21 น.',
+      body: 'ยกระดับการให้บริการผ่านการพัฒนาระบบการพิสูจน์และยืนยันตัวตนทางดิจิทัล จาก "D.DOPA" เป็น "ThaID" รองรับประชาชนคนไทยทั้งประเทศ',
+    },
   },
   {
     title: 'กรณีลืมรหัสผ่าน',
     date: '20/01/2566',
     body: 'หากลืมรหัสผ่าน สามารถสร้างรหัสผ่านใหม่ได้ โดยถ่ายรูปภาพใบหน้าตนเอง หากตรวจสอบแล้วเป็นเจ้าของไอดีจริง จะสามารถตั้งรหัสผ่านใหม่ได้',
+    detail: {
+      heading: 'กรณีลืมรหัสผ่าน',
+      received: 'ได้รับเมื่อ 20 ม.ค. 66 14:32 น.',
+      body: 'หากลืมรหัสผ่าน สามารถสร้างรหัสผ่านใหม่ได้ โดยถ่ายรูปภาพใบหน้าตนเอง หากตรวจสอบแล้วเป็นเจ้าของไอดีจริง จะสามารถสร้างรหัสผ่านใหม่ได้',
+    },
   },
 ]
 
@@ -293,6 +333,70 @@ export const notificationsPage = {
   emptyTitle: 'ไม่มีการแจ้งเตือน',
   emptySub: 'ยังไม่มี การแจ้งเตือนใด ๆ',
 }
+
+// The "ตรวจสอบคำขอ" (check requests) screen shows the signed-in profile's own name and photo.
+// Name comes from cardProfiles[id].fullNameTh; photo from profiles[id].avatar, falling back to the first profile's photo below.
+export const checkRequestsPage = {
+  title: 'ตรวจสอบคำขอ',
+  heading: 'ตรวจสอบคำขอทางออนไลน์',
+  profile: {
+    photo: {
+      src: '/images/check-request-source.png',
+      natural: { width: 656, height: 1330 },
+      crop: { x: 217, y: 255, width: 96, height: 96 },
+    },
+  },
+  greeting: {
+    title: 'สวัสดีครับ',
+    sub: 'ขอให้วันนี้เป็นวันที่ดีและสดใสทั้งวันนะครับ',
+  },
+  requests: [
+    { id: 'certify', title: 'การคัดรับรองเอกสาร', empty: 'ไม่มีรายการ' },
+    { id: 'person', title: 'การแก้ไขรายการบุคคล', empty: 'ไม่มีรายการ' },
+    { id: 'move', title: 'การแจ้งย้ายที่อยู่', empty: 'ไม่มีรายการ' },
+  ],
+  copyright: 'สงวนลิขสิทธิ์ © 2566',
+  agency: 'สำนักบริหารการทะเบียน กรมการปกครอง',
+  version: '2.2.4',
+} as const
+
+// The "การรับรองเอกสาร" (certify documents) screen reuses the signed-in profile's name and photo like the check screen.
+export const certifyPage = {
+  title: 'การรับรองเอกสาร',
+  heading: 'การคัดรับรองเอกสาร',
+  sectionTitle: 'ทะเบียนราษฎร',
+  documents: [
+    { id: 'person', title: 'คัดรับรองรายการบุคคล (ท.ร.14/1)', sub: 'รายการทะเบียนราษฎร' },
+    { id: 'history', title: 'คัดรับรองรายการประวัติบุคคล (ท.ร.12/2)', sub: 'ข้อมูลทะเบียนประวัติราษฎร' },
+    { id: 'birth', title: 'ทะเบียนการเกิด (ท.ร.1/ก)', sub: 'รายการทะเบียนคนเกิด (สูติบัตร)' },
+  ],
+  notice: 'เลือกเอกสารที่ต้องการคัดรับรอง',
+} as const
+
+// The "การแจ้งย้ายที่อยู่" (move address) screen. The emblem is cropped from the provided screenshot.
+export const movePage = {
+  title: 'การแจ้งย้ายที่อยู่',
+  cardTitle: 'การแจ้งย้ายที่อยู่ด้วยตนเอง',
+  label: 'ระบุเลขประจำตัวประชาชนเจ้าบ้าน (ย้ายเข้า)',
+  placeholder: 'ระบุเลขประจำตัวประชาชน',
+  send: 'ส่งคำร้องขอเจ้าบ้าน',
+  reset: 'ทำรายการใหม่',
+  statusLabel: 'สถานะ :',
+  statusEmpty: 'กรุณาระบุเลขประจำตัวประชาชนเจ้าบ้าน (ย้ายเข้า)',
+  statusReady: 'พร้อมส่งคำร้องขอเจ้าบ้าน',
+  statusSent: 'ส่งคำร้องขอเจ้าบ้านแล้ว รอการตอบรับ',
+  book: {
+    code: 'ท.ร.14',
+    title: 'สำเนาทะเบียนบ้าน',
+    agency: 'กรมการปกครอง',
+    ministry: 'กระทรวงมหาดไทย',
+    emblem: {
+      src: '/images/move-source.png',
+      natural: { width: 644, height: 1372 },
+      crop: { x: 262, y: 968, width: 128, height: 136 },
+    },
+  },
+} as const
 
 export const logoutDialog = {
   title: 'แจ้งเตือน',

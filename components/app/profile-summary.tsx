@@ -1,0 +1,40 @@
+import Image from 'next/image'
+import { cardProfiles, checkRequestsPage, profiles } from '@/lib/app-content'
+import { CroppedImage } from './cropped-image'
+
+export type ProfileId = keyof typeof profiles
+
+// "นาย ชื่อ นามสกุล" -> first name and last name (title dropped)
+function splitName(fullName: string) {
+  const [, firstName = '', ...rest] = fullName.split(' ')
+  return { firstName, lastName: rest.join(' ') }
+}
+
+export function ProfileSummary({ profileId }: { profileId: ProfileId }) {
+  const { profile } = checkRequestsPage
+  const { firstName, lastName } = splitName(cardProfiles[profileId].fullNameTh)
+  const avatar = (profiles[profileId] as { avatar?: string }).avatar
+
+  return (
+    <div className="mt-5 flex items-center justify-center gap-5">
+      {avatar ? (
+        <div className="relative size-24 shrink-0 overflow-hidden rounded-full ring-1 ring-neutral-200">
+          <Image src={avatar} alt="รูปโปรไฟล์" fill sizes="96px" className="object-cover object-top" />
+        </div>
+      ) : (
+        <CroppedImage
+          src={profile.photo.src}
+          natural={profile.photo.natural}
+          crop={profile.photo.crop}
+          alt="รูปโปรไฟล์"
+          className="size-24 shrink-0 rounded-full ring-1 ring-neutral-200"
+        />
+      )}
+      <p className="text-lg font-medium leading-snug text-neutral-800">
+        {firstName}
+        <br />
+        {lastName}
+      </p>
+    </div>
+  )
+}

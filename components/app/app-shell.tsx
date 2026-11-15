@@ -15,14 +15,18 @@ import { SettingsTab } from './settings-tab'
 import { NotificationsScreen } from './notifications-screen'
 import { CardInfoScreen } from './card-info-screen'
 import { ChatScreen } from './chat-screen'
+import { CheckRequestsScreen } from './check-requests-screen'
+import { CertifyScreen } from './certify-screen'
+import { MoveScreen } from './move-screen'
+import { AnnouncementScreen } from './announcement-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
 import { UnlockLoader } from './unlock-loader'
 import { SplashScreen } from './splash-screen'
-import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
+import { announcements, cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
-type Screen = 'notifications' | 'cardInfo' | 'scan' | null
+type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify' | 'move' | 'announcement' | null
 
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
@@ -35,6 +39,7 @@ export function AppShell() {
   const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
+  const [announcementIndex, setAnnouncementIndex] = useState(0)
   const [chatOpen, setChatOpen] = useState(false)
   const [logoutOpen, setLogoutOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
@@ -95,6 +100,13 @@ export function AppShell() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
+    if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
+    if (screen === 'certify') return <CertifyScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
+    if (screen === 'move') return <MoveScreen onBack={() => setScreen(null)} />
+    if (screen === 'announcement') {
+      const detail = announcements[announcementIndex]?.detail
+      if (detail) return <AnnouncementScreen detail={detail} onBack={() => setScreen(null)} />
+    }
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
@@ -115,9 +127,14 @@ export function AppShell() {
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-            <ServiceMenu />
+            <ServiceMenu onOpenCheck={() => setScreen('checkRequests')} onOpenCertify={() => setScreen('certify')} onOpenMove={() => setScreen('move')} />
             <BannerCarousel onAction={notify} />
-            <Announcements />
+            <Announcements
+              onOpen={(index) => {
+                setAnnouncementIndex(index)
+                setScreen('announcement')
+              }}
+            />
           </div>
         </div>
         </div>
@@ -142,7 +159,7 @@ export function AppShell() {
           onClick={() => setChatOpen(true)}
           aria-label="แชทบอท"
           className={`fixed right-[max(1rem,calc(50%-14rem+1rem))] z-30 flex size-[54px] items-center justify-center rounded-full bg-white text-brand shadow-lg ring-1 ring-black/5 transition active:scale-95 ${
-            screen ? 'bottom-8' : 'bottom-[calc(max(env(safe-area-inset-bottom),0.5rem)_+_84px)]'
+            screen === 'certify' || screen === 'announcement' ? 'bottom-24' : screen ? 'bottom-8' : 'bottom-[calc(max(env(safe-area-inset-bottom),0.5rem)_+_84px)]'
           }`}
         >
           <MessageCircleMore className="size-7" />
