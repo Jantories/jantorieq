@@ -51,7 +51,7 @@ export const card = {
   infoLabel: 'ข้อมูลบัตร',
 }
 
-// The first PIN (11111111) is the template: every other profile inherits it and overrides only identity fields.
+// The first PIN (10201020) is the template: every other profile inherits it and overrides only identity fields.
 export type CardSeal = {
   /** Circle centre, % of card width / height */
   x: number
