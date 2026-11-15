@@ -90,8 +90,8 @@ const firstCard = {
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
   front: {
-    small: '/images/card-front-1-new.png',
-    large: '/images/card-front-1-new.png',
+    small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AesNpINWsQJCVUt4BtDkwsbOjOVjLw.png',
+    large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AesNpINWsQJCVUt4BtDkwsbOjOVjLw.png',
   },
   back: {
     small: '/images/card-back-1-cropped.png',
@@ -227,13 +227,7 @@ export const banners = [
     // Placement (% of the 4:1 banner box) that maps the artwork's blue panel onto the box so the cards poke out above it
     bleed: { left: -0.254, top: -17.03, width: 100.38, height: 118.13 },
   },
-  {
-    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AesNpINWsQJCVUt4BtDkwsbOjOVjLw.png',
-    title: 'Rata Tung',
-    bleed: null,
-    aspectRatio: '16 / 9',
-  },
-] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null; aspectRatio?: string }[]
+] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null }[]
 
 export const announcements = [
   {
