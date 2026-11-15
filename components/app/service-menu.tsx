@@ -27,7 +27,7 @@ export function SectionHeader({ title, onAll, disabled = false }: { title: strin
   )
 }
 
-export function ServiceMenu() {
+export function ServiceMenu({ onOpenCheck }: { onOpenCheck?: () => void }) {
   return (
     <section aria-label={sections.services}>
       <div className="flex items-center justify-between px-5">
@@ -38,21 +38,34 @@ export function ServiceMenu() {
         </span>
       </div>
       <ul className="mt-3.5 grid grid-cols-4 px-2">
-        {services.map(({ id, label, disabled }) => (
-          <li key={id} className="flex flex-col items-center gap-2">
-            <span
-              style={{ backgroundColor: CIRCLE }}
-              className="flex size-[62px] items-center justify-center rounded-full"
-            >
-              <img src={icons[id]} alt="" draggable={false} className="size-[62px]" />
-            </span>
-            <span
-              className={`w-[76px] text-center text-xs font-normal leading-4 ${disabled ? 'text-neutral-400' : 'text-neutral-900'}`}
-            >
-              {label}
-            </span>
-          </li>
-        ))}
+        {services.map(({ id, label, disabled }) => {
+          const content = (
+            <>
+              <span
+                style={{ backgroundColor: CIRCLE }}
+                className="flex size-[62px] items-center justify-center rounded-full"
+              >
+                <img src={icons[id]} alt="" draggable={false} className="size-[62px]" />
+              </span>
+              <span
+                className={`w-[76px] text-center text-xs font-normal leading-4 ${disabled ? 'text-neutral-400' : 'text-neutral-900'}`}
+              >
+                {label}
+              </span>
+            </>
+          )
+          return (
+            <li key={id} className="flex justify-center">
+              {id === 'check' && onOpenCheck ? (
+                <button type="button" onClick={onOpenCheck} className="flex flex-col items-center gap-2 transition active:scale-95">
+                  {content}
+                </button>
+              ) : (
+                <div className="flex flex-col items-center gap-2">{content}</div>
+              )}
+            </li>
+          )
+        })}
       </ul>
     </section>
   )

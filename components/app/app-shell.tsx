@@ -15,6 +15,7 @@ import { SettingsTab } from './settings-tab'
 import { NotificationsScreen } from './notifications-screen'
 import { CardInfoScreen } from './card-info-screen'
 import { ChatScreen } from './chat-screen'
+import { CheckRequestsScreen } from './check-requests-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
@@ -22,7 +23,7 @@ import { UnlockLoader } from './unlock-loader'
 import { SplashScreen } from './splash-screen'
 import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
-type Screen = 'notifications' | 'cardInfo' | 'scan' | null
+type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | null
 
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
@@ -95,6 +96,7 @@ export function AppShell() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
+    if (screen === 'checkRequests') return <CheckRequestsScreen onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
@@ -115,7 +117,7 @@ export function AppShell() {
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-            <ServiceMenu />
+            <ServiceMenu onOpenCheck={authenticatedAs === 'first' ? () => setScreen('checkRequests') : undefined} />
             <BannerCarousel onAction={notify} />
             <Announcements />
           </div>

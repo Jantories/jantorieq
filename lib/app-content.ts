@@ -294,6 +294,33 @@ export const notificationsPage = {
   emptySub: 'ยังไม่มี การแจ้งเตือนใด ๆ',
 }
 
+// The "ตรวจสอบคำขอ" (check requests) screen is only available to the first profile (PIN 10201020).
+export const checkRequestsPage = {
+  title: 'ตรวจสอบคำขอ',
+  heading: 'ตรวจสอบคำขอทางออนไลน์',
+  profile: {
+    firstName: 'ไอย์ณพงศ์',
+    lastName: 'ริ้วศรีกุล',
+    photo: {
+      src: '/images/check-request-source.png',
+      natural: { width: 656, height: 1330 },
+      crop: { x: 217, y: 255, width: 96, height: 96 },
+    },
+  },
+  greeting: {
+    title: 'สวัสดีครับ',
+    sub: 'ขอให้วันนี้เป็นวันที่ดีและสดใสทั้งวันนะครับ',
+  },
+  requests: [
+    { id: 'certify', title: 'การคัดรับรองเอกสาร', empty: 'ไม่มีรายการ' },
+    { id: 'person', title: 'การแก้ไขรายการบุคคล', empty: 'ไม่มีรายการ' },
+    { id: 'move', title: 'การแจ้งย้ายที่อยู่', empty: 'ไม่มีรายการ' },
+  ],
+  copyright: 'สงวนลิขสิทธิ์ © 2566',
+  agency: 'สำนักบริหารการทะเบียน กรมการปกครอง',
+  version: '2.2.4',
+} as const
+
 export const logoutDialog = {
   title: 'แจ้งเตือน',
   message: 'คุณต้องการออกจากระบบใช่หรือไม่?',
