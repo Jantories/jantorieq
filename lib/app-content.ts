@@ -227,7 +227,13 @@ export const banners = [
     // Placement (% of the 4:1 banner box) that maps the artwork's blue panel onto the box so the cards poke out above it
     bleed: { left: -0.254, top: -17.03, width: 100.38, height: 118.13 },
   },
-] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null }[]
+  {
+    src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AesNpINWsQJCVUt4BtDkwsbOjOVjLw.png',
+    title: 'Rata Tung',
+    bleed: null,
+    aspectRatio: '16 / 9',
+  },
+] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null; aspectRatio?: string }[]
 
 export const announcements = [
   {

@@ -73,7 +73,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
         <div
           className="relative w-full"
           style={{
-            aspectRatio: '5 / 1',
+            aspectRatio: '2.25 / 1',
             transform: `translateX(calc(${-position} * ${SLIDE_STEP} + ${dragX}px))`,
             transition: dragging
               ? 'none'
@@ -93,7 +93,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
                 }}
                 aria-label={b.title}
                 tabIndex={isCurrent ? 0 : -1}
-                className="absolute top-0 block w-[80%]"
+                className="absolute top-1/2 block w-[80%] -translate-y-1/2"
                 style={{ left: `calc(10% + ${slot} * ${SLIDE_STEP})` }}
               >
                 {b.bleed ? (
@@ -112,7 +112,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
                     />
                   </span>
                 ) : (
-                  <span className="block aspect-[4/1] w-full overflow-hidden rounded-2xl">
+                  <span className="block w-full overflow-hidden rounded-2xl" style={{ aspectRatio: b.aspectRatio ?? '4 / 1' }}>
                     <img
                       src={b.src}
                       alt=""
