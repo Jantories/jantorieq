@@ -3,8 +3,7 @@
 export const profile = {
   greeting: 'สวัสดี',
   status: 'ONLINE',
-  name: 'คุณ ศิวกร สุสัมพันธ์ไพบูลย์',
-  avatar: '/images/card-photo-siwakorn.png',
+  name: 'คุณ ไอย์ณพงศ์ ริ้วศรีกุล',
 }
 
 export const profiles = {
@@ -17,6 +16,7 @@ export const profiles = {
   seventh: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เจ็ด', avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png' },
   eighth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่แปด' },
   ninth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เก้า' },
+  tenth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ศิวกร สุสัมพันธ์ไพบูลย์', avatar: '/images/card-photo-siwakorn.png' },
 } as const
 
 export const card = {
@@ -78,25 +78,25 @@ const providedCardSeals: CardSeal[] = [
 const firstCard = {
   ...card,
   seals: providedCardSeals,
-  number: '2 1203 01029 97 6',
-  fullNameTh: 'นาย ศิวกร สุสัมพันธ์ไพบูลย์',
-  firstNameEn: 'Mr. Siwakorn',
-  lastNameEn: 'Susumpanpaiboon',
-  birthTh: '18 ธ.ค. 2548',
-  birthEn: '18 Dec. 2005',
-  address: 'ที่อยู่ 203 หมู่ที่ 3 ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี',
-  issueTh: '13 พ.ค. 2567',
-  issueEn: '13 May 2024',
-  expiryTh: '17 ธ.ค. 2575',
-  expiryEn: '17 Dec. 2032',
-  photoCode: '1298-03-05131331',
+  number: '1 3099 03735 85 1',
+  fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+  firstNameEn: 'Mr. Ainapong',
+  lastNameEn: 'Riewsrikul',
+  birthTh: '19 พ.ย. 2548',
+  birthEn: '19 Nov. 2005',
+  address: 'ที่อยู่ 376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+  issueTh: '19 ธ.ค. 2567',
+  issueEn: '19 Dec. 2024',
+  expiryTh: '18 พ.ย. 2576',
+  expiryEn: '18 Nov. 2033',
+  photoCode: '3001-02-12191346',
   front: {
-    small: '/images/card-front-1-id.png',
-    large: '/images/card-front-1-id.png',
+    small: '/images/card-front-1-new.png',
+    large: '/images/card-front-1-new.png',
   },
   back: {
-    small: '/images/card-back-1-id.png',
-    large: '/images/card-back-1-id.png',
+    small: '/images/card-back-1-cropped.png',
+    large: '/images/card-back-1-cropped.png',
   },
 }
 
@@ -205,6 +205,29 @@ export const cardProfiles = {
   },
   eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
   ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
+  tenth: {
+    ...firstCard,
+    number: '2 1203 01029 97 6',
+    fullNameTh: 'นาย ศิวกร สุสัมพันธ์ไพบูลย์',
+    firstNameEn: 'Mr. Siwakorn',
+    lastNameEn: 'Susumpanpaiboon',
+    birthTh: '18 ธ.ค. 2548',
+    birthEn: '18 Dec. 2005',
+    address: 'ที่อยู่ 203 หมู่ที่ 3 ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี',
+    issueTh: '13 พ.ค. 2567',
+    issueEn: '13 May 2024',
+    expiryTh: '17 ธ.ค. 2575',
+    expiryEn: '17 Dec. 2032',
+    photoCode: '1298-03-05131331',
+    front: {
+      small: '/images/card-front-1-id.png',
+      large: '/images/card-front-1-id.png',
+    },
+    back: {
+      small: '/images/card-back-1-id.png',
+      large: '/images/card-back-1-id.png',
+    },
+  },
 } as const
 
 export const sections = {
@@ -298,14 +321,14 @@ export const cardInfo = {
 
 const firstCardInfo = {
   ...cardInfo,
-  photo: '/images/card-photo-siwakorn.png',
-  number: '2-1203-01029-97-6',
-  nameTh: 'นาย ศิวกร สุสัมพันธ์ไพบูลย์',
-  nameEn: 'Mr. Siwakorn  Susumpanpaiboon',
-  address: '203 หมู่ที่ 3 ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี',
-  birth: '18 ธ.ค. 2548',
-  issue: '13 พ.ค. 2567',
-  expiry: '17 ธ.ค. 2575',
+  photo: '/images/card-photo.png',
+  number: '1-3099-03735-85-1',
+  nameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
+  nameEn: 'Mr. Ainapong  Riewsrikul',
+  address: '376 ซ.มิตรภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
+  birth: '19 พ.ย. 2548',
+  issue: '19 ธ.ค. 2567',
+  expiry: '18 พ.ย. 2576',
 }
 
 export const cardInfoProfiles = {
@@ -358,6 +381,17 @@ export const cardInfoProfiles = {
   seventh: { ...firstCardInfo, number: '7-7777-77777-77-7', nameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', nameEn: 'Mr. Seventh User' },
   eighth: { ...firstCardInfo, number: '8-8888-88888-88-8', nameTh: 'นาย ผู้ใช้งาน คนที่แปด', nameEn: 'Mr. Eighth User' },
   ninth: { ...firstCardInfo, number: '9-9999-99999-99-9', nameTh: 'นาย ผู้ใช้งาน คนที่เก้า', nameEn: 'Mr. Ninth User' },
+  tenth: {
+    ...firstCardInfo,
+    photo: '/images/card-photo-siwakorn.png',
+    number: '2-1203-01029-97-6',
+    nameTh: 'นาย ศิวกร สุสัมพันธ์ไพบูลย์',
+    nameEn: 'Mr. Siwakorn  Susumpanpaiboon',
+    address: '203 หมู่ที่ 3 ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี',
+    birth: '18 ธ.ค. 2548',
+    issue: '13 พ.ค. 2567',
+    expiry: '17 ธ.ค. 2575',
+  },
 } as const
 
 export const chat = {
