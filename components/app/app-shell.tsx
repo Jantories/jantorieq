@@ -96,7 +96,7 @@ export function AppShell() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
-    if (screen === 'checkRequests') return <CheckRequestsScreen onBack={() => setScreen(null)} />
+    if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
@@ -117,7 +117,7 @@ export function AppShell() {
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-            <ServiceMenu onOpenCheck={authenticatedAs === 'first' ? () => setScreen('checkRequests') : undefined} />
+            <ServiceMenu onOpenCheck={() => setScreen('checkRequests')} />
             <BannerCarousel onAction={notify} />
             <Announcements />
           </div>

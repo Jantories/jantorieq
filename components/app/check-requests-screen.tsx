@@ -1,5 +1,6 @@
 import { ArrowLeftRight, ChevronLeft, Copy, House, Smile, UserPen } from 'lucide-react'
-import { checkRequestsPage } from '@/lib/app-content'
+import Image from 'next/image'
+import { cardProfiles, checkRequestsPage, profiles } from '@/lib/app-content'
 import { CroppedImage } from './cropped-image'
 
 const requestIcons = {
@@ -8,8 +9,18 @@ const requestIcons = {
   move: House,
 } as const
 
-export function CheckRequestsScreen({ onBack }: { onBack: () => void }) {
+type ProfileId = keyof typeof profiles
+
+// "นาย ชื่อ นามสกุล" -> first name and last name (title dropped)
+function splitName(fullName: string) {
+  const [, firstName = '', ...rest] = fullName.split(' ')
+  return { firstName, lastName: rest.join(' ') }
+}
+
+export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileId; onBack: () => void }) {
   const { profile, greeting } = checkRequestsPage
+  const { firstName, lastName } = splitName(cardProfiles[profileId].fullNameTh)
+  const avatar = (profiles[profileId] as { avatar?: string }).avatar
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-brand">
@@ -29,17 +40,23 @@ export function CheckRequestsScreen({ onBack }: { onBack: () => void }) {
         <h2 className="text-center text-xl font-medium text-neutral-800">{checkRequestsPage.heading}</h2>
 
         <div className="mt-5 flex items-center justify-center gap-5">
-          <CroppedImage
-            src={profile.photo.src}
-            natural={profile.photo.natural}
-            crop={profile.photo.crop}
-            alt="รูปโปรไฟล์"
-            className="size-24 shrink-0 rounded-full ring-1 ring-neutral-200"
-          />
+          {avatar ? (
+            <div className="relative size-24 shrink-0 overflow-hidden rounded-full ring-1 ring-neutral-200">
+              <Image src={avatar} alt="รูปโปรไฟล์" fill sizes="96px" className="object-cover object-top" />
+            </div>
+          ) : (
+            <CroppedImage
+              src={profile.photo.src}
+              natural={profile.photo.natural}
+              crop={profile.photo.crop}
+              alt="รูปโปรไฟล์"
+              className="size-24 shrink-0 rounded-full ring-1 ring-neutral-200"
+            />
+          )}
           <p className="text-lg font-medium leading-snug text-neutral-800">
-            {profile.firstName}
+            {firstName}
             <br />
-            {profile.lastName}
+            {lastName}
           </p>
         </div>
 

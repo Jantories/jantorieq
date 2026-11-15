@@ -294,13 +294,12 @@ export const notificationsPage = {
   emptySub: 'ยังไม่มี การแจ้งเตือนใด ๆ',
 }
 
-// The "ตรวจสอบคำขอ" (check requests) screen is only available to the first profile (PIN 10201020).
+// The "ตรวจสอบคำขอ" (check requests) screen shows the signed-in profile's own name and photo.
+// Name comes from cardProfiles[id].fullNameTh; photo from profiles[id].avatar, falling back to the first profile's photo below.
 export const checkRequestsPage = {
   title: 'ตรวจสอบคำขอ',
   heading: 'ตรวจสอบคำขอทางออนไลน์',
   profile: {
-    firstName: 'ไอย์ณพงศ์',
-    lastName: 'ริ้วศรีกุล',
     photo: {
       src: '/images/check-request-source.png',
       natural: { width: 656, height: 1330 },
