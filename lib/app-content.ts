@@ -297,6 +297,12 @@ export const announcements = [
     title: 'ระบบให้บริการประชาชนด้วย ThaID',
     date: '26/04/2566',
     body: 'รวมช่องทาง ระบบที่ให้บริการประชาชนที่เข้าสู่ระบบด้วย แอป ThaID ได้ที่ https://www.bora.dopa.go.th/thaid_authen_services/',
+    detail: {
+      heading: 'ระบบให้บริการประชาชนด้วย ThaID',
+      received: 'ได้รับเมื่อ 26 เม.ย. 66 10:40 น.',
+      body: 'รวมช่องทาง ระบบที่ให้บริการประชาชนที่เข้าสู่ระบบด้วย แอป ThaID ได้ที่',
+      link: 'https://www.bora.dopa.go.th/thaid_authen_services/',
+    },
   },
   {
     title: 'ชื่อแอปพลิเคชันใหม่ ThaID',
