@@ -50,7 +50,7 @@ export function AppShell() {
   const finishSplash = useCallback(() => setSplashVisible(false), [])
 
   const pinProfiles = {
-    '09225110': 'first', '10201020': 'first', '22222222': 'second', '33333333': 'third',
+    '10201020': 'first', '22222222': 'second', '33333333': 'third',
     '44444444': 'fourth', '55555555': 'fifth', '66666666': 'sixth',
     '77777777': 'seventh', '88888888': 'eighth', '99999999': 'ninth',
   } as const
