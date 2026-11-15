@@ -285,6 +285,13 @@ export const announcements = [
     title: 'BORA WEB PORTAL',
     date: '13/05/2566',
     body: 'ระบบการให้บริการงานทะเบียนออนไลน์ ผ่านเว็บไซต์ https://thportal.bora.dopa.go.th โดยยืนยันตัวตนผ่านแอปพลิเคชัน ThaID',
+    detail: {
+      heading: 'BORA WEB PORTAL',
+      received: 'ได้รับเมื่อ 13 พ.ค. 66 15:36 น.',
+      body: 'ระบบการให้บริการงานทะเบียนออนไลน์ ผ่านเว็บไซต์',
+      link: 'https://thportal.bora.dopa.go.th',
+      afterLink: 'โดยยืนยันตัวตนผ่านแอปพลิเคชัน ThaID',
+    },
   },
   {
     title: 'ระบบให้บริการประชาชนด้วย ThaID',

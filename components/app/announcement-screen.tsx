@@ -48,6 +48,9 @@ export function AnnouncementScreen({ detail, onBack }: { detail: AnnouncementDet
               {detail.link}
             </a>
           )}
+          {'afterLink' in detail && detail.afterLink && (
+            <p className="px-2 text-xl leading-relaxed text-neutral-900">{detail.afterLink}</p>
+          )}
         </article>
       </div>
 
