@@ -253,11 +253,23 @@ export const banners = [
   },
 ] as { src: string; title: string; bleed: { left: number; top: number; width: number; height: number } | null }[]
 
+export const announcementPage = {
+  title: 'ประกาศ',
+  back: 'ย้อนกลับ',
+}
+
+// Only announcements with a `detail` open the "ประกาศ" detail screen; the rest stay disabled in the list.
 export const announcements = [
   {
     title: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ ไปใช้สิทธิ',
     date: '6/02/2569',
     body: 'กรมการปกครองขอเชิญชวนผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น.',
+    detail: {
+      heading: 'เชิญชวนผู้มีสิทธิเลือกตั้ง/ประชามติ',
+      received: 'ได้รับเมื่อ 6 ก.พ. 69 15:46 น.',
+      body: 'กรมการปกครองขอเชิญชวนผู้มีสิทธิเลือกตั้ง ส.ส. และออกเสียงประชามติ ไปใช้สิทธิ ในวันอาทิตย์ที่ 8 กุมภาพันธ์ พ.ศ. 2569 เวลา 8.00 - 17.00 น. สามารถตรวจสอบสิทธิ ได้ที่',
+      link: 'https://boraservices.bora.dopa.go.th/election/',
+    },
   },
   {
     title: 'แจ้งเตือน!! ระวัง SMS หลอกลวง',

@@ -3,18 +3,23 @@ import { ChevronRight } from 'lucide-react'
 import { SectionHeader } from './service-menu'
 import { announcements, sections } from '@/lib/app-content'
 
-export function Announcements() {
+export function Announcements({ onOpen }: { onOpen: (index: number) => void }) {
   return (
     <section aria-label={sections.announcements} className="mt-5">
       <SectionHeader title={sections.announcements} disabled />
       <ul className="mt-3 flex flex-col gap-2 px-5">
-        {announcements.map((item) => (
+        {announcements.map((item, index) => {
+          const available = Boolean(item.detail)
+          return (
           <li key={item.title}>
             <button
               type="button"
-              disabled
-              aria-label={`${item.title} ยังไม่พร้อมใช้งาน`}
-              className="w-full cursor-not-allowed rounded-[24px] border border-neutral-300 px-5 py-3 text-left"
+              disabled={!available}
+              onClick={() => onOpen(index)}
+              aria-label={available ? item.title : `${item.title} ยังไม่พร้อมใช้งาน`}
+              className={`w-full rounded-[24px] border border-neutral-300 px-5 py-3 text-left ${
+                available ? 'transition active:bg-neutral-100' : 'cursor-not-allowed'
+              }`}
             >
               <div className="flex items-center gap-2">
                 <Image
@@ -37,7 +42,8 @@ export function Announcements() {
               <p className="mt-1.5 line-clamp-2 text-[13px] leading-[18px] text-neutral-800">{item.body}</p>
             </button>
           </li>
-        ))}
+          )
+        })}
       </ul>
     </section>
   )
