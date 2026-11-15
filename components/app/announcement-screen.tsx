@@ -38,14 +38,16 @@ export function AnnouncementScreen({ detail, onBack }: { detail: AnnouncementDet
           </div>
 
           <p className="mt-9 px-2 text-xl leading-relaxed text-neutral-900">{detail.body}</p>
-          <a
-            href={detail.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 block break-all px-2 text-xl leading-relaxed text-[#3b82d6] underline-offset-2 hover:underline"
-          >
-            {detail.link}
-          </a>
+          {detail.link && (
+            <a
+              href={detail.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 block break-all px-2 text-xl leading-relaxed text-[#3b82d6] underline-offset-2 hover:underline"
+            >
+              {detail.link}
+            </a>
+          )}
         </article>
       </div>
 
