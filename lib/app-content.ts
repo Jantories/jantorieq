@@ -90,8 +90,8 @@ const firstCard = {
   expiryEn: '18 Nov. 2033',
   photoCode: '3001-02-12191346',
   front: {
-    small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AesNpINWsQJCVUt4BtDkwsbOjOVjLw.png',
-    large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-AesNpINWsQJCVUt4BtDkwsbOjOVjLw.png',
+    small: '/images/card-front-1-id.png',
+    large: '/images/card-front-1-id.png',
   },
   back: {
     small: '/images/card-back-1-cropped.png',
