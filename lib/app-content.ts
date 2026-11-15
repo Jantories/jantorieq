@@ -190,7 +190,18 @@ export const cardProfiles = {
     },
   },
   sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
-  seventh: { ...firstCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
+  seventh: {
+    ...firstCard,
+    number: '7 7777 77777 77 7',
+    fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด',
+    firstNameEn: 'Mr. Seventh',
+    lastNameEn: 'User',
+    photoCode: '0000-00-00000007',
+    front: {
+      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png',
+      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png',
+    },
+  },
   eighth: { ...firstCard, number: '8 8888 88888 88 8', fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด', firstNameEn: 'Mr. Eighth', lastNameEn: 'User', photoCode: '0000-00-00000008' },
   ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
 } as const
