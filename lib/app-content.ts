@@ -333,6 +333,31 @@ export const certifyPage = {
   notice: 'เลือกเอกสารที่ต้องการคัดรับรอง',
 } as const
 
+// The "การแจ้งย้ายที่อยู่" (move address) screen. The emblem is cropped from the provided screenshot.
+export const movePage = {
+  title: 'การแจ้งย้ายที่อยู่',
+  cardTitle: 'การแจ้งย้ายที่อยู่ด้วยตนเอง',
+  label: 'ระบุเลขประจำตัวประชาชนเจ้าบ้าน (ย้ายเข้า)',
+  placeholder: 'ระบุเลขประจำตัวประชาชน',
+  send: 'ส่งคำร้องขอเจ้าบ้าน',
+  reset: 'ทำรายการใหม่',
+  statusLabel: 'สถานะ :',
+  statusEmpty: 'กรุณาระบุเลขประจำตัวประชาชนเจ้าบ้าน (ย้ายเข้า)',
+  statusReady: 'พร้อมส่งคำร้องขอเจ้าบ้าน',
+  statusSent: 'ส่งคำร้องขอเจ้าบ้านแล้ว รอการตอบรับ',
+  book: {
+    code: 'ท.ร.14',
+    title: 'สำเนาทะเบียนบ้าน',
+    agency: 'กรมการปกครอง',
+    ministry: 'กระทรวงมหาดไทย',
+    emblem: {
+      src: '/images/move-source.png',
+      natural: { width: 644, height: 1372 },
+      crop: { x: 262, y: 968, width: 128, height: 136 },
+    },
+  },
+} as const
+
 export const logoutDialog = {
   title: 'แจ้งเตือน',
   message: 'คุณต้องการออกจากระบบใช่หรือไม่?',

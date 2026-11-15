@@ -27,7 +27,15 @@ export function SectionHeader({ title, onAll, disabled = false }: { title: strin
   )
 }
 
-export function ServiceMenu({ onOpenCheck, onOpenCertify }: { onOpenCheck?: () => void; onOpenCertify?: () => void }) {
+export function ServiceMenu({
+  onOpenCheck,
+  onOpenCertify,
+  onOpenMove,
+}: {
+  onOpenCheck?: () => void
+  onOpenCertify?: () => void
+  onOpenMove?: () => void
+}) {
   return (
     <section aria-label={sections.services}>
       <div className="flex items-center justify-between px-5">
@@ -54,7 +62,7 @@ export function ServiceMenu({ onOpenCheck, onOpenCertify }: { onOpenCheck?: () =
               </span>
             </>
           )
-          const onOpen = id === 'check' ? onOpenCheck : id === 'certify' ? onOpenCertify : undefined
+          const onOpen = id === 'check' ? onOpenCheck : id === 'certify' ? onOpenCertify : id === 'move' ? onOpenMove : undefined
           return (
             <li key={id} className="flex justify-center">
               {onOpen ? (

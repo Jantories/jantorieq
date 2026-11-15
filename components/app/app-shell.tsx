@@ -17,6 +17,7 @@ import { CardInfoScreen } from './card-info-screen'
 import { ChatScreen } from './chat-screen'
 import { CheckRequestsScreen } from './check-requests-screen'
 import { CertifyScreen } from './certify-screen'
+import { MoveScreen } from './move-screen'
 import { LogoutDialog } from './logout-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
@@ -24,7 +25,7 @@ import { UnlockLoader } from './unlock-loader'
 import { SplashScreen } from './splash-screen'
 import { cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
-type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify' | null
+type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify' | 'move' | null
 
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
@@ -99,6 +100,7 @@ export function AppShell() {
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
     if (screen === 'certify') return <CertifyScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
+    if (screen === 'move') return <MoveScreen onBack={() => setScreen(null)} />
     if (tab === 'docs') return <DocumentsTab onAction={notify} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
@@ -119,7 +121,7 @@ export function AppShell() {
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-            <ServiceMenu onOpenCheck={() => setScreen('checkRequests')} onOpenCertify={() => setScreen('certify')} />
+            <ServiceMenu onOpenCheck={() => setScreen('checkRequests')} onOpenCertify={() => setScreen('certify')} onOpenMove={() => setScreen('move')} />
             <BannerCarousel onAction={notify} />
             <Announcements />
           </div>
