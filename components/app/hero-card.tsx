@@ -31,6 +31,7 @@ function CardFace({
   hiRes = false,
   seals,
   numberOverlay,
+  nameOverlay,
 }: {
   face: CardImage
   label: string
@@ -39,6 +40,7 @@ function CardFace({
   hiRes?: boolean
   seals?: readonly CardSeal[]
   numberOverlay?: NumberOverlay
+  nameOverlay?: NumberOverlay
 }) {
   return (
     <div
@@ -65,6 +67,19 @@ function CardFace({
           }}
         >
           {numberOverlay.text}
+        </span>
+      )}
+      {nameOverlay && (
+        <span
+          className="pointer-events-none absolute whitespace-nowrap font-[DilleniaUPC,'Dillenia_UPC',serif] leading-none text-black"
+          style={{
+            left: `${nameOverlay.x}%`,
+            top: `${nameOverlay.y}%`,
+            fontSize: `${nameOverlay.size}cqw`,
+            transform: 'translateY(-50%)',
+          }}
+        >
+          {nameOverlay.text}
         </span>
       )}
       {seals && !blurred && <SealRainbow seals={seals} />}
@@ -114,7 +129,7 @@ function toContentDelta(dx: number, dy: number) {
   return { x: dx, y: dy }
 }
 
-type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
+type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay; nameOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
 export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
@@ -283,7 +298,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} seals={card.seals} numberOverlay={card.numberOverlay} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} seals={card.seals} numberOverlay={card.numberOverlay} nameOverlay={card.nameOverlay} />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
       </div>
       {locked && (

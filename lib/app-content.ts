@@ -14,7 +14,7 @@ export const profiles = {
   fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ธนันท์รัฐ วัฒนสินศักดิ์', avatar: '/images/user-5-photo.jpg' },
   sixth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่หก' },
   seventh: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เจ็ด', avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png' },
-  eighth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่แปด' },
+  eighth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ วีริณฒิรา วงศ์ธนินยา' },
   ninth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เก้า' },
   tenth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ศิวกร สุสัมพันธ์ไพบูลย์', avatar: '/images/card-photo-siwakorn.png' },
 } as const
@@ -215,13 +215,14 @@ export const cardProfiles = {
   eighth: {
     ...firstCard,
     number: '1 1017 00437 68 0',
-    fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด',
+    fullNameTh: 'คุณ วีริณฒิรา วงศ์ธนินยา',
     firstNameEn: 'Mr. Eighth',
     lastNameEn: 'User',
     photoCode: '0000-00-00000008',
     seals: [],
     // 58.4px on the 1074px-wide card image
     numberOverlay: { text: '1 1017 00437 68 0', x: 43.6, y: 18.5, size: 5.44 },
+    nameOverlay: { text: 'คุณ วีริณฒิรา วงศ์ธนินยา', x: 39, y: 30.5, size: 5.2 },
     front: {
       small: '/images/card-front-8.png',
   large: '/images/card-front-8.png',
