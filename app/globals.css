@@ -54,6 +54,7 @@ body {
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
   --font-sans: "Noto Sans Thai", Tahoma, ui-sans-serif, system-ui, sans-serif;
+  --font-trirong: "Trirong", serif;
   --color-brand: #2b2f8f;
   --color-brand-dark: #1f2270;
   --color-brand-soft: #eef0fb;

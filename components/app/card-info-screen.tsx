@@ -42,7 +42,7 @@ export function CardInfoScreen({ cardInfo: c, onBack }: Props) {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-neutral-500">{c.numberLabel}</p>
-          <p className="text-2xl tracking-wide text-neutral-800">{c.number}</p>
+          <p className="font-trirong text-2xl tracking-wide text-neutral-800">{c.number}</p>
         </div>
         <div className="mx-auto my-5 flex w-2/3 items-center gap-2 text-neutral-300" aria-hidden>
           <span className="h-px flex-1 bg-current" />
