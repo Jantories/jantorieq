@@ -1,10 +1,9 @@
-import { ArrowLeftRight, ChevronLeft, House, Smile, UserPen } from 'lucide-react'
+import { ArrowLeftRight, ChevronLeft, House, Smile } from 'lucide-react'
 import { checkRequestsPage } from '@/lib/app-content'
 import { ProfileSummary, type ProfileId } from './profile-summary'
 import { HourglassLoader, useScreenReady } from './hourglass-loader'
 
 const requestIcons = {
-  person: UserPen,
   move: House,
 } as const
 
@@ -45,13 +44,18 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
 
         <ul className="mt-6 rounded-xl border border-neutral-200 bg-[#f1f2f4] px-4">
           {checkRequestsPage.requests.map(({ id, title, empty }) => {
-            const Icon = id === 'certify' ? null : requestIcons[id]
+            const hasImageIcon = id === 'certify' || id === 'person'
+            const Icon = hasImageIcon ? null : requestIcons[id]
             return (
               <li key={id} className="flex items-center gap-4 border-b border-neutral-300/70 py-4 last:border-0">
                 <span className="relative flex size-9 shrink-0 items-center justify-center text-neutral-500">
-                  {id === 'certify' ? (
+                  {hasImageIcon ? (
                     <img
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-11-16%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2013.08.59-0Ei3PVm5Ldx7wy14fGm9VZZ12zaqNu.png"
+                      src={
+                        id === 'certify'
+                          ? 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-11-16%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2013.08.59-0Ei3PVm5Ldx7wy14fGm9VZZ12zaqNu.png'
+                          : 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-11-16%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2013.09.09-aedFODkQwsfTCWum7VSO0BIwYgUi84.png'
+                      }
                       alt=""
                       aria-hidden="true"
                       className="size-8 object-contain"
