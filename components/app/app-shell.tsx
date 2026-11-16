@@ -30,12 +30,19 @@ type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify
 
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
+const screenLoaderDurationMs = 900
+const serviceScreens: Record<string, Screen> = {
+  check: 'checkRequests',
+  certify: 'certify',
+  move: 'move',
+}
 
 export function AppShell() {
   const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
   const [splashVisible, setSplashVisible] = useState(true)
   const [pinOpen, setPinOpen] = useState(false)
   const [pinLoading, setPinLoading] = useState(false)
+  const [pendingScreen, setPendingScreen] = useState<Screen>(null)
   const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
@@ -44,6 +51,7 @@ export function AppShell() {
   const [logoutOpen, setLogoutOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const screenAfterUnlock = useRef<Screen>(null)
 
   const notify = useCallback((message: string) => {
     setToast(message)
@@ -74,6 +82,19 @@ export function AppShell() {
   }
 
   useEffect(() => {
+    if (!pendingScreen) return
+    const id = window.setTimeout(() => {
+      setScreen(pendingScreen)
+      setPendingScreen(null)
+    }, screenLoaderDurationMs)
+    return () => window.clearTimeout(id)
+  }, [pendingScreen])
+
+  const openScreenWithLoader = (target: Screen) => {
+    if (!pendingScreen) setPendingScreen(target)
+  }
+
+  useEffect(() => {
     const saved = window.localStorage.getItem(lastProfileKey)
     if (saved && saved in profiles) setAuthenticatedAs(saved as keyof typeof profiles)
   }, [])
@@ -85,6 +106,9 @@ export function AppShell() {
     setAuthenticatedAs(profileId)
     setCardUnlocked(true)
     setPinOpen(false)
+    const target = screenAfterUnlock.current
+    screenAfterUnlock.current = null
+    if (target) setPendingScreen(target)
     return true
   }
 
@@ -93,6 +117,8 @@ export function AppShell() {
     const target = event.target as HTMLElement
     if (target.closest('[data-pin-screen]')) return
     if (!target.closest('button, a, [role="button"], [role="tab"], summary, label[for]')) return
+    const service = target.closest<HTMLElement>('[data-service]')?.dataset.service
+    screenAfterUnlock.current = service ? (serviceScreens[service] ?? null) : null
     event.preventDefault()
     event.stopPropagation()
     requestPin()
@@ -137,7 +163,11 @@ export function AppShell() {
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-            <ServiceMenu onOpenCheck={() => setScreen('checkRequests')} onOpenCertify={() => setScreen('certify')} onOpenMove={() => setScreen('move')} />
+            <ServiceMenu
+              onOpenCheck={() => openScreenWithLoader('checkRequests')}
+              onOpenCertify={() => openScreenWithLoader('certify')}
+              onOpenMove={() => openScreenWithLoader('move')}
+            />
             <BannerCarousel onAction={notify} />
             <Announcements
               onOpen={(index) => {
@@ -190,9 +220,17 @@ export function AppShell() {
         )}
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
-        {pinLoading && <UnlockLoader />}
+        {(pinLoading || pendingScreen) && <UnlockLoader />}
         {splashVisible && <SplashScreen onDone={finishSplash} />}
-        {pinOpen && <PinScreen onClose={() => setPinOpen(false)} onUnlock={unlock} />}
+        {pinOpen && (
+          <PinScreen
+            onClose={() => {
+              screenAfterUnlock.current = null
+              setPinOpen(false)
+            }}
+            onUnlock={unlock}
+          />
+        )}
         {logoutOpen && (
           <LogoutDialog
             onCancel={() => setLogoutOpen(false)}
