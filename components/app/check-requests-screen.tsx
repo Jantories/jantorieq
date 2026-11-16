@@ -39,8 +39,8 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
         <div className="mt-6 flex items-center gap-3 rounded-xl border border-neutral-200 bg-[#f1f2f4] px-4 py-3">
           <Smile className="size-7 shrink-0 fill-[#f6c453] text-white" strokeWidth={1.5} aria-hidden />
           <div className="min-w-0">
-            <p className="text-base font-medium leading-snug text-neutral-900">{greeting.title}</p>
-            <p className="text-sm leading-snug text-neutral-800">{greeting.sub}</p>
+            <p className="text-sm font-[100] leading-snug text-neutral-900">{greeting.title}</p>
+            <p className="text-sm font-[100] leading-snug text-neutral-800">{greeting.sub}</p>
           </div>
         </div>
 
@@ -60,8 +60,8 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
                   )}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-lg font-medium leading-snug text-neutral-400">{title}</p>
-                  <p className="text-base leading-snug text-neutral-400">{empty}</p>
+                  <p className="text-base font-[100] leading-snug text-neutral-400">{title}</p>
+                  <p className="text-base font-[100] leading-snug text-neutral-400">{empty}</p>
                 </div>
               </li>
             )
