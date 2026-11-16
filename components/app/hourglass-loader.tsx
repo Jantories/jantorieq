@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 const topBulb = 'M10 10 H90 L50 60 Z'
 const bottomBulb = 'M50 60 L90 110 H10 Z'
 
-export function useScreenReady(durationMs = 1400) {
+export function useScreenReady(durationMs = 6000) {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
