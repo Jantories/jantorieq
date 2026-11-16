@@ -4,10 +4,12 @@ import { useState } from 'react'
 import { ChevronLeft, RefreshCw, Send } from 'lucide-react'
 import { movePage } from '@/lib/app-content'
 import { CroppedImage } from './cropped-image'
+import { HourglassLoader, useScreenReady } from './hourglass-loader'
 
 const ID_LENGTH = 13
 
 export function MoveScreen({ onBack }: { onBack: () => void }) {
+  const screenReady = useScreenReady()
   const [idNumber, setIdNumber] = useState('')
   const [sent, setSent] = useState(false)
 
@@ -34,6 +36,10 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       <div className="flex flex-1 flex-col rounded-t-[2.5rem] bg-white px-4 pb-16 pt-14">
+        {!screenReady ? (
+          <HourglassLoader />
+        ) : (
+          <>
         <section className="rounded-md bg-white p-1.5 shadow-[0_1px_6px_rgba(0,0,0,0.18)]">
           <h2 className="bg-brand px-4 py-5 text-center text-xl font-medium text-white">{movePage.cardTitle}</h2>
 
@@ -106,6 +112,8 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
             <span>{movePage.book.ministry}</span>
           </p>
         </div>
+          </>
+        )}
       </div>
     </main>
   )

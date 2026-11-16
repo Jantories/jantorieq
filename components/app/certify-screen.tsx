@@ -1,8 +1,11 @@
 import { ChevronLeft, Eye, Info } from 'lucide-react'
 import { certifyPage, checkRequestsPage } from '@/lib/app-content'
 import { ProfileSummary, type ProfileId } from './profile-summary'
+import { HourglassLoader, useScreenReady } from './hourglass-loader'
 
 export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onBack: () => void }) {
+  const ready = useScreenReady()
+
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-brand">
       <header className="grid grid-cols-[4rem_1fr_4rem] items-center px-5 pb-6 pt-[max(env(safe-area-inset-top),1.5rem)]">
@@ -18,6 +21,10 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
       </header>
 
       <div className="flex flex-1 flex-col rounded-t-[2.5rem] bg-white px-5 pb-32 pt-9">
+        {!ready ? (
+          <HourglassLoader />
+        ) : (
+          <>
         <h2 className="text-center text-xl font-medium text-neutral-800">{certifyPage.heading}</h2>
 
         <ProfileSummary profileId={profileId} />
@@ -43,14 +50,18 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
           <p>{checkRequestsPage.agency}</p>
           <p>{checkRequestsPage.version}</p>
         </footer>
+          </>
+        )}
       </div>
 
-      <div className="pointer-events-none fixed bottom-0 left-1/2 z-20 w-full max-w-md -translate-x-1/2 px-5 pb-[max(env(safe-area-inset-bottom),1rem)]">
-        <p className="pointer-events-auto flex items-center gap-3 rounded-lg bg-[#fdf5df] px-4 py-3 text-base text-neutral-800">
-          <Info className="size-6 shrink-0 fill-[#f5a623] text-white" aria-hidden />
-          {certifyPage.notice}
-        </p>
-      </div>
+      {ready && (
+        <div className="pointer-events-none fixed bottom-0 left-1/2 z-20 w-full max-w-md -translate-x-1/2 px-5 pb-[max(env(safe-area-inset-bottom),1rem)]">
+          <p className="pointer-events-auto flex items-center gap-3 rounded-lg bg-[#fdf5df] px-4 py-3 text-base text-neutral-800">
+            <Info className="size-6 shrink-0 fill-[#f5a623] text-white" aria-hidden />
+            {certifyPage.notice}
+          </p>
+        </div>
+      )}
     </main>
   )
 }
