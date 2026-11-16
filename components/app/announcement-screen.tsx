@@ -29,7 +29,7 @@ export function AnnouncementScreen({ detail, onBack }: { detail: AnnouncementDet
               height={192}
               sizes="56px"
               quality={95}
-              className="size-14 shrink-0"
+              className="size-14 shrink-0 announcement-logo-rise"
             />
             <div className="min-w-0">
               <h2 className="text-xl font-bold leading-snug text-brand text-balance">{detail.heading}</h2>
