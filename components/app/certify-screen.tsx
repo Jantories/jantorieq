@@ -27,7 +27,7 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
           <>
         <h2 className="text-center text-lg font-[100] text-neutral-800">{certifyPage.heading}</h2>
 
-        <ProfileSummary profileId={profileId} lightText />
+        <ProfileSummary profileId={profileId} lightText smallImage />
 
         <h3 className="mt-8 text-base font-[100] text-brand">{certifyPage.sectionTitle}</h3>
 
