@@ -38,6 +38,7 @@ export function BottomNav({ active, onChange, onScan }: Props) {
         key={id}
         type="button"
         onClick={() => onChange(id)}
+        data-nav-tab={id}
         aria-current={isActive ? 'page' : undefined}
         className={`flex flex-1 flex-col items-center pt-2.5 transition ${isActive ? 'text-[#1f1bc9]' : 'text-[#666666] hover:text-neutral-800'}`}
       >

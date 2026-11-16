@@ -57,6 +57,7 @@ export function AppShell() {
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const screenAfterUnlock = useRef<Screen>(null)
+  const tabAfterUnlock = useRef<TabId | null>(null)
   const pressTarget = useRef<HTMLElement | null>(null)
   const replayingClick = useRef(false)
 
@@ -121,6 +122,9 @@ export function AppShell() {
     const id = window.setTimeout(() => {
       setAuthenticatedAs(unlockingProfile)
       setCardUnlocked(true)
+      const nextTab = tabAfterUnlock.current
+      tabAfterUnlock.current = null
+      if (nextTab) setTab(nextTab)
       const target = screenAfterUnlock.current
       screenAfterUnlock.current = null
       if (target) setScreen(target)
@@ -142,6 +146,15 @@ export function AppShell() {
       if (pressLoading || unlockingProfile) return
       pressTarget.current = pressed
       setPressLoading(true)
+      return
+    }
+    const tabId = target.closest<HTMLElement>('[data-nav-tab]')?.dataset.navTab as TabId | undefined
+    if (tabId) {
+      event.preventDefault()
+      event.stopPropagation()
+      if (pinOpen || pinLoading || unlockingProfile) return
+      tabAfterUnlock.current = tabId
+      setPinOpen(true)
       return
     }
     if (!target.closest('button, a, [role="button"], [role="tab"], summary, label[for]')) return
@@ -255,6 +268,7 @@ export function AppShell() {
           <PinScreen
             onClose={() => {
               screenAfterUnlock.current = null
+              tabAfterUnlock.current = null
               setPinOpen(false)
             }}
             onUnlock={unlock}
