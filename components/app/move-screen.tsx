@@ -106,7 +106,7 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
               className="aspect-[128/136] w-full"
             />
           </div>
-          <p className="mt-3 text-center text-2xl font-medium text-[#e8c75a]">{movePage.book.title}</p>
+          <p className="mt-3 text-center text-[20px] font-[300] text-[#e8c75a]">{movePage.book.title}</p>
           <p className="mt-8 flex justify-center gap-5 text-sm font-[100] text-[#e8c75a]">
             <span>{movePage.book.agency}</span>
             <span>{movePage.book.ministry}</span>

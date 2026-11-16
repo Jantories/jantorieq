@@ -38,16 +38,17 @@ export function BackButton({ onClick, variant = 'light' }: { onClick: () => void
   )
 }
 
-export function IconBubble({ icon: Icon, tone = 'blue' }: { icon: LucideIcon; tone?: Tone }) {
+export function IconBubble({ icon: Icon, tone = 'blue', imageSrc }: { icon?: LucideIcon; tone?: Tone; imageSrc?: string }) {
   return (
-    <span className={`flex size-14 shrink-0 items-center justify-center rounded-full ${tones[tone]}`}>
-      <Icon className="size-7" strokeWidth={1.8} />
+    <span className={`flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full ${tones[tone]}`}>
+      {imageSrc ? <img src={imageSrc} alt="" className="size-full scale-125 object-cover" /> : Icon ? <Icon className="size-7" strokeWidth={1.8} /> : null}
     </span>
   )
 }
 
 type RowProps = {
-  icon: LucideIcon
+  icon?: LucideIcon
+  iconImageSrc?: string
   tone?: Tone
   title: string
   sub: string
@@ -56,10 +57,10 @@ type RowProps = {
   trailing?: React.ReactNode
 }
 
-export function ListRow({ icon, tone, title, sub, titleClassName = 'text-neutral-900', onClick, trailing }: RowProps) {
+export function ListRow({ icon, iconImageSrc, tone, title, sub, titleClassName = 'text-neutral-900', onClick, trailing }: RowProps) {
   const content = (
     <>
-      <IconBubble icon={icon} tone={tone} />
+      <IconBubble icon={icon} imageSrc={iconImageSrc} tone={tone} />
       <span className="flex min-w-0 flex-1 items-center gap-3 self-stretch border-b border-neutral-100 py-4 group-last:border-0">
         <span className="min-w-0 flex-1">
           <span className={`block text-lg font-medium leading-snug ${titleClassName}`}>{title}</span>

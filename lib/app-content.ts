@@ -512,7 +512,7 @@ export const documentsPage = {
   sub: 'แสดงรายการเอกสารทั้งหมด',
   // tone: blue | green | red
   groups: [
-    [{ id: 'idcard', title: 'บัตรประจำตัว', sub: 'บัตรประจำตัว', tone: 'blue' }],
+    [{ id: 'idcard', title: 'บัตรประจำตัวประชาชน', sub: 'บัตรประจำตัวประชาชน', tone: 'blue' }],
     [
       { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
       { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานที่เกิด บิดา มารดา', tone: 'green' },
@@ -523,8 +523,8 @@ export const documentsPage = {
     ],
     [{ id: 'disability', title: 'บัตรประจำตัวคนพิการ', sub: 'บัตรประจำตัวคนพิการ', tone: 'blue' }],
     [
-      { id: 'license', title: 'ใบอนุญาต', sub: 'รายการใบอนุญาตต่าง ๆ', tone: 'blue' },
-      { id: 'other', title: 'เอกสารอื่น ๆ', sub: 'เอกสารเพิ่มเติม', tone: 'blue' },
+      { id: 'license', title: 'ใบอนุญาตอาวุธปืน แบบ ป.4', sub: 'รายการใบอนุญาตให้มีและใช้อสวุธปืน (แบบ ป.4)', tone: 'blue' },
+      { id: 'other', title: 'ใบอนุญาตอาวุธปืน แบบ ป.3', sub: 'รายการใบอนุญาตให้มีและใช้อสวุธปืน (แบบ ป.3)', tone: 'blue' },
     ],
   ],
 } as const
