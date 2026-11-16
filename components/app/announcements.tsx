@@ -5,7 +5,7 @@ import { announcements, sections } from '@/lib/app-content'
 
 export function Announcements({ onOpen }: { onOpen: (index: number) => void }) {
   return (
-    <section aria-label={sections.announcements} className="mt-5">
+    <section aria-label={sections.announcements} data-no-loader className="mt-5">
       <SectionHeader title={sections.announcements} disabled />
       <ul className="mt-3 flex flex-col gap-2 px-5">
         {announcements.map((item, index) => {
