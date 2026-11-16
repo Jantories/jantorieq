@@ -41,7 +41,7 @@ export function BackButton({ onClick, variant = 'light' }: { onClick: () => void
 export function IconBubble({ icon: Icon, tone = 'blue', imageSrc }: { icon?: LucideIcon; tone?: Tone; imageSrc?: string }) {
   return (
     <span className={`flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-full ${tones[tone]}`}>
-      {imageSrc ? <img src={imageSrc} alt="" className="size-full object-cover" /> : Icon ? <Icon className="size-7" strokeWidth={1.8} /> : null}
+      {imageSrc ? <img src={imageSrc} alt="" className="size-full scale-125 object-cover" /> : Icon ? <Icon className="size-7" strokeWidth={1.8} /> : null}
     </span>
   )
 }
