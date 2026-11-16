@@ -66,7 +66,7 @@ export function ServiceMenu({
           return (
             <li key={id} className="flex justify-center">
               {onOpen ? (
-                <button type="button" onClick={onOpen} className="flex flex-col items-center gap-2 transition active:scale-95">
+                <button type="button" data-service={id} onClick={onOpen} className="flex flex-col items-center gap-2 transition active:scale-95">
                   {content}
                 </button>
               ) : (

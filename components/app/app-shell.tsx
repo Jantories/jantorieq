@@ -31,6 +31,11 @@ type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
 const screenLoaderDurationMs = 900
+const serviceScreens: Record<string, Screen> = {
+  check: 'checkRequests',
+  certify: 'certify',
+  move: 'move',
+}
 
 export function AppShell() {
   const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
@@ -46,6 +51,7 @@ export function AppShell() {
   const [logoutOpen, setLogoutOpen] = useState(false)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const screenAfterUnlock = useRef<Screen>(null)
 
   const notify = useCallback((message: string) => {
     setToast(message)
@@ -100,6 +106,9 @@ export function AppShell() {
     setAuthenticatedAs(profileId)
     setCardUnlocked(true)
     setPinOpen(false)
+    const target = screenAfterUnlock.current
+    screenAfterUnlock.current = null
+    if (target) setPendingScreen(target)
     return true
   }
 
@@ -108,6 +117,8 @@ export function AppShell() {
     const target = event.target as HTMLElement
     if (target.closest('[data-pin-screen]')) return
     if (!target.closest('button, a, [role="button"], [role="tab"], summary, label[for]')) return
+    const service = target.closest<HTMLElement>('[data-service]')?.dataset.service
+    screenAfterUnlock.current = service ? (serviceScreens[service] ?? null) : null
     event.preventDefault()
     event.stopPropagation()
     requestPin()
@@ -211,7 +222,15 @@ export function AppShell() {
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
         {(pinLoading || pendingScreen) && <UnlockLoader />}
         {splashVisible && <SplashScreen onDone={finishSplash} />}
-        {pinOpen && <PinScreen onClose={() => setPinOpen(false)} onUnlock={unlock} />}
+        {pinOpen && (
+          <PinScreen
+            onClose={() => {
+              screenAfterUnlock.current = null
+              setPinOpen(false)
+            }}
+            onUnlock={unlock}
+          />
+        )}
         {logoutOpen && (
           <LogoutDialog
             onCancel={() => setLogoutOpen(false)}
