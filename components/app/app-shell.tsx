@@ -218,7 +218,7 @@ export function AppShell() {
         <div
           aria-hidden
           className={`pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] ${
-            screen === 'scan' ? 'bg-brand-dark' : 'bg-brand'
+            screen === 'scan' ? 'bg-brand-dark' : !screen && (tab === 'docs' || tab === 'history' || tab === 'settings') ? 'bg-white' : 'bg-brand'
           }`}
         />
 
