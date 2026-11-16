@@ -37,8 +37,8 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
               <button type="button" className="flex w-full items-center gap-4 py-4 text-left transition active:opacity-70">
                 <Eye className="size-7 shrink-0 text-[#4a6fc9]" strokeWidth={2} aria-hidden />
                 <span className="min-w-0">
-                  <span className="block text-lg font-medium leading-snug text-neutral-800">{title}</span>
-                  <span className="block text-base leading-snug text-neutral-500">{sub}</span>
+                  <span className="block text-base font-[100] leading-snug text-neutral-400">{title}</span>
+                  <span className="block text-base font-[100] leading-snug text-neutral-400">{sub}</span>
                 </span>
               </button>
             </li>
