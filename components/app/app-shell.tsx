@@ -135,7 +135,7 @@ export function AppShell() {
 
   const guardLockedClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement
-    if (target.closest('[data-pin-screen]')) return
+    if (target.closest('[data-pin-screen], [data-card-flip]')) return
     if (cardUnlocked) {
       if (replayingClick.current || chatOpen || logoutOpen) return
       const pressed = target.closest<HTMLElement>(pressableSelector)

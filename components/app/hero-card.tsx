@@ -309,7 +309,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           <ExpandIcon className="size-5" strokeWidth={1.4} />
           <span className="text-xs font-medium">{card.expandLabel}</span>
         </button>
-        <button type="button" onClick={flip} disabled={locked} aria-label="พลิกบัตร" data-no-loader className={circleBtn}>
+        <button type="button" onClick={flip} aria-label="พลิกบัตร" data-no-loader data-card-flip className={circleBtn}>
           <FlipIcon className="size-[18px]" />
         </button>
       </div>
@@ -328,7 +328,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
             <button type="button" onClick={() => setExpanded(false)} aria-label="ย้อนกลับ" className={glassBtn}>
               <ChevronLeft className="size-8" strokeWidth={2.5} />
             </button>
-            <button type="button" onClick={flipExpanded} aria-label="พลิกบัตร" className={glassBtn}>
+            <button type="button" onClick={flipExpanded} aria-label="พลิกบัตร" data-no-loader data-card-flip className={glassBtn}>
               <FlipIcon className="size-7" />
             </button>
           </div>
