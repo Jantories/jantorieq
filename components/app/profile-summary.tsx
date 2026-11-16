@@ -10,7 +10,7 @@ function splitName(fullName: string) {
   return { firstName, lastName: rest.join(' ') }
 }
 
-export function ProfileSummary({ profileId, compact = false }: { profileId: ProfileId; compact?: boolean }) {
+export function ProfileSummary({ profileId, compact = false, lightText = false }: { profileId: ProfileId; compact?: boolean; lightText?: boolean }) {
   const { profile } = checkRequestsPage
   const { firstName, lastName } = splitName(cardProfiles[profileId].fullNameTh)
   const avatar = (profiles[profileId] as { avatar?: string }).avatar
@@ -31,7 +31,7 @@ export function ProfileSummary({ profileId, compact = false }: { profileId: Prof
           className={`${sizeClass} shrink-0 rounded-full ring-1 ring-neutral-200`}
         />
       )}
-      <p className={compact ? 'text-sm font-[200] leading-snug text-neutral-800' : 'text-lg font-medium leading-snug text-neutral-800'}>
+      <p className={compact || lightText ? 'text-sm font-[100] leading-snug text-neutral-800' : 'text-lg font-medium leading-snug text-neutral-800'}>
         {firstName}
         <br />
         {lastName}
