@@ -1,5 +1,6 @@
 import { Accessibility, Baby, FileBadge, FileText, Heart, HeartCrack, House, UserRound } from 'lucide-react'
-import { documentsPage } from '@/lib/app-content'
+import { documentNotFoundDialog, documentsPage } from '@/lib/app-content'
+import type { NotFoundDocumentId } from './document-not-found-dialog'
 import { ListCard, ListRow, PageHeading, PageTitle } from './page-parts'
 
 const icons = {
@@ -13,7 +14,15 @@ const icons = {
   other: FileText,
 }
 
-export function DocumentsTab({ onAction, onOpenIdCard }: { onAction: (msg: string) => void; onOpenIdCard: () => void }) {
+export function DocumentsTab({
+  onAction,
+  onOpenIdCard,
+  onNotFound,
+}: {
+  onAction: (msg: string) => void
+  onOpenIdCard: () => void
+  onNotFound: (id: NotFoundDocumentId) => void
+}) {
   return (
     <main className="flex-1 bg-page px-5 pb-36">
       <PageTitle>{documentsPage.title}</PageTitle>
@@ -28,7 +37,11 @@ export function DocumentsTab({ onAction, onOpenIdCard }: { onAction: (msg: strin
                 tone={doc.tone}
                 title={doc.title}
                 sub={doc.sub}
-                onClick={() => (doc.id === 'idcard' ? onOpenIdCard() : onAction(doc.title))}
+                onClick={() => {
+                  if (doc.id === 'idcard') onOpenIdCard()
+                  else if (doc.id in documentNotFoundDialog.messages) onNotFound(doc.id as NotFoundDocumentId)
+                  else onAction(doc.title)
+                }}
               />
             ))}
           </ListCard>

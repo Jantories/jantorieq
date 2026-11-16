@@ -21,6 +21,7 @@ import { CertifyScreen } from './certify-screen'
 import { MoveScreen } from './move-screen'
 import { AnnouncementScreen } from './announcement-screen'
 import { LogoutDialog } from './logout-dialog'
+import { DocumentNotFoundDialog, type NotFoundDocumentId } from './document-not-found-dialog'
 import { ScanScreen } from './scan-screen'
 import { PinScreen } from './pin-screen'
 import { UnlockLoader } from './unlock-loader'
@@ -54,6 +55,7 @@ export function AppShell() {
   const [announcementIndex, setAnnouncementIndex] = useState(0)
   const [chatOpen, setChatOpen] = useState(false)
   const [logoutOpen, setLogoutOpen] = useState(false)
+  const [notFoundDocument, setNotFoundDocument] = useState<NotFoundDocumentId | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const screenAfterUnlock = useRef<Screen>(null)
@@ -188,7 +190,9 @@ export function AppShell() {
       const detail = announcements[announcementIndex]?.detail
       if (detail) return <AnnouncementScreen detail={detail} onBack={() => setScreen(null)} />
     }
-    if (tab === 'docs') return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} />
+    if (tab === 'docs') {
+      return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} onNotFound={setNotFoundDocument} />
+    }
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
@@ -277,6 +281,7 @@ export function AppShell() {
             onUnlock={unlock}
           />
         )}
+        {notFoundDocument && <DocumentNotFoundDialog documentId={notFoundDocument} onClose={() => setNotFoundDocument(null)} />}
         {logoutOpen && (
           <LogoutDialog
             onCancel={() => setLogoutOpen(false)}

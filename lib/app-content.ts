@@ -529,6 +529,20 @@ export const documentsPage = {
   ],
 } as const
 
+export const documentNotFoundDialog = {
+  title: 'ไม่พบข้อมูลในระบบ',
+  code: 'TC-037',
+  confirm: 'ตกลง',
+  messages: {
+    house: 'ไม่พบข้อมูลทะเบียนบ้านในระบบ',
+    birth: 'ไม่พบข้อมูลสูติบัตรในระบบ',
+    marriage: 'ไม่พบข้อมูลเอกสารการสมรสในระบบ',
+    divorce: 'ไม่พบข้อมูลเอกสารการหย่าในระบบ',
+    disability: 'ไม่พบข้อมูลบัตรประจำตัวคนพิการในระบบ',
+    other: 'ไม่พบข้อมูลเอกสารอื่น ๆ ในระบบ',
+  },
+} as const
+
 export const historyPage = {
   title: 'ประวัติการทำรายการ',
   groups: [
