@@ -34,6 +34,7 @@ export function DocumentsTab({
               <ListRow
                 key={doc.id}
                 icon={icons[doc.id]}
+                iconImageSrc={doc.id === 'idcard' ? 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-11-16%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2017.06.38-QDP5VcKyQfYy223L5St0AfHLrfXekW.png' : undefined}
                 tone={doc.tone}
                 title={doc.title}
                 sub={doc.sub}
