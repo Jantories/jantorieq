@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { ChevronLeft } from 'lucide-react'
 import { useState } from 'react'
 import { BackButton } from './page-parts'
 
@@ -51,26 +52,32 @@ export function DocumentIdScreen({ cardImage, onBack }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label="ภาพบัตรประจำตัวประชาชนขนาดเต็ม"
-          className="fixed inset-0 z-40 flex items-center justify-center bg-neutral-950/90 p-4"
+          className="fixed inset-0 z-40 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px]"
           onClick={() => setIsFullImageOpen(false)}
         >
           <button
             type="button"
             aria-label="ปิดภาพเต็ม"
-            className="absolute right-4 top-[max(env(safe-area-inset-top),1rem)] rounded-full bg-white px-5 py-3 text-base font-medium text-brand"
+            className="absolute left-5 top-[max(env(safe-area-inset-top),1.25rem)] z-10 flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95"
             onClick={() => setIsFullImageOpen(false)}
           >
-            ปิด
+            <ChevronLeft className="size-8" strokeWidth={2.5} />
           </button>
-          <Image
-            src={cardImage}
-            alt="ภาพบัตรประจำตัวประชาชนขนาดเต็ม"
-            width={1294}
-            height={811}
-            sizes="100vw"
-            className="h-auto max-h-[85dvh] w-full object-contain"
-            priority
-          />
+          <div
+            className="relative shrink-0 rotate-90 overflow-hidden rounded-[4.5cqw] shadow-xl"
+            style={{ width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)' }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <Image
+              src={cardImage}
+              alt="ภาพบัตรประจำตัวประชาชนขนาดเต็ม"
+              width={1294}
+              height={811}
+              sizes="1100px"
+              className="block aspect-[1.595/1] h-auto w-full object-fill"
+              priority
+            />
+          </div>
         </div>
       )}
     </main>
