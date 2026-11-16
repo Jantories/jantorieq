@@ -52,7 +52,7 @@ export function PinScreen({ onUnlock, onClose }: { onUnlock: (pin: string) => bo
   }
 
   return (
-    <main className="fixed inset-0 z-50 flex items-end justify-center bg-neutral-950/70 px-0 py-0 backdrop-blur-[2px] sm:px-6 sm:py-8" onClick={onClose}>
+    <main data-pin-screen className="fixed inset-0 z-50 flex items-end justify-center bg-neutral-950/70 px-0 py-0 backdrop-blur-[2px] sm:px-6 sm:py-8" onClick={onClose}>
       <section className="flex min-h-[80dvh] w-full max-w-md flex-col items-center rounded-t-[2.75rem] bg-white px-6 pb-10 pt-4 shadow-xl animate-in slide-in-from-bottom duration-300 sm:min-h-0 sm:rounded-[2.75rem]" onClick={(event) => event.stopPropagation()}>
         <div className="h-[3px] w-28 rounded-full bg-neutral-300" aria-hidden />
         <h1 className="mt-6 text-lg font-normal text-brand-dark">ระบุรหัสผ่าน</h1>

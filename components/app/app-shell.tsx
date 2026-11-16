@@ -88,6 +88,16 @@ export function AppShell() {
     return true
   }
 
+  const guardLockedClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (cardUnlocked) return
+    const target = event.target as HTMLElement
+    if (target.closest('[data-pin-screen]')) return
+    if (!target.closest('button, a, [role="button"], [role="tab"], summary, label[for]')) return
+    event.preventDefault()
+    event.stopPropagation()
+    requestPin()
+  }
+
   const pull = usePullDown(
     tab === 'home' && !screen && !splashVisible && !pinOpen && !pinLoading && !chatOpen && !logoutOpen,
   )
@@ -144,7 +154,10 @@ export function AppShell() {
 
   return (
     <div className="min-h-dvh bg-canvas px-0 sm:px-3 sm:py-2">
-      <div className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-white sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]">
+      <div
+        onClickCapture={guardLockedClick}
+        className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-white sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]"
+      >
         <div
           aria-hidden
           className={`pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] ${
