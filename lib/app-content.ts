@@ -213,8 +213,12 @@ export const cardProfiles = {
     seals: [],
     front: {
       small: '/images/card-front-8.png',
-      large: '/images/card-front-8.png',
-    },
+  large: '/images/card-front-8.png',
+  },
+  back: {
+  small: '/images/card-back-8.png',
+  large: '/images/card-back-8.png',
+  },
   },
   ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
   tenth: {
