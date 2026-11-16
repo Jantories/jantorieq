@@ -62,7 +62,7 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
               disabled={sent}
               onChange={(event) => setIdNumber(event.target.value.replace(/\D/g, ''))}
               placeholder={movePage.placeholder}
-              className="mt-3 h-14 w-full rounded-md border border-neutral-400 bg-white px-4 text-sm font-[100] text-neutral-800 outline-none placeholder:text-neutral-500 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:bg-neutral-100"
+              className="font-trirong mt-3 h-14 w-full rounded-md border border-neutral-400 bg-white px-4 text-sm font-[100] text-neutral-800 outline-none placeholder:text-neutral-500 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:bg-neutral-100"
             />
 
             <div className="mt-9 flex items-center gap-5">
