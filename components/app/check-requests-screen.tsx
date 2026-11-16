@@ -32,7 +32,10 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
           <HourglassLoader />
         ) : (
           <>
-        <h2 className="text-center text-lg font-[100] text-neutral-800">{checkRequestsPage.heading}</h2>
+        <h2 className="text-center text-lg font-[100] text-neutral-800">
+          <span className="block">ตรวจสอบ</span>
+          <span className="block">คำขอทางออนไลน์</span>
+        </h2>
 
         <ProfileSummary profileId={profileId} compact />
 
