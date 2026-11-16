@@ -512,7 +512,7 @@ export const documentsPage = {
   sub: 'แสดงรายการเอกสารทั้งหมด',
   // tone: blue | green | red
   groups: [
-    [{ id: 'idcard', title: 'บัตรประจำตัว', sub: 'บัตรประจำตัว', tone: 'blue' }],
+    [{ id: 'idcard', title: 'บัตรประจำตัวประชาชน', sub: 'บัตรประจำตัวประชาชน', tone: 'blue' }],
     [
       { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
       { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานที่เกิด บิดา มารดา', tone: 'green' },
