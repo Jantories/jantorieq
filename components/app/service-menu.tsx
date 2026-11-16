@@ -56,7 +56,7 @@ export function ServiceMenu({
                 <img src={icons[id]} alt="" draggable={false} className="size-[62px]" />
               </span>
               <span
-                className={`w-[76px] text-center text-xs font-normal leading-4 ${disabled ? 'text-neutral-400' : 'text-neutral-900'}`}
+                className={`w-[76px] whitespace-pre-line text-center text-xs font-normal leading-4 ${disabled ? 'text-neutral-400' : 'text-neutral-900'}`}
               >
                 {label}
               </span>

@@ -237,7 +237,7 @@ export const sections = {
 }
 
 export const services = [
-  { id: 'check', label: 'ตรวจสอบคำขอ', disabled: false },
+  { id: 'check', label: 'ตรวจสอบ\nคำขอ', disabled: false },
   { id: 'certify', label: 'การรับรองเอกสาร', disabled: false },
   { id: 'move', label: 'การแจ้งย้ายที่อยู่', disabled: false },
   { id: 'soon', label: 'เร็วๆ นี้', disabled: true },
