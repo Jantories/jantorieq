@@ -55,7 +55,7 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
                       }
                       alt=""
                       aria-hidden="true"
-                      className="size-8 object-contain"
+                      className="size-9 object-contain"
                     />
                   ) : null}
                 </span>

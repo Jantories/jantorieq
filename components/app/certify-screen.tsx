@@ -39,7 +39,7 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%88%E0%B8%AD%202569-11-16%20%E0%B9%80%E0%B8%A7%E0%B8%A5%E0%B8%B2%2015.32.13-Zwk6asqu5KIC85wcf2r3NE79u8UnfT.png"
                   alt=""
                   aria-hidden="true"
-                  className="size-7 shrink-0 object-contain"
+                  className="size-9 shrink-0 object-contain"
                 />
                 <span className="min-w-0">
                   <span className="block text-sm font-[100] leading-snug text-neutral-400">{title}</span>
