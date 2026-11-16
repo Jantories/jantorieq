@@ -1,14 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Noto_Sans_Thai } from 'next/font/google'
 import { OrientationLock } from '@/components/app/orientation-lock'
 import './globals.css'
-
-const notoThai = Noto_Sans_Thai({
-  subsets: ['thai', 'latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-thai',
-})
 
 export const metadata: Metadata = {
   title: 'แอปบริการ',
@@ -43,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="th" className={`${notoThai.variable}`}>
+    <html lang="th" className="bg-background">
       <body className="font-sans antialiased" suppressHydrationWarning>
         <OrientationLock />
         {children}
