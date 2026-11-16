@@ -34,7 +34,7 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
           <>
         <h2 className="text-center text-xl font-medium text-neutral-800">{checkRequestsPage.heading}</h2>
 
-        <ProfileSummary profileId={profileId} />
+        <ProfileSummary profileId={profileId} compact />
 
         <div className="mt-6 flex items-center gap-3 rounded-xl border border-neutral-200 bg-[#f1f2f4] px-4 py-3">
           <Smile className="size-7 shrink-0 fill-[#f6c453] text-white" strokeWidth={1.5} aria-hidden />
