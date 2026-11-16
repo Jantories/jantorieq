@@ -13,7 +13,7 @@ const icons = {
   other: FileText,
 }
 
-export function DocumentsTab({ onAction }: { onAction: (msg: string) => void }) {
+export function DocumentsTab({ onAction, onOpenIdCard }: { onAction: (msg: string) => void; onOpenIdCard: () => void }) {
   return (
     <main className="flex-1 bg-page px-5 pb-36">
       <PageTitle>{documentsPage.title}</PageTitle>
@@ -22,7 +22,14 @@ export function DocumentsTab({ onAction }: { onAction: (msg: string) => void }) 
         {documentsPage.groups.map((group, i) => (
           <ListCard key={i}>
             {group.map((doc) => (
-              <ListRow key={doc.id} icon={icons[doc.id]} tone={doc.tone} title={doc.title} sub={doc.sub} onClick={() => onAction(doc.title)} />
+              <ListRow
+                key={doc.id}
+                icon={icons[doc.id]}
+                tone={doc.tone}
+                title={doc.title}
+                sub={doc.sub}
+                onClick={() => (doc.id === 'idcard' ? onOpenIdCard() : onAction(doc.title))}
+              />
             ))}
           </ListCard>
         ))}
