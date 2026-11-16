@@ -58,6 +58,7 @@ export function AnnouncementScreen({ detail, onBack }: { detail: AnnouncementDet
         <button
           type="button"
           onClick={onBack}
+          data-no-loader
           className="h-14 w-full rounded-full bg-brand text-xl text-white transition active:scale-[0.98]"
         >
           {announcementPage.back}

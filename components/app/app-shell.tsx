@@ -33,6 +33,7 @@ const pinLoaderDurationMs = 650
 const screenLoaderDurationMs = 900
 const pressLoaderDurationMs = 700
 const pressableSelector = 'button, a, [role="button"], [role="tab"]'
+const exitSelector = '[data-no-loader], [aria-label^="ย้อนกลับ"], [aria-label^="ปิด"]'
 const serviceScreens: Record<string, Screen> = {
   check: 'checkRequests',
   certify: 'certify',
@@ -134,6 +135,7 @@ export function AppShell() {
       if (replayingClick.current || chatOpen || logoutOpen) return
       const pressed = target.closest<HTMLElement>(pressableSelector)
       if (!pressed || pressed.matches(':disabled')) return
+      if (pressed.matches(exitSelector)) return
       event.preventDefault()
       event.stopPropagation()
       if (pressLoading || unlockingProfile) return
