@@ -58,7 +58,7 @@ function CardFace({
       />
       {numberOverlay && (
         <span
-          className="pointer-events-none absolute whitespace-nowrap font-[DilleniaUPC,'Dillenia_UPC',serif] leading-none text-black"
+          className="font-trirong pointer-events-none absolute whitespace-nowrap font-normal leading-none text-black"
           style={{
             left: `${numberOverlay.x}%`,
             top: `${numberOverlay.y}%`,
@@ -71,7 +71,7 @@ function CardFace({
       )}
       {nameOverlay && (
         <span
-          className="pointer-events-none absolute whitespace-nowrap font-[DilleniaUPC,'Dillenia_UPC',serif] leading-none text-black"
+          className="font-trirong pointer-events-none absolute whitespace-nowrap font-semibold leading-none text-black"
           style={{
             left: `${nameOverlay.x}%`,
             top: `${nameOverlay.y}%`,
