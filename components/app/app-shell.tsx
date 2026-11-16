@@ -135,12 +135,15 @@ export function AppShell() {
 
   const guardLockedClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement
-    if (target.closest('[data-pin-screen]')) return
+    if (target.closest('[data-pin-screen], [data-card-flip]')) return
     if (cardUnlocked) {
       if (replayingClick.current || chatOpen || logoutOpen) return
       const pressed = target.closest<HTMLElement>(pressableSelector)
       if (!pressed || pressed.matches(':disabled')) return
-      if (pressed.closest(exitSelector) || !pressed.closest('[data-service]')) return
+      const navTab = pressed.closest<HTMLElement>('[data-nav-tab]')?.dataset.navTab
+      const opensLoadingTab = !!navTab && navTab !== 'home' && navTab !== tab
+      if (pressed.closest(exitSelector)) return
+      if (!opensLoadingTab && !pressed.closest('[data-service]')) return
       event.preventDefault()
       event.stopPropagation()
       if (pressLoading || unlockingProfile) return
