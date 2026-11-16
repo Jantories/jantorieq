@@ -296,19 +296,20 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     <div className="px-5">
       {renderCard({ onTap: handleCardTap, isFlipped: flipped })}
       <div className="mt-3 flex items-center justify-center gap-4">
-        <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} className={circleBtn}>
+        <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} data-no-loader className={circleBtn}>
           <PersonIcon className="size-[18px]" />
         </button>
         <button
           type="button"
           onClick={() => openExpanded()}
           disabled={locked}
+          data-no-loader
           className="flex h-8 items-center gap-2 rounded-full bg-brand-dark pl-[19px] pr-[13px] text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none"
         >
           <ExpandIcon className="size-5" strokeWidth={1.4} />
           <span className="text-xs font-medium">{card.expandLabel}</span>
         </button>
-        <button type="button" onClick={flip} disabled={locked} aria-label="พลิกบัตร" className={circleBtn}>
+        <button type="button" onClick={flip} disabled={locked} aria-label="พลิกบัตร" data-no-loader className={circleBtn}>
           <FlipIcon className="size-[18px]" />
         </button>
       </div>
