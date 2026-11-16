@@ -31,6 +31,8 @@ type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
 const screenLoaderDurationMs = 900
+const pressLoaderDurationMs = 700
+const pressableSelector = 'button, a, [role="button"], [role="tab"]'
 const serviceScreens: Record<string, Screen> = {
   check: 'checkRequests',
   certify: 'certify',
@@ -42,7 +44,7 @@ export function AppShell() {
   const [splashVisible, setSplashVisible] = useState(true)
   const [pinOpen, setPinOpen] = useState(false)
   const [pinLoading, setPinLoading] = useState(false)
-  const [pendingScreen, setPendingScreen] = useState<Screen>(null)
+  const [pressLoading, setPressLoading] = useState(false)
   const [unlockingProfile, setUnlockingProfile] = useState<keyof typeof profiles | null>(null)
   const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
@@ -53,6 +55,8 @@ export function AppShell() {
   const [toast, setToast] = useState<string | null>(null)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const screenAfterUnlock = useRef<Screen>(null)
+  const pressTarget = useRef<HTMLElement | null>(null)
+  const replayingClick = useRef(false)
 
   const notify = useCallback((message: string) => {
     setToast(message)
@@ -83,17 +87,18 @@ export function AppShell() {
   }
 
   useEffect(() => {
-    if (!pendingScreen) return
+    if (!pressLoading) return
     const id = window.setTimeout(() => {
-      setScreen(pendingScreen)
-      setPendingScreen(null)
-    }, screenLoaderDurationMs)
+      const element = pressTarget.current
+      pressTarget.current = null
+      setPressLoading(false)
+      if (!element?.isConnected) return
+      replayingClick.current = true
+      element.click()
+      replayingClick.current = false
+    }, pressLoaderDurationMs)
     return () => window.clearTimeout(id)
-  }, [pendingScreen])
-
-  const openScreenWithLoader = (target: Screen) => {
-    if (!pendingScreen) setPendingScreen(target)
-  }
+  }, [pressLoading])
 
   useEffect(() => {
     const saved = window.localStorage.getItem(lastProfileKey)
@@ -123,9 +128,19 @@ export function AppShell() {
   }, [unlockingProfile])
 
   const guardLockedClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (cardUnlocked) return
     const target = event.target as HTMLElement
     if (target.closest('[data-pin-screen]')) return
+    if (cardUnlocked) {
+      if (replayingClick.current || chatOpen || logoutOpen) return
+      const pressed = target.closest<HTMLElement>(pressableSelector)
+      if (!pressed || pressed.matches(':disabled')) return
+      event.preventDefault()
+      event.stopPropagation()
+      if (pressLoading || unlockingProfile) return
+      pressTarget.current = pressed
+      setPressLoading(true)
+      return
+    }
     if (!target.closest('button, a, [role="button"], [role="tab"], summary, label[for]')) return
     const service = target.closest<HTMLElement>('[data-service]')?.dataset.service
     screenAfterUnlock.current = service ? (serviceScreens[service] ?? null) : null
@@ -174,9 +189,9 @@ export function AppShell() {
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
             <ServiceMenu
-              onOpenCheck={() => openScreenWithLoader('checkRequests')}
-              onOpenCertify={() => openScreenWithLoader('certify')}
-              onOpenMove={() => openScreenWithLoader('move')}
+              onOpenCheck={() => setScreen('checkRequests')}
+              onOpenCertify={() => setScreen('certify')}
+              onOpenMove={() => setScreen('move')}
             />
             <BannerCarousel onAction={notify} />
             <Announcements
@@ -230,7 +245,7 @@ export function AppShell() {
         )}
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
-        {(pinLoading || pendingScreen || unlockingProfile) && <UnlockLoader />}
+        {(pinLoading || pressLoading || unlockingProfile) && <UnlockLoader />}
         {splashVisible && <SplashScreen onDone={finishSplash} />}
         {pinOpen && (
           <PinScreen
