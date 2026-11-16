@@ -75,18 +75,6 @@ const providedCardSeals: CardSeal[] = [
   { x: 17.66, y: 76.2, size: 11.93, angle: 0 },
 ]
 
-// Seal positions measured from the provided holographic template card (profile 8).
-const eighthCardSeals: CardSeal[] = [
-  { x: 1.4, y: 22.76, size: 8.85, angle: 180 },
-  { x: 23.28, y: 30.35, size: 13.97, angle: 315 },
-  { x: 52.61, y: 23.52, size: 13.97, angle: 90 },
-  { x: 75.42, y: 19.73, size: 14.9, angle: 225 },
-  { x: 68.25, y: 51.14, size: 14.43, angle: 45 },
-  { x: 45.34, y: 71.32, size: 14.43, angle: 270 },
-  { x: 69.09, y: 90.29, size: 15.83, angle: 135 },
-  { x: 13.5, y: 78.91, size: 13.97, angle: 0 },
-]
-
 const firstCard = {
   ...card,
   seals: providedCardSeals,
@@ -222,7 +210,7 @@ export const cardProfiles = {
     firstNameEn: 'Mr. Eighth',
     lastNameEn: 'User',
     photoCode: '0000-00-00000008',
-    seals: eighthCardSeals,
+    seals: [],
     front: {
       small: '/images/card-front-8.png',
       large: '/images/card-front-8.png',
