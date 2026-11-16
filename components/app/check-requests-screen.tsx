@@ -1,6 +1,7 @@
 import { ArrowLeftRight, ChevronLeft, Copy, House, Smile, UserPen } from 'lucide-react'
 import { checkRequestsPage } from '@/lib/app-content'
 import { ProfileSummary, type ProfileId } from './profile-summary'
+import { HourglassLoader, useScreenReady } from './hourglass-loader'
 
 const requestIcons = {
   certify: Copy,
@@ -10,6 +11,7 @@ const requestIcons = {
 
 export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileId; onBack: () => void }) {
   const { greeting } = checkRequestsPage
+  const ready = useScreenReady()
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-brand">
@@ -26,6 +28,10 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
       </header>
 
       <div className="flex flex-1 flex-col rounded-t-[2.5rem] bg-white px-5 pb-32 pt-9">
+        {!ready ? (
+          <HourglassLoader />
+        ) : (
+          <>
         <h2 className="text-center text-xl font-medium text-neutral-800">{checkRequestsPage.heading}</h2>
 
         <ProfileSummary profileId={profileId} />
@@ -67,6 +73,8 @@ export function CheckRequestsScreen({ profileId, onBack }: { profileId: ProfileI
           <p>{checkRequestsPage.agency}</p>
           <p>{checkRequestsPage.version}</p>
         </footer>
+          </>
+        )}
       </div>
     </main>
   )

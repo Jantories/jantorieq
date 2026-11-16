@@ -307,6 +307,70 @@ body {
   }
 }
 
+.hourglass-loader {
+  animation: hourglass-flip 3s ease-in-out infinite;
+}
+
+.hourglass-sand-top,
+.hourglass-sand-bottom {
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+
+.hourglass-sand-top {
+  animation: hourglass-drain 3s linear infinite;
+}
+
+.hourglass-sand-bottom {
+  animation: hourglass-fill 3s linear infinite;
+}
+
+.hourglass-stream {
+  animation: hourglass-stream 3s linear infinite;
+}
+
+@keyframes hourglass-flip {
+  0%,
+  72% {
+    transform: rotate(0deg);
+  }
+  92%,
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes hourglass-drain {
+  0% {
+    transform: scaleY(1);
+  }
+  70%,
+  100% {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes hourglass-fill {
+  0% {
+    transform: scaleY(0);
+  }
+  70%,
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes hourglass-stream {
+  0%,
+  69% {
+    opacity: 1;
+  }
+  70%,
+  100% {
+    opacity: 0;
+  }
+}
+
 .splash-dark-bg {
   background-color: #282934;
   background-image: radial-gradient(ellipse 75% 38% at 50% 52%, #3a3c47 0%, #2d2e39 55%, rgb(35 36 47 / 0) 100%),
@@ -319,8 +383,16 @@ body {
   }
 
   .unlock-loader-wave,
-  .unlock-loader-wave-back {
+  .unlock-loader-wave-back,
+  .hourglass-loader,
+  .hourglass-sand-top,
+  .hourglass-sand-bottom,
+  .hourglass-stream {
     animation: none;
+  }
+
+  .hourglass-sand-bottom {
+    transform: scaleY(0);
   }
 }
 
