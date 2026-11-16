@@ -30,12 +30,14 @@ type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify
 
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
+const screenLoaderDurationMs = 900
 
 export function AppShell() {
   const [authenticatedAs, setAuthenticatedAs] = useState<keyof typeof profiles>('first')
   const [splashVisible, setSplashVisible] = useState(true)
   const [pinOpen, setPinOpen] = useState(false)
   const [pinLoading, setPinLoading] = useState(false)
+  const [pendingScreen, setPendingScreen] = useState<Screen>(null)
   const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
@@ -71,6 +73,19 @@ export function AppShell() {
 
   const requestPin = () => {
     if (!pinOpen && !pinLoading) setPinLoading(true)
+  }
+
+  useEffect(() => {
+    if (!pendingScreen) return
+    const id = window.setTimeout(() => {
+      setScreen(pendingScreen)
+      setPendingScreen(null)
+    }, screenLoaderDurationMs)
+    return () => window.clearTimeout(id)
+  }, [pendingScreen])
+
+  const openScreenWithLoader = (target: Screen) => {
+    if (!pendingScreen) setPendingScreen(target)
   }
 
   useEffect(() => {
@@ -137,7 +152,11 @@ export function AppShell() {
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>
           <div className="-mt-6 rounded-t-[2rem] bg-white pt-5">
-            <ServiceMenu onOpenCheck={() => setScreen('checkRequests')} onOpenCertify={() => setScreen('certify')} onOpenMove={() => setScreen('move')} />
+            <ServiceMenu
+              onOpenCheck={() => openScreenWithLoader('checkRequests')}
+              onOpenCertify={() => openScreenWithLoader('certify')}
+              onOpenMove={() => openScreenWithLoader('move')}
+            />
             <BannerCarousel onAction={notify} />
             <Announcements
               onOpen={(index) => {
@@ -190,7 +209,7 @@ export function AppShell() {
         )}
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
-        {pinLoading && <UnlockLoader />}
+        {(pinLoading || pendingScreen) && <UnlockLoader />}
         {splashVisible && <SplashScreen onDone={finishSplash} />}
         {pinOpen && <PinScreen onClose={() => setPinOpen(false)} onUnlock={unlock} />}
         {logoutOpen && (
