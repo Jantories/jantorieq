@@ -43,6 +43,7 @@ export function AppShell() {
   const [pinOpen, setPinOpen] = useState(false)
   const [pinLoading, setPinLoading] = useState(false)
   const [pendingScreen, setPendingScreen] = useState<Screen>(null)
+  const [unlockingProfile, setUnlockingProfile] = useState<keyof typeof profiles | null>(null)
   const [cardUnlocked, setCardUnlocked] = useState(false)
   const [tab, setTab] = useState<TabId>('home')
   const [screen, setScreen] = useState<Screen>(null)
@@ -78,7 +79,7 @@ export function AppShell() {
   }, [pinLoading])
 
   const requestPin = () => {
-    if (!pinOpen && !pinLoading) setPinLoading(true)
+    if (!pinOpen && !pinLoading && !unlockingProfile) setPinLoading(true)
   }
 
   useEffect(() => {
@@ -103,14 +104,23 @@ export function AppShell() {
     const profileId = pinProfiles[pin as keyof typeof pinProfiles]
     if (!profileId) return false
     window.localStorage.setItem(lastProfileKey, profileId)
-    setAuthenticatedAs(profileId)
-    setCardUnlocked(true)
     setPinOpen(false)
-    const target = screenAfterUnlock.current
-    screenAfterUnlock.current = null
-    if (target) setPendingScreen(target)
+    setUnlockingProfile(profileId)
     return true
   }
+
+  useEffect(() => {
+    if (!unlockingProfile) return
+    const id = window.setTimeout(() => {
+      setAuthenticatedAs(unlockingProfile)
+      setCardUnlocked(true)
+      const target = screenAfterUnlock.current
+      screenAfterUnlock.current = null
+      if (target) setScreen(target)
+      setUnlockingProfile(null)
+    }, screenLoaderDurationMs)
+    return () => window.clearTimeout(id)
+  }, [unlockingProfile])
 
   const guardLockedClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (cardUnlocked) return
@@ -220,7 +230,7 @@ export function AppShell() {
         )}
 
         {chatOpen && <ChatScreen onClose={() => setChatOpen(false)} />}
-        {(pinLoading || pendingScreen) && <UnlockLoader />}
+        {(pinLoading || pendingScreen || unlockingProfile) && <UnlockLoader />}
         {splashVisible && <SplashScreen onDone={finishSplash} />}
         {pinOpen && (
           <PinScreen
