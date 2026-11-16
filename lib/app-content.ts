@@ -513,7 +513,10 @@ export const documentsPage = {
   // tone: blue | green | red
   groups: [
     [{ id: 'idcard', title: 'บัตรประจำตัวประชาชน', sub: 'บัตรประจำตัวประชาชน', tone: 'blue' }],
-    [{ id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' }],
+    [
+      { id: 'house', title: 'ทะเบียนบ้าน', sub: 'ข้อมูลทะเบียนบ้าน', tone: 'green' },
+      { id: 'birth', title: 'สูติบัตร', sub: 'ข้อมูลการเกิด สถานที่เกิด บิดา มารดา', tone: 'green' },
+    ],
     [
       { id: 'marriage', title: 'ทะเบียนสมรส', sub: 'ทะเบียนการสมรส', tone: 'red' },
       { id: 'divorce', title: 'ทะเบียนหย่า', sub: 'ทะเบียนการหย่า', tone: 'red' },
