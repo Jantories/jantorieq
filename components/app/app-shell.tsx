@@ -14,6 +14,7 @@ import { HistoryTab } from './history-tab'
 import { SettingsTab } from './settings-tab'
 import { NotificationsScreen } from './notifications-screen'
 import { CardInfoScreen } from './card-info-screen'
+import { DocumentIdScreen } from './document-id-screen'
 import { ChatScreen } from './chat-screen'
 import { CheckRequestsScreen } from './check-requests-screen'
 import { CertifyScreen } from './certify-screen'
@@ -26,7 +27,7 @@ import { UnlockLoader } from './unlock-loader'
 import { SplashScreen } from './splash-screen'
 import { announcements, cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
-type Screen = 'notifications' | 'cardInfo' | 'scan' | 'checkRequests' | 'certify' | 'move' | 'announcement' | null
+type Screen = 'notifications' | 'cardInfo' | 'documentId' | 'scan' | 'checkRequests' | 'certify' | 'move' | 'announcement' | null
 
 const lastProfileKey = 'last-profile'
 const pinLoaderDurationMs = 650
@@ -162,6 +163,7 @@ export function AppShell() {
   function renderContent() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
+    if (screen === 'documentId') return <DocumentIdScreen cardImage={activeCard.front.large} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
     if (screen === 'certify') return <CertifyScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
@@ -170,7 +172,7 @@ export function AppShell() {
       const detail = announcements[announcementIndex]?.detail
       if (detail) return <AnnouncementScreen detail={detail} onBack={() => setScreen(null)} />
     }
-    if (tab === 'docs') return <DocumentsTab onAction={notify} />
+    if (tab === 'docs') return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} />
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
     return (
@@ -229,7 +231,7 @@ export function AppShell() {
           onClick={() => setChatOpen(true)}
           aria-label="แชทบอท"
           className={`fixed right-[max(1rem,calc(50%-14rem+1rem))] z-30 flex size-[54px] items-center justify-center rounded-full bg-white text-brand shadow-lg ring-1 ring-black/5 transition active:scale-95 ${
-            screen === 'certify' || screen === 'announcement' ? 'bottom-24' : screen ? 'bottom-8' : 'bottom-[calc(max(env(safe-area-inset-bottom),0.5rem)_+_84px)]'
+            screen === 'certify' || screen === 'announcement' ? 'bottom-24' : screen === 'documentId' ? 'bottom-36' : screen ? 'bottom-8' : 'bottom-[calc(max(env(safe-area-inset-bottom),0.5rem)_+_84px)]'
           }`}
         >
           <MessageCircleMore className="size-7" />
