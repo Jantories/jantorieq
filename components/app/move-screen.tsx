@@ -41,7 +41,7 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
         ) : (
           <>
         <section className="rounded-md bg-white p-1.5 shadow-[0_1px_6px_rgba(0,0,0,0.18)]">
-          <h2 className="bg-brand px-4 py-5 text-center text-xl font-medium text-white">{movePage.cardTitle}</h2>
+          <h2 className="bg-brand px-4 py-5 text-center text-lg font-[100] text-white">{movePage.cardTitle}</h2>
 
           <form
             className="px-3 pb-6 pt-5"
@@ -62,14 +62,14 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
               disabled={sent}
               onChange={(event) => setIdNumber(event.target.value.replace(/\D/g, ''))}
               placeholder={movePage.placeholder}
-              className="mt-3 h-14 w-full rounded-md border border-neutral-400 bg-white px-4 text-base font-[100] text-neutral-800 outline-none placeholder:text-neutral-500 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:bg-neutral-100"
+              className="mt-3 h-14 w-full rounded-md border border-neutral-400 bg-white px-4 text-sm font-[100] text-neutral-800 outline-none placeholder:text-neutral-500 focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:bg-neutral-100"
             />
 
             <div className="mt-9 flex items-center gap-5">
               <button
                 type="submit"
                 disabled={!ready || sent}
-                className="flex h-14 flex-1 items-center justify-between rounded-md bg-brand px-4 text-base font-[100] text-white transition active:scale-[0.98] disabled:bg-neutral-200 disabled:text-neutral-500"
+                className="flex h-14 flex-1 items-center justify-between rounded-md bg-brand px-4 text-sm font-[100] text-white transition active:scale-[0.98] disabled:bg-neutral-200 disabled:text-neutral-500"
               >
                 {movePage.send}
                 <Send className="size-5" aria-hidden />
@@ -77,18 +77,18 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
               <button
                 type="button"
                 onClick={reset}
-                className="flex h-14 flex-1 items-center justify-between rounded-md border border-brand px-4 text-base font-[100] text-brand transition hover:bg-brand/5 active:scale-[0.98]"
+                className="flex h-14 flex-1 items-center justify-between rounded-md border border-brand px-4 text-sm font-[100] text-brand transition hover:bg-brand/5 active:scale-[0.98]"
               >
                 {movePage.reset}
                 <RefreshCw className="size-5" aria-hidden />
               </button>
             </div>
 
-            <p className="mt-5 text-base font-[100] text-brand">{movePage.statusLabel}</p>
+            <p className="mt-5 text-sm font-[100] text-brand">{movePage.statusLabel}</p>
             <p
               role="status"
               aria-live="polite"
-              className="mt-5 rounded-md bg-neutral-200 px-4 py-5 text-center text-base font-[100] text-neutral-700 shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+              className="mt-5 rounded-md bg-neutral-200 px-4 py-5 text-center text-sm font-[100] text-neutral-700 shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
             >
               {status}
             </p>
@@ -107,7 +107,7 @@ export function MoveScreen({ onBack }: { onBack: () => void }) {
             />
           </div>
           <p className="mt-3 text-center text-2xl font-medium text-[#e8c75a]">{movePage.book.title}</p>
-          <p className="mt-8 flex justify-center gap-5 text-base font-[100] text-[#e8c75a]">
+          <p className="mt-8 flex justify-center gap-5 text-sm font-[100] text-[#e8c75a]">
             <span>{movePage.book.agency}</span>
             <span>{movePage.book.ministry}</span>
           </p>

@@ -25,11 +25,11 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
           <HourglassLoader />
         ) : (
           <>
-        <h2 className="text-center text-xl font-medium text-neutral-800">{certifyPage.heading}</h2>
+        <h2 className="text-center text-lg font-[100] text-neutral-800">{certifyPage.heading}</h2>
 
-        <ProfileSummary profileId={profileId} />
+        <ProfileSummary profileId={profileId} lightText smallImage />
 
-        <h3 className="mt-8 text-lg font-bold text-brand">{certifyPage.sectionTitle}</h3>
+        <h3 className="mt-8 text-base font-[100] text-brand">{certifyPage.sectionTitle}</h3>
 
         <ul className="mt-2 rounded-xl border border-neutral-200 bg-[#f1f2f4] px-4">
           {certifyPage.documents.map(({ id, title, sub }) => (
@@ -37,15 +37,15 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
               <button type="button" className="flex w-full items-center gap-4 py-4 text-left transition active:opacity-70">
                 <Eye className="size-7 shrink-0 text-[#4a6fc9]" strokeWidth={2} aria-hidden />
                 <span className="min-w-0">
-                  <span className="block text-base font-[100] leading-snug text-neutral-400">{title}</span>
-                  <span className="block text-base font-[100] leading-snug text-neutral-400">{sub}</span>
+                  <span className="block text-sm font-[100] leading-snug text-neutral-400">{title}</span>
+                  <span className="block text-sm font-[100] leading-snug text-neutral-400">{sub}</span>
                 </span>
               </button>
             </li>
           ))}
         </ul>
 
-        <footer className="mt-4 space-y-0.5 text-right text-base leading-snug text-neutral-400">
+        <footer className="mt-4 space-y-0.5 text-right text-sm font-[100] leading-snug text-neutral-400">
           <p>{checkRequestsPage.copyright}</p>
           <p>{checkRequestsPage.agency}</p>
           <p>{checkRequestsPage.version}</p>
@@ -56,7 +56,7 @@ export function CertifyScreen({ profileId, onBack }: { profileId: ProfileId; onB
 
       {ready && (
         <div className="pointer-events-none fixed bottom-0 left-1/2 z-20 w-full max-w-md -translate-x-1/2 px-5 pb-[max(env(safe-area-inset-bottom),1rem)]">
-          <p className="pointer-events-auto flex items-center gap-3 rounded-lg bg-[#fdf5df] px-4 py-3 text-base text-neutral-800">
+          <p className="pointer-events-auto flex items-center gap-3 rounded-lg bg-[#fdf5df] px-4 py-3 text-sm font-[100] text-neutral-800">
             <Info className="size-6 shrink-0 fill-[#f5a623] text-white" aria-hidden />
             {certifyPage.notice}
           </p>
