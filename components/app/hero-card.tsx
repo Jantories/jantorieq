@@ -265,7 +265,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
       onClick={onTap}
     >
       <div
-        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
+        className="relative aspect-[1.585/1] w-full shadow-xl [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} seals={card.seals} />
