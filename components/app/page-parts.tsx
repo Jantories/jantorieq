@@ -53,18 +53,29 @@ type RowProps = {
   title: string
   sub: string
   titleClassName?: string
+  subClassName?: string
   onClick?: () => void
   trailing?: React.ReactNode
 }
 
-export function ListRow({ icon, iconImageSrc, tone, title, sub, titleClassName = 'text-neutral-900', onClick, trailing }: RowProps) {
+export function ListRow({
+  icon,
+  iconImageSrc,
+  tone,
+  title,
+  sub,
+  titleClassName = 'text-lg font-medium leading-snug text-neutral-900',
+  subClassName = 'text-sm text-neutral-500',
+  onClick,
+  trailing,
+}: RowProps) {
   const content = (
     <>
       <IconBubble icon={icon} imageSrc={iconImageSrc} tone={tone} />
       <span className="flex min-w-0 flex-1 items-center gap-3 self-stretch border-b border-neutral-100 py-4 group-last:border-0">
         <span className="min-w-0 flex-1">
-          <span className={`block text-lg font-medium leading-snug ${titleClassName}`}>{title}</span>
-          <span className="block text-sm text-neutral-500">{sub}</span>
+          <span className={`block ${titleClassName}`}>{title}</span>
+          <span className={subClassName}>{sub}</span>
         </span>
         {trailing}
       </span>

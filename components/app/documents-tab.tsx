@@ -54,6 +54,8 @@ export function DocumentsTab({
                 tone={doc.tone}
                 title={doc.title}
                 sub={doc.sub}
+                titleClassName="text-base font-[100] leading-snug text-neutral-900"
+                subClassName="text-sm font-[100] text-neutral-500"
                 onClick={() => {
                   if (doc.id === 'idcard') onOpenIdCard()
                   else if (doc.id in documentNotFoundDialog.messages) onNotFound(doc.id as NotFoundDocumentId)
