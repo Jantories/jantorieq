@@ -63,6 +63,15 @@ export type CardSeal = {
   angle: number
 }
 
+export type NumberOverlay = {
+  text: string
+  /** Left edge / vertical centre of the text, % of card width / height */
+  x: number
+  y: number
+  /** Font size, % of card width (cqw) */
+  size: number
+}
+
 // Seal positions for cards built from a provided full-card image (same template).
 const providedCardSeals: CardSeal[] = [
   { x: -1.31, y: 21.37, size: 11.93, angle: 180 },
@@ -205,12 +214,14 @@ export const cardProfiles = {
   },
   eighth: {
     ...firstCard,
-    number: '8 8888 88888 88 8',
+    number: '1 1017 00437 68 0',
     fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด',
     firstNameEn: 'Mr. Eighth',
     lastNameEn: 'User',
     photoCode: '0000-00-00000008',
     seals: [],
+    // 58.4px on the 1074px-wide card image
+    numberOverlay: { text: '1 1017 00437 68 0', x: 43.6, y: 18.5, size: 5.44 },
     front: {
       small: '/images/card-front-8.png',
   large: '/images/card-front-8.png',
