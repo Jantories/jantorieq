@@ -68,13 +68,22 @@ export function createInkSparkle(
 
   const program = gl.createProgram()
   if (!program) return null
-  const vertexShader = compile(gl, gl.VERTEX_SHADER, vertexSource)
-  const fragmentShader = compile(gl, gl.FRAGMENT_SHADER, fragmentSource)
-  gl.attachShader(program, vertexShader)
-  gl.attachShader(program, fragmentShader)
-  gl.linkProgram(program)
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    throw new Error(`Program link failed: ${gl.getProgramInfoLog(program)}`)
+  let vertexShader: WebGLShader | null = null
+  let fragmentShader: WebGLShader | null = null
+  try {
+    vertexShader = compile(gl, gl.VERTEX_SHADER, vertexSource)
+    fragmentShader = compile(gl, gl.FRAGMENT_SHADER, fragmentSource)
+    gl.attachShader(program, vertexShader)
+    gl.attachShader(program, fragmentShader)
+    gl.linkProgram(program)
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      throw new Error(`Program link failed: ${gl.getProgramInfoLog(program)}`)
+    }
+  } catch (error) {
+    if (vertexShader) gl.deleteShader(vertexShader)
+    if (fragmentShader) gl.deleteShader(fragmentShader)
+    gl.deleteProgram(program)
+    throw error
   }
   gl.useProgram(program)
 
@@ -170,13 +179,23 @@ export function createInkSparkle(
     if (!frame) frame = requestAnimationFrame(tick)
   }
 
+  const handleContextLost = (event: Event) => {
+    event.preventDefault()
+    cancelAnimationFrame(frame)
+    frame = 0
+    ripples = []
+  }
+  canvas.addEventListener('webglcontextlost', handleContextLost)
+
   resize()
 
   return {
     spawn,
     resize,
     destroy: () => {
+      canvas.removeEventListener('webglcontextlost', handleContextLost)
       cancelAnimationFrame(frame)
+      frame = 0
       ripples = []
       gl.deleteProgram(program)
       gl.deleteShader(vertexShader)

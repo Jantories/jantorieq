@@ -23,7 +23,13 @@ export function SparkleCard({ fragmentSource, vertexSource }: SparkleCardProps) 
     const container = containerRef.current
     if (!canvas || !container) return
 
-    sparkleRef.current = createInkSparkle(canvas, fragmentSource, vertexSource, SPARKLE_COLOR)
+    try {
+      sparkleRef.current = createInkSparkle(canvas, fragmentSource, vertexSource, SPARKLE_COLOR)
+    } catch (error) {
+      console.error('Ink sparkle disabled:', error instanceof Error ? error.message : error)
+      sparkleRef.current = null
+    }
+    if (!sparkleRef.current) return
 
     const observer = new ResizeObserver(() => sparkleRef.current?.resize())
     observer.observe(container)
