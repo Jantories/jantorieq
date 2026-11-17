@@ -214,22 +214,20 @@ export const cardProfiles = {
   },
   eighth: {
     ...firstCard,
-    number: '1 1017 00437 68 0',
+    number: '8 8888 88888 88 8',
     fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด',
     firstNameEn: 'Mr. Eighth',
     lastNameEn: 'User',
     photoCode: '0000-00-00000008',
     seals: [],
-    // 58.4px on the 1074px-wide card image
-    numberOverlay: { text: '1 1017 00437 68 0', x: 43.6, y: 18.5, size: 5.44 },
     front: {
-      small: '/images/card-front-8.png',
-  large: '/images/card-front-8.png',
-  },
-  back: {
-  small: '/images/card-back-8.png',
-  large: '/images/card-back-8.png',
-  },
+      small: '/images/card-8-photo.png',
+      large: '/images/card-8-photo.png',
+    },
+    back: {
+      small: '/images/card-8-photo.png',
+      large: '/images/card-8-photo.png',
+    },
   },
   ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
   tenth: {
