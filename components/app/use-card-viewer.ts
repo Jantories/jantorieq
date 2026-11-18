@@ -10,8 +10,9 @@ const DOUBLE_TAP_ZOOM = 2
 
 type View = { zoom: number; x: number; y: number }
 
-// Pinch, pan and double-tap zoom for a card shown rotated 90deg inside a full-screen dialog.
-export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => void) {
+// Pinch, pan and double-tap zoom for a card shown inside a full-screen dialog.
+// Landscape cards are rotated 90deg to fill the portrait screen; portrait documents use rotation 0.
+export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => void, rotation: 0 | 90 = 90) {
   const contentRef = useRef<HTMLDivElement>(null)
   const swipeRef = useRef<{ x: number; y: number } | null>(null)
   const viewRef = useRef<View>({ zoom: 1, x: 0, y: 0 })
@@ -20,6 +21,14 @@ export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => vo
 
   function clampPan(pan: { x: number; y: number }, zoom: number) {
     const viewportWidth = Math.min(window.innerWidth, 448)
+    if (rotation === 0) {
+      const height = Math.min(window.innerHeight * 0.82, (viewportWidth - 32) / ratio)
+      const width = height * ratio
+      const ease = Math.min(1, Math.max(0, (zoom - 1) / 0.5))
+      const limitX = Math.max(0, (width * zoom - viewportWidth) / 2 + EDGE_OVERSHOOT) * ease
+      const limitY = Math.max(0, (height * zoom - window.innerHeight) / 2 + EDGE_OVERSHOOT) * ease
+      return { x: Math.max(-limitX, Math.min(limitX, pan.x)), y: Math.max(-limitY, Math.min(limitY, pan.y)) }
+    }
     const cardWidth = Math.min(window.innerHeight * 0.78, (viewportWidth - 32) * ratio, 640)
     const cardHeight = cardWidth / ratio
     const easing = Math.min(1, Math.max(0, (zoom - 1) / 0.5))
@@ -32,7 +41,7 @@ export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => vo
     viewRef.current = { zoom, x: pan.x, y: pan.y }
     beginGesture()
     if (contentRef.current) {
-      contentRef.current.style.transform = `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom}) rotate(90deg)`
+      contentRef.current.style.transform = `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoom}) rotate(${rotation}deg)`
       promoteLayer(contentRef.current)
     }
     endGesture()
@@ -102,7 +111,7 @@ export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => vo
     if (event.touches.length === 0 && start && onSwipe && !touchRef.current.pinching && viewRef.current.zoom === 1) {
       const end = event.changedTouches[0]
       const delta = toScreenDelta(end.clientX - start.x, end.clientY - start.y)
-      if (Math.abs(delta.x) > 50 && Math.abs(delta.x) > Math.abs(delta.y) * 1.5) onSwipe(delta.x < 0 ? 1 : -1)
+      if (Math.abs(delta.y) > 50 && Math.abs(delta.y) > Math.abs(delta.x) * 1.5) onSwipe(delta.y < 0 ? 1 : -1)
     }
     if (event.touches.length === 0) swipeRef.current = null
     touchRef.current.distance = 0

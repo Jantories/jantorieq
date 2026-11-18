@@ -33,8 +33,8 @@ export function HouseRegistrationScreen({ onBack }: Props) {
     if (event.detail >= 2) viewer.toggleZoom()
   }
 
-  function openFull() {
-    setActiveIndex(0)
+  function openFull(index = 0) {
+    setActiveIndex(index)
     setIsFullOpen(true)
   }
 
@@ -46,8 +46,8 @@ export function HouseRegistrationScreen({ onBack }: Props) {
   useEffect(() => {
     if (!isFullOpen) return
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'ArrowRight') goTo(activeIndex + 1)
-      if (event.key === 'ArrowLeft') goTo(activeIndex - 1)
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') goTo(activeIndex + 1)
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') goTo(activeIndex - 1)
       if (event.key === 'Escape') closeFull()
     }
     window.addEventListener('keydown', onKeyDown)
@@ -69,15 +69,23 @@ export function HouseRegistrationScreen({ onBack }: Props) {
         </div>
 
         <div className="mt-8 flex flex-col gap-6">
-          {SLIDES.map(({ id, Artwork }) => (
-            <Artwork key={id} className="overflow-hidden rounded-xl shadow-md" />
+          {SLIDES.map(({ id, Artwork }, index) => (
+            <div
+              key={id}
+              className="cursor-zoom-in select-none [touch-action:manipulation]"
+              onClick={(event) => {
+                if (event.detail >= 2) openFull(index)
+              }}
+            >
+              <Artwork className="overflow-hidden rounded-xl shadow-md" />
+            </div>
           ))}
         </div>
 
         <div className="mt-auto pt-8">
           <button
             type="button"
-            onClick={openFull}
+            onClick={() => openFull(0)}
             className="flex min-h-16 w-full items-center justify-center rounded-full bg-brand px-6 py-4 text-xl font-medium text-white transition hover:bg-brand-dark active:scale-[0.99]"
           >
             ดูภาพเต็ม
@@ -107,8 +115,8 @@ export function HouseRegistrationScreen({ onBack }: Props) {
           </button>
 
           <div
-            className="flex size-full transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            className="flex size-full flex-col transition-transform duration-500 ease-out"
+            style={{ transform: `translateY(-${activeIndex * 100}%)` }}
           >
             {SLIDES.map(({ id, label, Artwork }, index) => (
               <div
@@ -133,22 +141,6 @@ export function HouseRegistrationScreen({ onBack }: Props) {
                   <Artwork className="size-full" />
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div
-            className="absolute inset-x-0 bottom-[max(env(safe-area-inset-bottom),1.5rem)] z-10 flex items-center justify-center gap-2"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {SLIDES.map(({ id, label }, index) => (
-              <button
-                key={id}
-                type="button"
-                aria-label={`ไปที่${label}`}
-                aria-current={index === activeIndex}
-                onClick={() => goTo(index)}
-                className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-6 bg-white' : 'w-2 bg-white/50'}`}
-              />
             ))}
           </div>
         </div>
