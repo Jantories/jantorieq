@@ -49,10 +49,38 @@ async function fetchDatedSvg([src, dateKey]: readonly [string, string]) {
  * Returns undefined until the image is ready.
  */
 export function useDatedCertificateImage(src: string) {
-  const dateKey = getTodayKey()
+  const [dateKey, setDateKey] = useState(getTodayKey)
+
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>
+    const syncDate = () => setDateKey(getTodayKey())
+
+    const scheduleNextMidnight = () => {
+      // Asia/Bangkok is UTC+7 with no daylight saving.
+      const dayMs = 24 * 60 * 60 * 1000
+      const msIntoBangkokDay = (Date.now() + 7 * 60 * 60 * 1000) % dayMs
+      timer = setTimeout(() => {
+        syncDate()
+        scheduleNextMidnight()
+      }, dayMs - msIntoBangkokDay + 500)
+    }
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') syncDate()
+    }
+
+    scheduleNextMidnight()
+    document.addEventListener('visibilitychange', handleVisibility)
+    return () => {
+      clearTimeout(timer)
+      document.removeEventListener('visibilitychange', handleVisibility)
+    }
+  }, [])
+
   const { data: svg } = useSWR([src, dateKey] as const, fetchDatedSvg, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
+    keepPreviousData: true,
   })
   const [objectUrl, setObjectUrl] = useState<string>()
 
