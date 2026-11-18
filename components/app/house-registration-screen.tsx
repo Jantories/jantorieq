@@ -13,11 +13,62 @@ const FACE_WIDTH = 810
 const FACE_HEIGHT = 500
 const FLIP_DELAY_MS = 260
 
+const SLIDES = [
+  { id: 'house-info', label: 'รายการเกี่ยวกับบ้าน', Artwork: HouseInfoArtwork },
+  { id: 'house-members', label: 'รายการบุคคลในบ้าน', Artwork: HouseMembersArtwork },
+]
+
 function HouseDocument() {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  function handleScroll() {
+    const track = trackRef.current
+    if (!track) return
+    setActiveIndex(Math.round(track.scrollLeft / track.clientWidth))
+  }
+
+  function goTo(index: number) {
+    const track = trackRef.current
+    if (!track) return
+    track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' })
+  }
+
   return (
-    <div className="flex flex-col gap-6">
-      <HouseInfoArtwork className="overflow-hidden rounded-xl shadow-md" />
-      <HouseMembersArtwork className="overflow-hidden rounded-xl shadow-md" />
+    <div className="flex flex-col gap-4">
+      <div
+        ref={trackRef}
+        onScroll={handleScroll}
+        className="flex snap-x snap-mandatory overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        role="group"
+        aria-roledescription="carousel"
+        aria-label="เอกสารทะเบียนบ้าน"
+      >
+        {SLIDES.map(({ id, label, Artwork }, index) => (
+          <div
+            key={id}
+            className="w-full shrink-0 snap-center"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`${label} (${index + 1} จาก ${SLIDES.length})`}
+          >
+            <Artwork className="overflow-hidden rounded-xl shadow-md" />
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-center gap-2">
+        {SLIDES.map(({ id, label }, index) => (
+          <button
+            key={id}
+            type="button"
+            aria-label={`ไปที่${label}`}
+            aria-current={index === activeIndex}
+            onClick={() => goTo(index)}
+            className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-6 bg-brand' : 'w-2 bg-neutral-300'}`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
