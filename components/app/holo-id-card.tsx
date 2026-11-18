@@ -2,25 +2,84 @@
 
 import { useEffect, useRef } from 'react'
 
-const FIELDS = [
-  { id: 'number', x: 346.7, y: 90.5, size: 44.4, fill: '#111111', stroke: 1.012, text: '1 3099 03735 85 1' },
-  { id: 'thai-name', x: 258, y: 146, size: 53, fill: '#111111', stroke: 1.208, text: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล' },
-  { id: 'english-first', x: 339, y: 199.1, size: 38.4, fill: '#263a79', stroke: 0.876, text: 'Mr. Ainapong' },
-  { id: 'english-last', x: 373.9, y: 226.2, size: 39.8, fill: '#263a79', stroke: 0.907, text: 'Riewsrikul' },
-  { id: 'birth-th', x: 377.1, y: 272.8, size: 38, fill: '#111111', stroke: 0.866, text: '19 พ.ย. 2549' },
-  { id: 'birth-en', x: 416.1, y: 302.2, size: 38, fill: '#263a79', stroke: 0.866, text: '19 Nov. 2006' },
-  { id: 'address-1', x: 95, y: 351, size: 35.8, fill: '#111111', stroke: 0.816, text: 'ที่อยู่ 376 ซ.มิตราภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา' },
-  { id: 'address-2', x: 93.6, y: 383.3, size: 35.8, fill: '#111111', stroke: 0.816, text: 'จ.นครราชสีมา' },
-  { id: 'issue-th', x: 96, y: 415, size: 30, fill: '#111111', stroke: 0.684, text: '19 ธ.ค. 2567' },
-  { id: 'issue-label-th', x: 96, y: 436, size: 27, fill: '#111111', stroke: 0.616, text: 'วันออกบัตร' },
-  { id: 'issue-en', x: 96, y: 464, size: 30, fill: '#263a79', stroke: 0.684, text: '19 Dec. 2024' },
-  { id: 'issue-label-en', x: 96, y: 482, size: 26.5, fill: '#263a79', stroke: 0.604, text: 'Date of Issue' },
-  { id: 'expiry-th', x: 439.4, y: 412.9, size: 30, fill: '#111111', stroke: 0.684, text: '18 พ.ย. 2576' },
-  { id: 'expiry-label-th', x: 438.9, y: 434.9, size: 27, fill: '#111111', stroke: 0.616, text: 'วันบัตรหมดอายุ' },
-  { id: 'expiry-en', x: 439.6, y: 463.6, size: 30, fill: '#263a79', stroke: 0.684, text: '18 Nov. 2033' },
-  { id: 'expiry-label-en', x: 439, y: 482.4, size: 26.5, fill: '#263a79', stroke: 0.604, text: 'Date of Expiry' },
-  { id: 'photo-code', x: 628.7, y: 458.9, size: 31.7, fill: '#111111', stroke: 0.723, text: '3001-02-12191346' },
-] as const
+export type HoloCardData = {
+  number: string
+  fullNameTh: string
+  firstNameEn: string
+  lastNameEn: string
+  birthTh: string
+  birthEn: string
+  address: string
+  issueTh: string
+  issueEn: string
+  expiryTh: string
+  expiryEn: string
+  photoCode: string
+}
+
+type FieldKey = Exclude<keyof HoloCardData, 'address'> | 'address1' | 'address2'
+
+type Field = {
+  id: string
+  x: number
+  y: number
+  size: number
+  fill: string
+  stroke: number
+  /** Static label text */
+  text?: string
+  /** Value taken from the card data */
+  field?: FieldKey
+  /** Right edge (in the 810x500 card space); longer values are squeezed to fit */
+  maxRight?: number
+}
+
+const INK = '#111111'
+const BLUE = '#263a79'
+
+// Positions, sizes and colours live here; the words come from the card data (lib/app-content.ts).
+const FIELDS: readonly Field[] = [
+  { id: 'number', x: 346.7, y: 90.5, size: 44.4, fill: INK, stroke: 1.012, field: 'number', maxRight: 780 },
+  { id: 'thai-name', x: 258, y: 146, size: 53, fill: INK, stroke: 1.208, field: 'fullNameTh', maxRight: 795 },
+  { id: 'english-first', x: 339, y: 199.1, size: 38.4, fill: BLUE, stroke: 0.876, field: 'firstNameEn', maxRight: 780 },
+  { id: 'english-last', x: 373.9, y: 226.2, size: 39.8, fill: BLUE, stroke: 0.907, field: 'lastNameEn', maxRight: 780 },
+  { id: 'birth-th', x: 377.1, y: 272.8, size: 38, fill: INK, stroke: 0.866, field: 'birthTh', maxRight: 620 },
+  { id: 'birth-en', x: 416.1, y: 302.2, size: 38, fill: BLUE, stroke: 0.866, field: 'birthEn', maxRight: 620 },
+  { id: 'address-1', x: 95, y: 351, size: 35.8, fill: INK, stroke: 0.816, field: 'address1', maxRight: 612 },
+  { id: 'address-2', x: 93.6, y: 383.3, size: 35.8, fill: INK, stroke: 0.816, field: 'address2', maxRight: 612 },
+  { id: 'issue-th', x: 96, y: 415, size: 30, fill: INK, stroke: 0.684, field: 'issueTh', maxRight: 430 },
+  { id: 'issue-label-th', x: 96, y: 436, size: 27, fill: INK, stroke: 0.616, text: 'วันออกบัตร' },
+  { id: 'issue-en', x: 96, y: 464, size: 30, fill: BLUE, stroke: 0.684, field: 'issueEn', maxRight: 430 },
+  { id: 'issue-label-en', x: 96, y: 482, size: 26.5, fill: BLUE, stroke: 0.604, text: 'Date of Issue' },
+  { id: 'expiry-th', x: 439.4, y: 412.9, size: 30, fill: INK, stroke: 0.684, field: 'expiryTh', maxRight: 615 },
+  { id: 'expiry-label-th', x: 438.9, y: 434.9, size: 27, fill: INK, stroke: 0.616, text: 'วันบัตรหมดอายุ' },
+  { id: 'expiry-en', x: 439.6, y: 463.6, size: 30, fill: BLUE, stroke: 0.684, field: 'expiryEn', maxRight: 615 },
+  { id: 'expiry-label-en', x: 439, y: 482.4, size: 26.5, fill: BLUE, stroke: 0.604, text: 'Date of Expiry' },
+  { id: 'photo-code', x: 628.7, y: 458.9, size: 31.7, fill: INK, stroke: 0.723, field: 'photoCode', maxRight: 800 },
+]
+
+const THAI_MARKS = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g
+const ADDRESS_LINE_LENGTH = 46
+
+// The address wraps onto two lines at a space, so a long address never runs under the portrait.
+function splitAddress(address: string): [string, string] {
+  const words = address.trim().split(/\s+/)
+  let first = ''
+  let i = 0
+  for (; i < words.length; i++) {
+    const next = first ? `${first} ${words[i]}` : words[i]
+    if (first && next.replace(THAI_MARKS, '').length > ADDRESS_LINE_LENGTH) break
+    first = next
+  }
+  return [first, words.slice(i).join(' ')]
+}
+
+function fieldText(f: Field, card: HoloCardData, address: [string, string]) {
+  if (f.text) return f.text
+  if (f.field === 'address1') return address[0]
+  if (f.field === 'address2') return address[1]
+  return f.field ? card[f.field] : ''
+}
 
 const HOLO_ITEMS = [
   { kind: 'seal', left: -1.43, top: 18.83, width: 12.61, rotate: 0 },
@@ -48,8 +107,37 @@ const PERIOD = 70
 const mod = (a: number, n: number) => ((a % n) + n) % n
 const clamp = (v: number) => Math.max(-1, Math.min(1, v))
 
-export function HoloIdCard({ className = '' }: { className?: string }) {
+export const DEFAULT_PORTRAIT = '/images/alpha/portrait.png'
+export const DEFAULT_BARCODE = '/images/alpha/barcode.svg'
+
+type Props = { card: HoloCardData; portrait?: string; barcode?: string; className?: string }
+
+export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAULT_BARCODE, className = '' }: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
+  const address = splitAddress(card.address)
+
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    let cancelled = false
+    const fit = () => {
+      if (cancelled) return
+      root.querySelectorAll<SVGTextElement>('text[data-max-right]').forEach((node) => {
+        node.removeAttribute('textLength')
+        const room = Number(node.dataset.maxRight) - Number(node.getAttribute('x'))
+        const width = node.getComputedTextLength()
+        if (width > room) {
+          node.setAttribute('textLength', String(room))
+          node.setAttribute('lengthAdjust', 'spacingAndGlyphs')
+        }
+      })
+    }
+    fit()
+    document.fonts?.ready.then(fit)
+    return () => {
+      cancelled = true
+    }
+  }, [card])
 
   useEffect(() => {
     const root = rootRef.current
@@ -111,11 +199,11 @@ export function HoloIdCard({ className = '' }: { className?: string }) {
   return (
     <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${className}`}>
       <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true">
-        <image x="9.3" y="173.67" width="54.4" height="297.67" preserveAspectRatio="none" href="/images/alpha/barcode.svg" />
-        <image x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href="/images/alpha/portrait.png" />
+        <image x="9.3" y="173.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
+        <image x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
         {FIELDS.map((f) => (
-          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke}>
-            {f.text}
+          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
+            {fieldText(f, card, address)}
           </text>
         ))}
       </svg>

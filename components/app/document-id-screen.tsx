@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import { ChevronLeft } from 'lucide-react'
 import { useRef, useState } from 'react'
-import { HoloIdCard } from './holo-id-card'
+import { HoloIdCard, type HoloCardData } from './holo-id-card'
 import { BackButton } from './page-parts'
 
-type Props = { cardImage: string; holo?: boolean; onBack: () => void }
+type Props = { cardImage: string; holo?: { card: HoloCardData; portrait?: string }; onBack: () => void }
 
 const MAX_IMAGE_ZOOM = 2.45
 const IMAGE_RATIO = 1.595
@@ -14,7 +14,7 @@ const IMAGE_EDGE_OVERSHOOT = 28
 
 type ImageView = { zoom: number; x: number; y: number }
 
-export function DocumentIdScreen({ cardImage, holo = false, onBack }: Props) {
+export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
   const [isFullImageOpen, setIsFullImageOpen] = useState(false)
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false, focalX: 0, focalY: 0, lastTap: 0 })
   const viewRef = useRef<ImageView>({ zoom: 1, x: 0, y: 0 })
@@ -138,7 +138,7 @@ export function DocumentIdScreen({ cardImage, holo = false, onBack }: Props) {
         <div className="mt-10 overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5">
           {holo ? (
             <div className="relative aspect-[810/500] w-full">
-              <HoloIdCard />
+              <HoloIdCard card={holo.card} portrait={holo.portrait} />
             </div>
           ) : (
             <Image
@@ -193,7 +193,7 @@ export function DocumentIdScreen({ cardImage, holo = false, onBack }: Props) {
           >
             {holo ? (
               <div className="relative aspect-[810/500] w-full">
-                <HoloIdCard />
+                <HoloIdCard card={holo.card} portrait={holo.portrait} />
               </div>
             ) : (
               <Image

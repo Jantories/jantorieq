@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { ChevronLeft } from 'lucide-react'
 import type { CardSeal, NumberOverlay } from '@/lib/app-content'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
-import { HoloIdCard } from './holo-id-card'
+import { HoloIdCard, type HoloCardData } from './holo-id-card'
 
 type CardImage = { small: string; large: string; cropScale?: number; cropRotate?: number }
 
@@ -30,7 +30,8 @@ function CardFace({
   back = false,
   blurred = false,
   hiRes = false,
-  holo = false,
+  holoCard,
+  portrait,
   seals,
   numberOverlay,
 }: {
@@ -39,7 +40,8 @@ function CardFace({
   back?: boolean
   blurred?: boolean
   hiRes?: boolean
-  holo?: boolean
+  holoCard?: HoloCardData
+  portrait?: string
   seals?: readonly CardSeal[]
   numberOverlay?: NumberOverlay
 }) {
@@ -47,8 +49,8 @@ function CardFace({
     <div
       className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
     >
-      {holo ? (
-        <HoloIdCard className="rounded-[3.3cqw]" />
+      {holoCard ? (
+        <HoloIdCard card={holoCard} portrait={portrait} className="rounded-[3.3cqw]" />
       ) : (
         <img
           src={face.large}
@@ -121,7 +123,7 @@ function toContentDelta(dx: number, dy: number) {
   return { x: dx, y: dy }
 }
 
-type Props = { card: { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
+type Props = { card: HoloCardData & { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; portrait?: string; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
 export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
@@ -290,7 +292,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
         style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} holo={card.holo} seals={card.seals} numberOverlay={card.numberOverlay} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} holoCard={card.holo ? card : undefined} portrait={card.portrait} seals={card.seals} numberOverlay={card.numberOverlay} />
         <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
       </div>
       {locked && (

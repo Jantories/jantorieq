@@ -87,6 +87,10 @@ const providedCardSeals: CardSeal[] = [
 const firstCard = {
   ...card,
   seals: providedCardSeals,
+  // true = the front is drawn live by HoloIdCard from the fields below instead of a flat image
+  holo: false as boolean,
+  // Portrait shown on the live card (cropped from the person's photo); the default portrait is used when omitted
+  portrait: undefined as string | undefined,
   number: '1 3099 03735 85 1',
   fullNameTh: 'นาย ไอย์ณพงศ์ ริ้วศรีกุล',
   firstNameEn: 'Mr. Ainapong',
@@ -109,14 +113,16 @@ const firstCard = {
   },
 }
 
+const liveCard = { holo: true, seals: [] } as const
+
 export const cardProfiles = {
   first: {
     ...firstCard,
     birthTh: '19 พ.ย. 2549',
     birthEn: '19 Nov. 2006',
     // Rendered live by HoloIdCard (text, portrait and animated holographic seals are code, not an image).
-    holo: true,
-    seals: [],
+    ...liveCard,
+    address: 'ที่อยู่ 376 ซ.มิตราภาพ 15 ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
     front: {
       small: '/images/card-front-1-alpha.png',
       large: '/images/card-front-1-alpha.png',
@@ -124,6 +130,8 @@ export const cardProfiles = {
   },
   second: {
     ...firstCard,
+    ...liveCard,
+    portrait: '/images/alpha/portrait-second.png',
     number: '1 1014 02398 10 4',
     fullNameTh: 'นาย ภัทรชนน รัตธนภาส',
     firstNameEn: 'Mr. Phatchanon',
@@ -136,7 +144,6 @@ export const cardProfiles = {
     expiryTh: '14 เม.ย. 2576',
     expiryEn: '14 Apr. 2033',
     photoCode: '1014-02-05251541',
-    seals: providedCardSeals,
     front: {
       small: '/images/card-front-2-provided.png',
       large: '/images/card-front-2-provided.png',
@@ -145,6 +152,8 @@ export const cardProfiles = {
   },
   third: {
     ...firstCard,
+    ...liveCard,
+    portrait: '/images/alpha/portrait-third.png',
     number: '1 1008 01640 48 0',
     fullNameTh: 'นาย ธรรมเชษฐ์ เชาว์วิศวชัย',
     firstNameEn: 'Mr. Tamachate',
@@ -157,7 +166,6 @@ export const cardProfiles = {
     expiryTh: '28 ต.ค. 2578',
     expiryEn: '28 Oct. 2035',
     photoCode: '1007-04-10271552',
-    seals: providedCardSeals,
     front: {
       small: '/images/card-front-3-new.png',
       large: '/images/card-front-3-new.png',
@@ -166,12 +174,14 @@ export const cardProfiles = {
   },
   fourth: {
     ...firstCard,
+    ...liveCard,
+    portrait: '/images/alpha/portrait-fourth.png',
     number: '1 1034 00183 78 1',
     fullNameTh: 'นาย คุณธรรม พิพัฒน์ธรรมคุณ',
     firstNameEn: 'Mr. Khunnatham',
     lastNameEn: 'Phiphatthammakhun',
     birthTh: '26 เม.ย. 2549',
-    birthEn: '29 Apr. 2006',
+    birthEn: '26 Apr. 2006',
     address: 'ที่อยู่ 274 ถ.พหลแสน ต.ในเมือง อ.เมืองนครราชสีมา จ.นครราชสีมา',
     issueTh: '14 พ.ค. 2569',
     issueEn: '14 May 2026',
@@ -189,6 +199,8 @@ export const cardProfiles = {
   },
   fifth: {
     ...firstCard,
+    ...liveCard,
+    portrait: '/images/alpha/portrait-fifth.png',
     number: '1 3099 03616 07 0',
     fullNameTh: 'นาย ธนันท์รัฐ วัฒนสินศักดิ์',
     firstNameEn: 'Mr. Tananrat',
@@ -210,7 +222,7 @@ export const cardProfiles = {
       large: '/images/card-back-5.png',
     },
   },
-  sixth: { ...firstCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
+  sixth: { ...firstCard, ...liveCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
   seventh: {
     ...firstCard,
     number: '7 7777 77777 77 7',
@@ -225,14 +237,12 @@ export const cardProfiles = {
   },
   eighth: {
     ...firstCard,
+    ...liveCard,
     number: '1 1017 00437 68 0',
     fullNameTh: 'นาย ผู้ใช้งาน คนที่แปด',
     firstNameEn: 'Mr. Eighth',
     lastNameEn: 'User',
     photoCode: '0000-00-00000008',
-    seals: [],
-    // 58.4px on the 1074px-wide card image
-    numberOverlay: { text: '1 1017 00437 68 0', x: 43.6, y: 18.5, size: 5.44 },
     front: {
       small: '/images/card-front-8.png',
   large: '/images/card-front-8.png',
@@ -242,9 +252,11 @@ export const cardProfiles = {
   large: '/images/card-back-8.png',
   },
   },
-  ninth: { ...firstCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
+  ninth: { ...firstCard, ...liveCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
   tenth: {
     ...firstCard,
+    ...liveCard,
+    portrait: '/images/alpha/portrait-tenth.png',
     number: '2 1203 01029 97 6',
     fullNameTh: 'นาย ศิวกร สุสัมพันธ์ไพบูลย์',
     firstNameEn: 'Mr. Siwakorn',
