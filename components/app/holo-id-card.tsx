@@ -78,6 +78,34 @@ function splitAddress(address: string): [string, string] {
   return [first, words.slice(i).join(' ')]
 }
 
+const KARAN_DROP_EM = 0.28
+const TALL_CONSONANTS = 'ปฝฟฬฦ'
+
+// DilleniaUPC parks karan at ascender height, so it hovers over short consonants (ย, ธ, ...).
+// Browsers will not offset a combining mark on its own, so the karan is pulled out of the text and drawn as a separate lowered glyph (see fit()).
+function extractKaran(text: string) {
+  const marks: number[] = []
+  let out = ''
+  for (let i = 0; i < text.length; i++) {
+    const prev = out[out.length - 1]
+    if (text[i] === '\u0E4C' && prev && prev >= '\u0E01' && prev <= '\u0E2E' && !TALL_CONSONANTS.includes(prev)) {
+      marks.push(out.length - 1)
+    } else {
+      out += text[i]
+    }
+  }
+  return { text: out, marks }
+}
+
+function KaranText({ f, value }: { f: Field; value: string }) {
+  const { text, marks } = extractKaran(value)
+  return (
+    <text x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight} data-karan={marks.length ? marks.join(',') : undefined}>
+      {text}
+    </text>
+  )
+}
+
 function fieldText(f: Field, card: HoloCardData, address: [string, string]) {
   if (f.text) return f.text
   if (f.field === 'address1') return address[0]
@@ -127,15 +155,30 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
     let cancelled = false
     const fit = () => {
       if (cancelled) return
+      root.querySelectorAll('.karan-mark').forEach((mark) => mark.remove())
       root.querySelectorAll<SVGTextElement>('text[data-max-right]').forEach((node) => {
-        node.removeAttribute('textLength')
-        node.removeAttribute('lengthAdjust')
         node.removeAttribute('transform')
         const x = Number(node.getAttribute('x'))
         const room = Number(node.dataset.maxRight) - x
         const width = node.getComputedTextLength()
         // textLength re-spaces Thai combining marks (karan, tone marks) so they sink into the letter; a plain horizontal scale keeps them floating.
-        if (width > room) node.setAttribute('transform', `translate(${x} 0) scale(${room / width} 1) translate(${-x} 0)`)
+        const transform = width > room ? `translate(${x} 0) scale(${room / width} 1) translate(${-x} 0)` : null
+        if (transform) node.setAttribute('transform', transform)
+
+        const size = Number(node.getAttribute('font-size'))
+        const y = Number(node.getAttribute('y'))
+        node.dataset.karan?.split(',').forEach((index) => {
+          const end = node.getEndPositionOfChar(Number(index))
+          const mark = node.cloneNode(false) as SVGTextElement
+          mark.removeAttribute('data-max-right')
+          mark.removeAttribute('data-karan')
+          mark.setAttribute('class', 'karan-mark')
+          mark.setAttribute('x', String(end.x))
+          mark.setAttribute('y', String(y + size * KARAN_DROP_EM))
+          mark.textContent = '\u0E4C'
+          if (transform) mark.setAttribute('transform', transform)
+          node.after(mark)
+        })
       })
     }
     fit()
@@ -245,9 +288,7 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
         <image x="15.8" y="174.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
         <image className={card.photoCode === '1040-02-04221656' ? 'holo-card-portrait-neutral' : undefined} x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
         {FIELDS.map((f) => (
-          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
-            {fieldText(f, card, address)}
-          </text>
+          <KaranText key={f.id} f={f} value={fieldText(f, card, address)} />
         ))}
       </svg>
       {HOLO_ITEMS.map((item, i) => (
