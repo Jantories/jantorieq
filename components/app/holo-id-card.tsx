@@ -15,6 +15,8 @@ export type HoloCardData = {
   expiryTh: string
   expiryEn: string
   photoCode: string
+  /** Optional font file for the overlay text (defaults to the shared card font) */
+  cardFont?: 'card'
 }
 
 type FieldKey = Exclude<keyof HoloCardData, 'address'> | 'address1' | 'address2'
@@ -240,7 +242,7 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
 
   return (
     <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${className}`}>
-      <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true">
+      <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true" style={card.cardFont === 'card' ? { fontFamily: "'AlphaDilleniaCard', Tahoma, sans-serif" } : undefined}>
         <image x="15.8" y="174.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
         <image className={card.photoCode === '1040-02-04221656' ? 'holo-card-portrait-neutral' : undefined} x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
         {FIELDS.map((f) => (

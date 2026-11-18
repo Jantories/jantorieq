@@ -450,6 +450,13 @@ html[data-forced-portrait] .min-h-\[80dvh\] {
 
 /* Alpha holo ID card: live text overlay plus animated holographic seals. */
 @font-face {
+  font-family: 'AlphaDilleniaCard';
+  src: url('/fonts/DilleniaUPC-card.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'AlphaDillenia';
   src: url('/fonts/DilleniaUPC.ttf') format('truetype');
   font-weight: 400;

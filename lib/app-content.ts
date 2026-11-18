@@ -270,6 +270,7 @@ export const cardProfiles = {
     ...firstCard,
     ...liveCard,
     portrait: '/images/alpha/portrait-tenth.png',
+    cardFont: 'card' as const,
     number: '2 1203 01029 97 6',
     fullNameTh: 'นาย ศิวกร สุสัมพันธ์ไพบูลย์',
     firstNameEn: 'Mr. Siwakorn',
