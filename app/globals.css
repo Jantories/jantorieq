@@ -458,6 +458,10 @@ html[data-forced-portrait] .min-h-\[80dvh\] {
   stroke-linejoin: round;
 }
 
+.holo-card-portrait-neutral {
+  filter: grayscale(1);
+}
+
 .holo-seal,
 .holo-seal-text {
   position: absolute;
