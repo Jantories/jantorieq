@@ -87,7 +87,7 @@ const circleBtn =
   'flex size-8 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
 
 const glassBtn =
-  'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
+  'flex size-11 items-center justify-center rounded-full bg-white/35 text-white transition hover:bg-white/45 active:scale-95'
 
 const DOUBLE_TAP_MS = 350
 const MAX_CARD_ZOOM = 2.45
@@ -173,12 +173,15 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     const { zoom, x, y } = shownRef.current
     if (contentRef.current) {
       contentRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${zoom}) rotate(90deg)`
+      if (settled) contentRef.current.removeAttribute('data-gesture')
     }
     frameRef.current = settled || !contentRef.current ? 0 : requestAnimationFrame(paintView)
   }
 
   const applyView = (nextZoom: number, nextPan: { x: number; y: number }) => {
     viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
+    // Pauses the holographic shimmer while the card is being pinched or dragged.
+    contentRef.current?.setAttribute('data-gesture', '')
     if (!frameRef.current) frameRef.current = requestAnimationFrame(paintView)
   }
 
@@ -367,7 +370,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           role="dialog"
           aria-modal="true"
           aria-label={card.expandLabel}
-          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none [overscroll-behavior:none] [touch-action:none]"
+          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/65 touch-none [overscroll-behavior:none] [touch-action:none]"
           onTouchStart={handleExpandedTouchStart}
           onTouchMove={handleExpandedTouchMove}
           onTouchEnd={handleExpandedTouchEnd}

@@ -201,13 +201,7 @@ export function AppShell() {
           <AppHeader profile={activeProfile} onAction={notify} onNotifications={() => setScreen('notifications')} onLogout={openLogout} />
         </div>
         <div className="bg-white">
-        <div
-          className="relative"
-          style={{
-            transform: pull.offset > 0 ? `translate3d(0, ${pull.offset}px, 0)` : undefined,
-            transition: pull.pulling ? 'none' : 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1)',
-          }}
-        >
+        <div ref={pull.ref} className="relative">
           <section className="bg-brand pb-9">
             <HeroCard card={activeCard} locked={!cardUnlocked} onRequestUnlock={requestPin} onOpenInfo={() => (cardUnlocked ? setScreen('cardInfo') : requestPin())} />
           </section>

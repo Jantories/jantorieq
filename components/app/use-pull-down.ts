@@ -1,24 +1,38 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 const activateDistance = 6
 const maxPull = 140
+const releaseTransition = 'transform 420ms cubic-bezier(0.22, 1, 0.36, 1)'
 
+// The pull offset is written straight to the element, so dragging never re-renders the app.
 export function usePullDown(enabled: boolean) {
-  const [offset, setOffset] = useState(0)
-  const [pulling, setPulling] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!enabled) {
-      setOffset(0)
-      setPulling(false)
-      return
+    const paint = (offset: number, animate: boolean) => {
+      const el = ref.current
+      if (!el) return
+      el.style.transition = animate ? releaseTransition : 'none'
+      el.style.transform = `translate3d(0, ${offset}px, 0)`
     }
+
+    // A lingering transform would turn the element into the containing block of fixed overlays.
+    let clearTimer: ReturnType<typeof setTimeout> | undefined
+    const clear = () => {
+      const el = ref.current
+      if (!el) return
+      el.style.transition = ''
+      el.style.transform = ''
+    }
+
+    if (!enabled) return
 
     let startY: number | null = null
     let active = false
     let pulled = 0
+    let frame = 0
     let suppressClick = false
 
     const isBlocked = (target: EventTarget | null) =>
@@ -31,6 +45,11 @@ export function usePullDown(enabled: boolean) {
       pulled = 0
     }
 
+    const flush = () => {
+      frame = 0
+      paint(pulled, false)
+    }
+
     const move = (y: number) => {
       if (startY === null) return false
       const distance = y - startY
@@ -41,11 +60,11 @@ export function usePullDown(enabled: boolean) {
         }
         if (distance < activateDistance) return false
         active = true
-        setPulling(true)
+        clearTimeout(clearTimer)
         document.body.style.userSelect = 'none'
       }
       pulled = (distance * maxPull) / (maxPull + distance)
-      setOffset(pulled)
+      if (!frame) frame = requestAnimationFrame(flush)
       return true
     }
 
@@ -56,9 +75,11 @@ export function usePullDown(enabled: boolean) {
       active = false
       if (!wasActive) return
       document.body.style.userSelect = ''
-      setPulling(false)
+      cancelAnimationFrame(frame)
+      frame = 0
       pulled = 0
-      setOffset(0)
+      paint(0, true)
+      clearTimer = setTimeout(clear, 460)
     }
 
     const onTouchStart = (e: TouchEvent) => begin(e.touches[0].clientY, e.target)
@@ -98,11 +119,12 @@ export function usePullDown(enabled: boolean) {
       window.removeEventListener('mousemove', onMouseMove)
       window.removeEventListener('mouseup', end)
       window.removeEventListener('click', onClickCapture, true)
+      cancelAnimationFrame(frame)
+      clearTimeout(clearTimer)
       document.body.style.userSelect = ''
-      setPulling(false)
-      setOffset(0)
+      clear()
     }
   }, [enabled])
 
-  return { offset, pulling }
+  return { ref }
 }
