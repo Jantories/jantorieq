@@ -7,17 +7,23 @@ import { HouseInfoArtwork } from './house-info-artwork'
 import { HouseMembersArtwork } from './house-members-artwork'
 import { useCardViewer } from './use-card-viewer'
 
-type Props = { onBack: () => void }
+type Props = { onBack: () => void; imageSrcs?: { info: string; members: string } }
 
 const FACE_WIDTH = 810
 const FACE_HEIGHT = 500
 
-const SLIDES = [
-  { id: 'house-info', label: 'รายการเกี่ยวกับบ้าน', Artwork: HouseInfoArtwork },
-  { id: 'house-members', label: 'รายการบุคคลในบ้าน', Artwork: HouseMembersArtwork },
-]
+type ArtworkProps = { className?: string; src?: string; alt: string; Fallback: (props: { className?: string }) => React.ReactNode }
 
-export function HouseRegistrationScreen({ onBack }: Props) {
+function SlideArtwork({ className = '', src, alt, Fallback }: ArtworkProps) {
+  if (!src) return <Fallback className={className} />
+  return <img src={src} alt={alt} draggable={false} className={`block h-auto w-full select-none ${className}`} />
+}
+
+export function HouseRegistrationScreen({ onBack, imageSrcs }: Props) {
+  const SLIDES = [
+    { id: 'house-info', label: 'รายการเกี่ยวกับบ้าน', src: imageSrcs?.info, Fallback: HouseInfoArtwork },
+    { id: 'house-members', label: 'รายการบุคคลในบ้าน', src: imageSrcs?.members, Fallback: HouseMembersArtwork },
+  ]
   const [isFullOpen, setIsFullOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(0)
   const viewer = useCardViewer(FACE_WIDTH / FACE_HEIGHT, (direction) => goTo(activeIndex + direction))
@@ -69,7 +75,7 @@ export function HouseRegistrationScreen({ onBack }: Props) {
         </div>
 
         <div className="mt-8 flex flex-col gap-6">
-          {SLIDES.map(({ id, Artwork }, index) => (
+          {SLIDES.map(({ id, label, src, Fallback }, index) => (
             <div
               key={id}
               className="cursor-zoom-in select-none [touch-action:manipulation]"
@@ -77,7 +83,7 @@ export function HouseRegistrationScreen({ onBack }: Props) {
                 if (event.detail >= 2) openFull(index)
               }}
             >
-              <Artwork className="overflow-hidden rounded-xl shadow-md" />
+              <SlideArtwork src={src} alt={label} Fallback={Fallback} className="overflow-hidden rounded-xl shadow-md" />
             </div>
           ))}
         </div>
@@ -118,7 +124,7 @@ export function HouseRegistrationScreen({ onBack }: Props) {
             className="flex size-full flex-col transition-transform duration-500 ease-out"
             style={{ transform: `translateY(-${activeIndex * 100}%)` }}
           >
-            {SLIDES.map(({ id, label, Artwork }, index) => (
+            {SLIDES.map(({ id, label, src, Fallback }, index) => (
               <div
                 key={id}
                 className="flex size-full shrink-0 items-center justify-center"
@@ -138,7 +144,7 @@ export function HouseRegistrationScreen({ onBack }: Props) {
                   }}
                   onClick={handleCardTap}
                 >
-                  <Artwork className="size-full" />
+                  <SlideArtwork src={src} alt={label} Fallback={Fallback} className="size-full" />
                 </div>
               </div>
             ))}
