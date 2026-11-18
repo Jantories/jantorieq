@@ -448,6 +448,7 @@ html[data-forced-portrait] .min-h-\[80dvh\] {
   inset: 0;
   overflow: hidden;
   isolation: isolate;
+  clip-path: inset(1% 0.5% 0.6% 0.5% round 3% / 5%);
   contain: layout paint style;
   background: url('/images/alpha/card-base.jpg') center / 100% 100% no-repeat;
 }
