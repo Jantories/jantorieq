@@ -7,9 +7,9 @@ import { useCardViewer } from './use-card-viewer'
 
 type Props = { onBack: () => void }
 
-const IMAGE_SRC = '/images/birth-certificate.png'
-const IMAGE_WIDTH = 1014
-const IMAGE_HEIGHT = 1536
+const IMAGE_SRC = '/images/birth-certificate.svg'
+const IMAGE_WIDTH = 1234
+const IMAGE_HEIGHT = 1748
 const RATIO = IMAGE_WIDTH / IMAGE_HEIGHT
 const ALT = 'แบบรับรองรายการทะเบียนคนเกิด (สูติบัตร)'
 
