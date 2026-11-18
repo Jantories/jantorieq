@@ -102,7 +102,7 @@ export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => vo
     if (event.touches.length === 0 && start && onSwipe && !touchRef.current.pinching && viewRef.current.zoom === 1) {
       const end = event.changedTouches[0]
       const delta = toScreenDelta(end.clientX - start.x, end.clientY - start.y)
-      if (Math.abs(delta.x) > 50 && Math.abs(delta.x) > Math.abs(delta.y) * 1.5) onSwipe(delta.x < 0 ? 1 : -1)
+      if (Math.abs(delta.y) > 50 && Math.abs(delta.y) > Math.abs(delta.x) * 1.5) onSwipe(delta.y < 0 ? 1 : -1)
     }
     if (event.touches.length === 0) swipeRef.current = null
     touchRef.current.distance = 0

@@ -46,8 +46,8 @@ export function HouseRegistrationScreen({ onBack }: Props) {
   useEffect(() => {
     if (!isFullOpen) return
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key === 'ArrowRight') goTo(activeIndex + 1)
-      if (event.key === 'ArrowLeft') goTo(activeIndex - 1)
+      if (event.key === 'ArrowDown' || event.key === 'ArrowRight') goTo(activeIndex + 1)
+      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') goTo(activeIndex - 1)
       if (event.key === 'Escape') closeFull()
     }
     window.addEventListener('keydown', onKeyDown)
@@ -107,8 +107,8 @@ export function HouseRegistrationScreen({ onBack }: Props) {
           </button>
 
           <div
-            className="flex size-full transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            className="flex size-full flex-col transition-transform duration-500 ease-out"
+            style={{ transform: `translateY(-${activeIndex * 100}%)` }}
           >
             {SLIDES.map(({ id, label, Artwork }, index) => (
               <div
@@ -137,7 +137,7 @@ export function HouseRegistrationScreen({ onBack }: Props) {
           </div>
 
           <div
-            className="absolute inset-x-0 bottom-[max(env(safe-area-inset-bottom),1.5rem)] z-10 flex items-center justify-center gap-2"
+            className="absolute inset-y-0 right-1 z-10 flex flex-col items-center justify-center gap-2"
             onClick={(event) => event.stopPropagation()}
           >
             {SLIDES.map(({ id, label }, index) => (
@@ -147,7 +147,7 @@ export function HouseRegistrationScreen({ onBack }: Props) {
                 aria-label={`ไปที่${label}`}
                 aria-current={index === activeIndex}
                 onClick={() => goTo(index)}
-                className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-6 bg-white' : 'w-2 bg-white/50'}`}
+                className={`w-2 rounded-full transition-all ${index === activeIndex ? 'h-6 bg-white' : 'h-2 bg-white/50'}`}
               />
             ))}
           </div>
