@@ -30,6 +30,7 @@ function CardFace({
   back = false,
   blurred = false,
   hiRes = false,
+  flat = false,
   holoCard,
   portrait,
   seals,
@@ -40,6 +41,7 @@ function CardFace({
   back?: boolean
   blurred?: boolean
   hiRes?: boolean
+  flat?: boolean
   holoCard?: HoloCardData
   portrait?: string
   seals?: readonly CardSeal[]
@@ -47,7 +49,7 @@ function CardFace({
 }) {
   return (
     <div
-      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] [backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
+      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] ${flat ? (back ? 'hidden' : '') : `[backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''}`} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
     >
       {holoCard ? (
         <HoloIdCard card={holoCard} portrait={portrait} className="rounded-[3.3cqw]" />
@@ -125,6 +127,24 @@ function toContentDelta(dx: number, dy: number) {
 
 type Props = { card: HoloCardData & { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; portrait?: string; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
+const FLIP_MS = 1100
+
+// The 3D layer (perspective, preserve-3d, backface-visibility) softens text, so it is only used while the card is flipped or flipping.
+function useFlat(isFlipped: boolean) {
+  const [flipping, setFlipping] = useState(false)
+  const mounted = useRef(false)
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true
+      return
+    }
+    setFlipping(true)
+    const id = setTimeout(() => setFlipping(false), FLIP_MS + 100)
+    return () => clearTimeout(id)
+  }, [isFlipped])
+  return !isFlipped && !flipping
+}
+
 export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: Props) {
   const [flipped, setFlipped] = useState(false)
   const flip = () => setFlipped((f) => !f)
@@ -137,6 +157,8 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const contentRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef(0)
   const flipExpanded = () => setExpandedFlipped((f) => !f)
+  const flatMain = useFlat(flipped)
+  const flatExpanded = useFlat(expandedFlipped)
 
   const paintView = () => {
     const target = viewRef.current
@@ -277,23 +299,25 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     onTap,
     hiRes = false,
     isFlipped,
+    flat,
   }: {
     style?: React.CSSProperties
     onTap?: (e: React.MouseEvent) => void
     hiRes?: boolean
     isFlipped: boolean
+    flat: boolean
   }) => (
     <div
-      className={`relative [container-type:inline-size] [perspective:1200px] ${onTap ? 'cursor-pointer' : ''}`}
+      className={`relative [container-type:inline-size] ${flat ? '' : '[perspective:1200px]'} ${onTap ? 'cursor-pointer' : ''}`}
       style={style}
       onClick={onTap}
     >
       <div
-        className="relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out [transform-style:preserve-3d]"
-        style={{ transform: `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
+        className={`relative aspect-[1.585/1] w-full shadow-xl transition-transform duration-[1100ms] ease-in-out ${flat ? '' : '[transform-style:preserve-3d]'}`}
+        style={{ transform: flat ? 'none' : `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
-        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} holoCard={card.holo ? card : undefined} portrait={card.portrait} seals={card.seals} numberOverlay={card.numberOverlay} />
-        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} />
+        <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} flat={flat} holoCard={card.holo ? card : undefined} portrait={card.portrait} seals={card.seals} numberOverlay={card.numberOverlay} />
+        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} flat={flat} />
       </div>
       {locked && (
         <button
@@ -318,7 +342,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
 
   return (
     <div className="px-5">
-      {renderCard({ onTap: handleCardTap, isFlipped: flipped })}
+      {renderCard({ onTap: handleCardTap, isFlipped: flipped, flat: flatMain })}
       <div className="mt-3 flex items-center justify-center gap-4">
         <button type="button" onClick={onOpenInfo} disabled={locked} aria-label={card.infoLabel} data-no-loader className={circleBtn}>
           <PersonIcon className="size-[18px]" />
@@ -366,6 +390,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
               onTap: handleExpandedTap,
               hiRes: true,
               isFlipped: expandedFlipped,
+              flat: flatExpanded,
             })}
           </div>
         </div>
