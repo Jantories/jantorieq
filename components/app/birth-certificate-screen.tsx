@@ -4,6 +4,7 @@ import { ChevronLeft } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { BackButton } from './page-parts'
 import { useCardViewer } from './use-card-viewer'
+import { useDatedCertificateImage } from './use-dated-certificate-image'
 
 type Props = { onBack: () => void; imageSrc?: string }
 
@@ -14,7 +15,7 @@ const RATIO = IMAGE_WIDTH / IMAGE_HEIGHT
 const ALT = 'แบบรับรองรายการทะเบียนคนเกิด (สูติบัตร)'
 
 export function BirthCertificateScreen({ onBack, imageSrc = DEFAULT_IMAGE_SRC }: Props) {
-  const IMAGE_SRC = imageSrc
+  const IMAGE_SRC = useDatedCertificateImage(imageSrc)
   const [isFullOpen, setIsFullOpen] = useState(false)
   const viewer = useCardViewer(RATIO, undefined, 0)
 
@@ -57,15 +58,24 @@ export function BirthCertificateScreen({ onBack, imageSrc = DEFAULT_IMAGE_SRC }:
             if (event.detail >= 2) setIsFullOpen(true)
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={IMAGE_SRC}
-            alt={ALT}
-            width={IMAGE_WIDTH}
-            height={IMAGE_HEIGHT}
-            draggable={false}
-            className="h-auto w-full rounded-sm shadow-md"
-          />
+          {IMAGE_SRC ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={IMAGE_SRC}
+              alt={ALT}
+              width={IMAGE_WIDTH}
+              height={IMAGE_HEIGHT}
+              draggable={false}
+              className="h-auto w-full rounded-sm shadow-md"
+            />
+          ) : (
+            <div
+              role="status"
+              aria-label="กำลังโหลดเอกสาร"
+              className="w-full animate-pulse rounded-sm bg-neutral-100"
+              style={{ aspectRatio: `${IMAGE_WIDTH} / ${IMAGE_HEIGHT}` }}
+            />
+          )}
         </div>
 
         <div className="mt-auto pt-8">
@@ -79,7 +89,7 @@ export function BirthCertificateScreen({ onBack, imageSrc = DEFAULT_IMAGE_SRC }:
         </div>
       </div>
 
-      {isFullOpen && (
+      {isFullOpen && IMAGE_SRC && (
         <div
           role="dialog"
           aria-modal="true"
