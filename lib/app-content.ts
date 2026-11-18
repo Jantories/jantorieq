@@ -110,7 +110,17 @@ const firstCard = {
 }
 
 export const cardProfiles = {
-  first: firstCard,
+  first: {
+    ...firstCard,
+    birthTh: '19 พ.ย. 2549',
+    birthEn: '19 Nov. 2006',
+    // Holographic seals and all text are baked into this image, so no live overlays.
+    seals: [],
+    front: {
+      small: '/images/card-front-1-alpha.png',
+      large: '/images/card-front-1-alpha.png',
+    },
+  },
   second: {
     ...firstCard,
     number: '1 1014 02398 10 4',
@@ -463,7 +473,7 @@ const firstCardInfo = {
 }
 
 export const cardInfoProfiles = {
-  first: firstCardInfo,
+  first: { ...firstCardInfo, birth: '19 พ.ย. 2549' },
   second: {
     ...firstCardInfo,
     photo: '/images/card-photo-2.png',
