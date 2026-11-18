@@ -164,7 +164,7 @@ export function AppShell() {
       const navTab = pressed.closest<HTMLElement>('[data-nav-tab]')?.dataset.navTab
       const opensLoadingTab = !!navTab && navTab !== 'home' && navTab !== tab
       if (pressed.closest(exitSelector)) return
-      if (!opensLoadingTab && !pressed.closest('[data-service]')) return
+      if (!opensLoadingTab && !pressed.closest('[data-service], [data-loader]')) return
       event.preventDefault()
       event.stopPropagation()
       if (pressLoading || unlockingProfile) return

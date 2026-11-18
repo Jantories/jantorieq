@@ -56,6 +56,7 @@ export function DocumentsTab({
                                 : undefined
                 }
                 tone={doc.tone}
+                showsLoader={(doc.id === 'house' && !!onOpenHouse) || (doc.id === 'birth' && !!onOpenBirth)}
                 title={doc.title}
                 sub={doc.sub}
                 titleClassName="text-base font-[100] leading-snug text-neutral-900"
