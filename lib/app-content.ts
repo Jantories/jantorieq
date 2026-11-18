@@ -234,7 +234,7 @@ export const cardProfiles = {
     lastNameEn: 'Wongthaninya',
     birthTh: '23 ต.ค. 2549',
     birthEn: '23 Oct. 2006',
-    address: 'ที่อยู่ 224/14 หมู่ที่ 2 ต.บางขุนกอง อ.บางกรวย จ.นนทบุรี',
+    address: 'ที่อยู่ 224/14 หมู่ที่ 2 ต.บางขุนกอง อ.บางกรวย\nจ.นนทบุรี',
     issueTh: '22 เม.ย. 2567',
     issueEn: '22 Apr. 2024',
     expiryTh: '22 ต.ค. 2575',

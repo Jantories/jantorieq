@@ -63,6 +63,10 @@ const ADDRESS_LINE_LENGTH = 46
 
 // The address wraps onto two lines at a space, so a long address never runs under the portrait.
 function splitAddress(address: string): [string, string] {
+  const breakAt = address.indexOf('\n')
+  if (breakAt !== -1) {
+    return [address.slice(0, breakAt).trim(), address.slice(breakAt + 1).trim()]
+  }
   const words = address.trim().split(/\s+/)
   let first = ''
   let i = 0
