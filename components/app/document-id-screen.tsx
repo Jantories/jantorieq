@@ -199,7 +199,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           <p className="mt-1 text-base leading-relaxed text-neutral-500">ข้อมูลหน้าบัตร รูปภาพ ชื่อ นามสกุล วันหมดอายุ</p>
         </div>
 
-        <div className="mt-10 overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5">
+        <div className="mt-10">
           {holo ? (
             <HoloDocumentCard card={holo.card} portrait={holo.portrait} flipped={holoFlipped} onClick={handleHoloTap} />
           ) : (
@@ -247,7 +247,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           </button>
           <div
             ref={contentRef}
-            className="relative shrink-0 overflow-hidden rounded-[4.5cqw] shadow-xl touch-none"
+            className="relative shrink-0 touch-none"
             style={{ width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)', transform: 'translate3d(0px, 0px, 0) scale(1) rotate(90deg)', transformOrigin: 'center' }}
             onClick={(event) => event.stopPropagation()}
             onDoubleClick={() => applyImageView(viewRef.current.zoom > 1 ? 1 : 2, { x: 0, y: 0 })}
