@@ -33,8 +33,8 @@ export function HouseRegistrationScreen({ onBack }: Props) {
     if (event.detail >= 2) viewer.toggleZoom()
   }
 
-  function openFull() {
-    setActiveIndex(0)
+  function openFull(index = 0) {
+    setActiveIndex(index)
     setIsFullOpen(true)
   }
 
@@ -69,15 +69,23 @@ export function HouseRegistrationScreen({ onBack }: Props) {
         </div>
 
         <div className="mt-8 flex flex-col gap-6">
-          {SLIDES.map(({ id, Artwork }) => (
-            <Artwork key={id} className="overflow-hidden rounded-xl shadow-md" />
+          {SLIDES.map(({ id, Artwork }, index) => (
+            <div
+              key={id}
+              className="cursor-zoom-in select-none [touch-action:manipulation]"
+              onClick={(event) => {
+                if (event.detail >= 2) openFull(index)
+              }}
+            >
+              <Artwork className="overflow-hidden rounded-xl shadow-md" />
+            </div>
           ))}
         </div>
 
         <div className="mt-auto pt-8">
           <button
             type="button"
-            onClick={openFull}
+            onClick={() => openFull(0)}
             className="flex min-h-16 w-full items-center justify-center rounded-full bg-brand px-6 py-4 text-xl font-medium text-white transition hover:bg-brand-dark active:scale-[0.99]"
           >
             ดูภาพเต็ม
