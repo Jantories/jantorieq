@@ -5,7 +5,7 @@ import { useState } from 'react'
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 const keyClass =
-  'flex size-23 items-center justify-center rounded-full bg-keypad text-[45px] font-medium leading-none text-brand-dark transition active:scale-95 active:bg-keypad-active disabled:opacity-60'
+  'flex size-23 items-center justify-center rounded-full bg-keypad text-[45px] font-normal leading-none text-brand-dark transition active:scale-95 active:bg-keypad-active disabled:opacity-60'
 
 function BackspaceIcon() {
   return (
