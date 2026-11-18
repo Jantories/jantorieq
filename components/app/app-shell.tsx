@@ -31,6 +31,12 @@ import { UnlockLoader } from './unlock-loader'
 import { SplashScreen } from './splash-screen'
 import { announcements, cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
+const civilDocumentProfiles: readonly string[] = ['first', 'eighth', 'tenth']
+const birthCertificateImages: Record<string, string | undefined> = { tenth: '/images/birth-certificate-tenth.svg' }
+const houseRegistrationImages: Record<string, { info: string; members: string } | undefined> = {
+  tenth: { info: '/images/house-info-tenth.svg', members: '/images/house-members-tenth.svg' },
+}
+
 type Screen = 'notifications' | 'cardInfo' | 'documentId' | 'houseRegistration' | 'birthCertificate' | 'scan' | 'checkRequests' | 'certify' | 'move' | 'announcement' | null
 
 const lastProfileKey = 'last-profile'
@@ -158,7 +164,7 @@ export function AppShell() {
       const navTab = pressed.closest<HTMLElement>('[data-nav-tab]')?.dataset.navTab
       const opensLoadingTab = !!navTab && navTab !== 'home' && navTab !== tab
       if (pressed.closest(exitSelector)) return
-      if (!opensLoadingTab && !pressed.closest('[data-service]')) return
+      if (!opensLoadingTab && !pressed.closest('[data-service], [data-loader]')) return
       event.preventDefault()
       event.stopPropagation()
       if (pressLoading || unlockingProfile) return
@@ -195,8 +201,8 @@ export function AppShell() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'documentId') return <DocumentIdScreen cardImage={activeCard.front.large} holo={activeCard.holo ? { card: activeCard, portrait: activeCard.portrait } : undefined} onBack={() => setScreen(null)} />
-    if (screen === 'houseRegistration') return <HouseRegistrationScreen onBack={() => setScreen(null)} />
-    if (screen === 'birthCertificate') return <BirthCertificateScreen onBack={() => setScreen(null)} />
+    if (screen === 'houseRegistration') return <HouseRegistrationScreen onBack={() => setScreen(null)} imageSrcs={houseRegistrationImages[authenticatedAs]} />
+    if (screen === 'birthCertificate') return <BirthCertificateScreen onBack={() => setScreen(null)} imageSrc={birthCertificateImages[authenticatedAs]} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
     if (screen === 'certify') return <CertifyScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
@@ -206,7 +212,8 @@ export function AppShell() {
       if (detail) return <AnnouncementScreen detail={detail} onBack={() => setScreen(null)} />
     }
     if (tab === 'docs') {
-      return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} onOpenHouse={authenticatedAs === 'first' ? () => setScreen('houseRegistration') : undefined} onOpenBirth={authenticatedAs === 'first' ? () => setScreen('birthCertificate') : undefined} onNotFound={setNotFoundDocument} />
+      const hasCivilDocuments = civilDocumentProfiles.includes(authenticatedAs)
+      return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} onOpenHouse={hasCivilDocuments ? () => setScreen('houseRegistration') : undefined} onOpenBirth={hasCivilDocuments ? () => setScreen('birthCertificate') : undefined} onNotFound={setNotFoundDocument} />
     }
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />

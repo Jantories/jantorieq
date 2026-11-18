@@ -276,7 +276,7 @@ export const cardProfiles = {
     lastNameEn: 'Susumpanpaiboon',
     birthTh: '18 ธ.ค. 2548',
     birthEn: '18 Dec. 2005',
-    address: 'ที่อยู่ 203 หมู่ที่ 3 ต.บางรักพัฒนา อ.บางบัวทอง จ.นนทบุรี',
+    address: 'ที่อยู่ 203 หมู่ที่ 3 ต.บางรักพัฒนา อ.บางบัวทอง\nจ.นนทบุรี',
     issueTh: '13 พ.ค. 2567',
     issueEn: '13 May 2024',
     expiryTh: '17 ธ.ค. 2575',

@@ -56,7 +56,8 @@ type RowProps = {
   subClassName?: string
   onClick?: () => void
   trailing?: React.ReactNode
-}
+  showsLoader?: boolean
+  }
 
 export function ListRow({
   icon,
@@ -68,7 +69,8 @@ export function ListRow({
   subClassName = 'text-sm text-neutral-500',
   onClick,
   trailing,
-}: RowProps) {
+  showsLoader,
+  }: RowProps) {
   const content = (
     <>
       <IconBubble icon={icon} imageSrc={iconImageSrc} tone={tone} />
@@ -83,7 +85,7 @@ export function ListRow({
   )
   if (!onClick) return <div className="group flex items-center gap-4 px-4">{content}</div>
   return (
-    <button type="button" onClick={onClick} className="group flex w-full items-center gap-4 px-4 text-left transition hover:bg-neutral-50 active:bg-neutral-100">
+    <button type="button" onClick={onClick} data-loader={showsLoader ? '' : undefined} className="group flex w-full items-center gap-4 px-4 text-left transition hover:bg-neutral-50 active:bg-neutral-100">
       {content}
     </button>
   )
