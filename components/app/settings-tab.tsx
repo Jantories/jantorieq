@@ -16,7 +16,7 @@ function Toggle({ checked, onChange, label }: { checked: boolean; onChange: (v: 
       className={`relative h-8 w-14 shrink-0 rounded-full transition ${checked ? 'bg-brand' : 'bg-neutral-400'}`}
     >
       <span
-        className={`absolute top-0.5 size-7 rounded-full bg-white shadow transition-all ${checked ? 'left-[1.625rem]' : 'left-0.5'}`}
+        className={`absolute top-0.5 size-7 rounded-full bg-white shadow transition-[left] ${checked ? 'left-[1.625rem]' : 'left-0.5'}`}
       />
     </button>
   )

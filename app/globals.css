@@ -53,7 +53,7 @@ body {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --font-sans: "Noto Sans Thai", Tahoma, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-noto-thai), "Noto Sans Thai", Tahoma, ui-sans-serif, system-ui, sans-serif;
   --color-brand: #2b2f8f;
   --color-brand-dark: #1f2270;
   --color-brand-soft: #eef0fb;
@@ -234,6 +234,10 @@ body {
   transform: rotate(var(--seal-angle, 0deg)) translateX(-30%);
   animation: seal-rainbow-wave 43s linear infinite;
   mix-blend-mode: screen;
+}
+
+[data-gesture] .seal-rainbow-band {
+  animation-play-state: paused;
 }
 
 /* Two slow U-shaped passes, followed by a three-second quiet interval. */
@@ -445,6 +449,7 @@ html[data-forced-portrait] .min-h-\[80dvh\] {
   overflow: hidden;
   isolation: isolate;
   clip-path: inset(1% 0.5% 0.6% 0.5% round 3% / 5%);
+  contain: layout paint style;
   background: url('/images/alpha/card-base.jpg') center / 100% 100% no-repeat;
 }
 

@@ -134,7 +134,7 @@ export function BannerCarousel({ onAction }: { onAction: (msg: string) => void }
             onClick={() => goToDot(i)}
             aria-label={`แบนเนอร์ที่ ${i + 1}`}
             aria-current={i === activeDot}
-            className={`h-[7px] rounded-full transition-all ${i === activeDot ? 'w-[27px] bg-brand' : 'w-[7px] bg-neutral-300'}`}
+            className={`h-[7px] rounded-full transition-[width,background-color] ${i === activeDot ? 'w-[27px] bg-brand' : 'w-[7px] bg-neutral-300'}`}
           />
         ))}
       </div>

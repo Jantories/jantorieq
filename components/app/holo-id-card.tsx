@@ -107,6 +107,7 @@ const HOLO_ITEMS = [
 const SWEEP_SECONDS = 6
 const HOLD_SECONDS = 3
 const PERIOD = 70
+const FRAME_MS = 32
 
 const mod = (a: number, n: number) => ((a % n) + n) % n
 const clamp = (v: number) => Math.max(-1, Math.min(1, v))
@@ -154,7 +155,10 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
     let clock = 0
     let lastCycle = -1
     let last = performance.now()
+    let lastPaint = 0
+    let lastKey = ''
     let raf = 0
+    let onScreen = true
 
     const setPos = (nx: number, ny: number) => {
       target = (nx + ny) * 35
@@ -164,12 +168,38 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
       if (e.gamma == null || e.beta == null) return
       setPos(clamp(e.gamma / 40), clamp((e.beta - 45) / 40))
     }
-    window.addEventListener('pointermove', onPointer)
-    window.addEventListener('deviceorientation', onTilt)
+    window.addEventListener('pointermove', onPointer, { passive: true })
+    window.addEventListener('deviceorientation', onTilt, { passive: true })
+
+    const canRun = () => onScreen && !document.hidden
+    const wake = () => {
+      if (raf || !canRun()) return
+      last = performance.now()
+      raf = requestAnimationFrame(frame)
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting
+      wake()
+    })
+    observer.observe(root)
+    document.addEventListener('visibilitychange', wake)
 
     const frame = (t: number) => {
+      raf = 0
+      if (!canRun()) return
+      // The shimmer is slow, so 30fps looks identical and halves the repaint work.
+      if (t - lastPaint < FRAME_MS) {
+        raf = requestAnimationFrame(frame)
+        return
+      }
+      lastPaint = t
       const dt = Math.min(0.1, (t - last) / 1000)
       last = t
+      // While the card is being pinched or panned, keep the main thread free for the gesture.
+      if (root.closest('[data-gesture]')) {
+        raf = requestAnimationFrame(frame)
+        return
+      }
       let p = 0
       let e = 0
       if (!reduce) {
@@ -184,17 +214,25 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
         e = p * p * p * (p * (p * 6 - 15) + 10)
       }
       cur += (target - cur) * Math.min(1, dt * 2.5)
-      nodes.forEach((node, k) => {
-        const d = dirs[k]
-        node.style.setProperty('--o', mod(d * e * PERIOD + cur, PERIOD).toFixed(3) + '%')
-        node.style.setProperty('--s', (-d * Math.sin(Math.PI * p) * PERIOD * 0.5 - cur * 0.5).toFixed(2) + '%')
-      })
+      // During the hold phase nothing moves, so skip the style writes that would force a repaint.
+      const key = `${e.toFixed(4)}|${p.toFixed(4)}|${cur.toFixed(3)}`
+      if (key !== lastKey) {
+        lastKey = key
+        nodes.forEach((node, k) => {
+          const d = dirs[k]
+          node.style.setProperty('--o', mod(d * e * PERIOD + cur, PERIOD).toFixed(3) + '%')
+          node.style.setProperty('--s', (-d * Math.sin(Math.PI * p) * PERIOD * 0.5 - cur * 0.5).toFixed(2) + '%')
+        })
+      }
       raf = requestAnimationFrame(frame)
     }
     raf = requestAnimationFrame(frame)
 
     return () => {
       cancelAnimationFrame(raf)
+      raf = 0
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', wake)
       window.removeEventListener('pointermove', onPointer)
       window.removeEventListener('deviceorientation', onTilt)
     }
