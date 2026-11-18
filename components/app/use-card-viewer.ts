@@ -11,8 +11,9 @@ const DOUBLE_TAP_ZOOM = 2
 type View = { zoom: number; x: number; y: number }
 
 // Pinch, pan and double-tap zoom for a card shown rotated 90deg inside a full-screen dialog.
-export function useCardViewer(ratio: number) {
+export function useCardViewer(ratio: number, onSwipe?: (direction: 1 | -1) => void) {
   const contentRef = useRef<HTMLDivElement>(null)
+  const swipeRef = useRef<{ x: number; y: number } | null>(null)
   const viewRef = useRef<View>({ zoom: 1, x: 0, y: 0 })
   const centerRef = useRef({ x: 0, y: 0 })
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, focalX: 0, focalY: 0, pinching: false })
@@ -65,6 +66,7 @@ export function useCardViewer(ratio: number) {
         pinching: true,
       }
     } else if (event.touches.length === 1) {
+      swipeRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }
       touchRef.current = { ...touchRef.current, x: event.touches[0].clientX, y: event.touches[0].clientY, panX: viewRef.current.x, panY: viewRef.current.y, pinching: false }
     }
   }
@@ -96,6 +98,13 @@ export function useCardViewer(ratio: number) {
   }
 
   function onTouchEnd(event: TouchEvent<HTMLDivElement>) {
+    const start = swipeRef.current
+    if (event.touches.length === 0 && start && onSwipe && !touchRef.current.pinching && viewRef.current.zoom === 1) {
+      const end = event.changedTouches[0]
+      const delta = toScreenDelta(end.clientX - start.x, end.clientY - start.y)
+      if (Math.abs(delta.x) > 50 && Math.abs(delta.x) > Math.abs(delta.y) * 1.5) onSwipe(delta.x < 0 ? 1 : -1)
+    }
+    if (event.touches.length === 0) swipeRef.current = null
     touchRef.current.distance = 0
     if (event.touches.length === 1) {
       touchRef.current = { ...touchRef.current, x: event.touches[0].clientX, y: event.touches[0].clientY, panX: viewRef.current.x, panY: viewRef.current.y, pinching: true }
