@@ -428,3 +428,76 @@ html[data-forced-portrait] .min-h-dvh {
 html[data-forced-portrait] .min-h-\[80dvh\] {
   min-height: calc(var(--app-h) * 0.8);
 }
+
+/* Alpha holo ID card: live text overlay plus animated holographic seals. */
+@font-face {
+  font-family: 'AlphaDillenia';
+  src: url('/fonts/DilleniaUPC.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+.holo-card {
+  --o: 0%;
+  --s: 0%;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: url('/images/alpha/card-base.jpg') center / 100% 100% no-repeat;
+}
+
+.holo-card-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  font-family: 'AlphaDillenia', Tahoma, sans-serif;
+  font-weight: 400;
+  paint-order: stroke fill;
+  stroke-linejoin: round;
+}
+
+.holo-seal,
+.holo-seal-text {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0.9;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.holo-seal {
+  aspect-ratio: 360 / 368;
+  -webkit-mask: url('/images/alpha/seal.png') center / 100% 100% no-repeat;
+  mask: url('/images/alpha/seal.png') center / 100% 100% no-repeat;
+}
+
+.holo-seal-text {
+  aspect-ratio: 360 / 44;
+  -webkit-mask: url('/images/alpha/seal-text.png') center / 100% 100% no-repeat;
+  mask: url('/images/alpha/seal-text.png') center / 100% 100% no-repeat;
+}
+
+.holo-band {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    225deg,
+    #fbebb0 calc(var(--o) + 0%),
+    #f7a1d4 calc(var(--o) + 12%),
+    #e585e2 calc(var(--o) + 24%),
+    #b98af2 calc(var(--o) + 36%),
+    #8fa2f6 calc(var(--o) + 48%),
+    #78cdf3 calc(var(--o) + 59%),
+    #fbebb0 calc(var(--o) + 70%)
+  );
+}
+
+.holo-sheen {
+  position: absolute;
+  inset: -50%;
+  mix-blend-mode: soft-light;
+  background: linear-gradient(225deg, transparent 38%, rgba(255, 255, 255, 0.85) 50%, transparent 62%);
+  transform: translate(var(--s), var(--s));
+}

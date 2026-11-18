@@ -3,9 +3,10 @@
 import Image from 'next/image'
 import { ChevronLeft } from 'lucide-react'
 import { useRef, useState } from 'react'
+import { HoloIdCard } from './holo-id-card'
 import { BackButton } from './page-parts'
 
-type Props = { cardImage: string; onBack: () => void }
+type Props = { cardImage: string; holo?: boolean; onBack: () => void }
 
 const MAX_IMAGE_ZOOM = 2.45
 const IMAGE_RATIO = 1.595
@@ -13,7 +14,7 @@ const IMAGE_EDGE_OVERSHOOT = 28
 
 type ImageView = { zoom: number; x: number; y: number }
 
-export function DocumentIdScreen({ cardImage, onBack }: Props) {
+export function DocumentIdScreen({ cardImage, holo = false, onBack }: Props) {
   const [isFullImageOpen, setIsFullImageOpen] = useState(false)
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false, focalX: 0, focalY: 0, lastTap: 0 })
   const viewRef = useRef<ImageView>({ zoom: 1, x: 0, y: 0 })
@@ -135,15 +136,21 @@ export function DocumentIdScreen({ cardImage, onBack }: Props) {
         </div>
 
         <div className="mt-10 overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5">
-          <Image
-            src={cardImage}
-            alt="ภาพบัตรประจำตัวประชาชน"
-            width={1294}
-            height={811}
-            sizes="(max-width: 448px) 92vw, 400px"
-            className="block h-auto w-full"
-            priority
-          />
+          {holo ? (
+            <div className="relative aspect-[810/500] w-full">
+              <HoloIdCard />
+            </div>
+          ) : (
+            <Image
+              src={cardImage}
+              alt="ภาพบัตรประจำตัวประชาชน"
+              width={1294}
+              height={811}
+              sizes="(max-width: 448px) 92vw, 400px"
+              className="block h-auto w-full"
+              priority
+            />
+          )}
         </div>
 
         <div className="mt-auto pt-8">
@@ -184,15 +191,21 @@ export function DocumentIdScreen({ cardImage, onBack }: Props) {
             onDoubleClick={() => applyImageView(viewRef.current.zoom > 1 ? 1 : 2, { x: 0, y: 0 })}
             aria-label="แตะสองครั้งเพื่อขยายหรือย่อภาพ"
           >
-            <Image
-              src={cardImage}
-              alt="ภาพบัตรประจำตัวประชาชนขนาดเต็ม แตะสองครั้งเพื่อขยายหรือย่อ"
-              width={1294}
-              height={811}
-              sizes="1100px"
-              className="block aspect-[1.595/1] h-auto w-full object-fill"
-              priority
-            />
+            {holo ? (
+              <div className="relative aspect-[810/500] w-full">
+                <HoloIdCard />
+              </div>
+            ) : (
+              <Image
+                src={cardImage}
+                alt="ภาพบัตรประจำตัวประชาชนขนาดเต็ม แตะสองครั้งเพื่อขยายหรือย่อ"
+                width={1294}
+                height={811}
+                sizes="1100px"
+                className="block aspect-[1.595/1] h-auto w-full object-fill"
+                priority
+              />
+            )}
           </div>
         </div>
       )}

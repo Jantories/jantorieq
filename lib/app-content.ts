@@ -114,7 +114,8 @@ export const cardProfiles = {
     ...firstCard,
     birthTh: '19 พ.ย. 2549',
     birthEn: '19 Nov. 2006',
-    // Holographic seals and all text are baked into this image, so no live overlays.
+    // Rendered live by HoloIdCard (text, portrait and animated holographic seals are code, not an image).
+    holo: true,
     seals: [],
     front: {
       small: '/images/card-front-1-alpha.png',
