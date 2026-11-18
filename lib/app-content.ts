@@ -602,6 +602,35 @@ export const documentsPage = {
   ],
 } as const
 
+export const houseRegistration = {
+  house: {
+    title: 'รายการเกี่ยวกับบ้าน',
+    code: '3099-016036-0',
+    office: 'ท้องถิ่นเทศบาลนครนครราชสีมา',
+    address: '376 ซอยมิตรภาพ 15 ตำบลในเมือง อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
+    village: '-',
+    name: '-',
+    type: 'บ้าน',
+    kind: '-',
+    assignedDate: '-',
+    community: '[เคหะชุมชนนครราชสีมา]',
+    printedDate: '24 เม.ย. 2561',
+  },
+  residents: {
+    title: 'รายการบุคคลในบ้านของเลขรหัสประจำบ้าน',
+    name: 'นาย ไอย์ณพงษ์ ริ้วศรีกุล',
+    nationality: 'ไทย',
+    gender: 'ชาย',
+    idNumber: '1-3099-03735-85-1',
+    status: 'ผู้อาศัย',
+    birth: '19 พ.ย. 2549',
+    mother: { name: 'นริศรา', id: '3-3099-01026-71-9', nationality: 'ไทย' },
+    father: { name: 'ภวัฒ', id: '3-3099-01271-76-4', nationality: 'ไทย' },
+    movedFrom: 'ฐานข้อมูลทะเบียนราษฎร เข้ามาอยู่ในบ้านนี้เมื่อ 29 ต.ค. 2558',
+    movedTo: '-',
+  },
+} as const
+
 export const documentNotFoundDialog = {
   title: 'ไม่พบข้อมูลในระบบ',
   code: 'TC-037',

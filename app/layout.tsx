@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: 'แอปบริการ',
-    statusBarStyle: 'black-translucent',
   },
 }
 

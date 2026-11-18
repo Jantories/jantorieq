@@ -18,9 +18,11 @@ export function DocumentsTab({
   onAction,
   onOpenIdCard,
   onNotFound,
+  onOpenHouse,
 }: {
   onAction: (msg: string) => void
   onOpenIdCard: () => void
+  onOpenHouse?: () => void
   onNotFound: (id: NotFoundDocumentId) => void
 }) {
   return (
@@ -58,6 +60,7 @@ export function DocumentsTab({
                 subClassName="text-sm font-[100] text-neutral-500"
                 onClick={() => {
                   if (doc.id === 'idcard') onOpenIdCard()
+                  else if (doc.id === 'house' && onOpenHouse) onOpenHouse()
                   else if (doc.id in documentNotFoundDialog.messages) onNotFound(doc.id as NotFoundDocumentId)
                   else onAction(doc.title)
                 }}

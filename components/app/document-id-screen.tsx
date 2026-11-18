@@ -2,12 +2,12 @@
 
 import Image from 'next/image'
 import { ChevronLeft } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { HoloIdCard, type HoloCardData } from './holo-id-card'
 import { BackButton } from './page-parts'
 import { beginGesture, endGesture, promoteLayer } from '@/lib/gesture'
 
-type Props = { cardImage: string; holo?: { card: HoloCardData; portrait?: string }; onBack: () => void }
+type Props = { cardImage: string; holo?: { card: HoloDocumentCardData; portrait?: string }; onBack: () => void }
 
 const MAX_IMAGE_ZOOM = 2.45
 const IMAGE_RATIO = 1.595
@@ -15,12 +15,68 @@ const IMAGE_EDGE_OVERSHOOT = 28
 
 type ImageView = { zoom: number; x: number; y: number }
 
+type HoloDocumentCardData = HoloCardData & { back: { large: string } }
+
+function HoloDocumentCard({ card, portrait, flipped, onClick }: { card: HoloDocumentCardData; portrait?: string; flipped: boolean; onClick?: (event?: React.MouseEvent) => void }) {
+  return (
+    <div
+      className="relative w-full [perspective:1200px]"
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+      onKeyDown={onClick ? (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onClick() } } : undefined}
+      aria-label={onClick ? 'แตะหนึ่งครั้งเพื่อพลิกบัตร แตะสองครั้งเพื่อขยาย' : undefined}
+    >
+      <div className="relative aspect-[810/500] w-full [transform-style:preserve-3d] transition-transform duration-700 ease-in-out" style={{ transform: `rotateY(${flipped ? 180 : 0}deg)` }}>
+        <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] [backface-visibility:hidden]">
+          <HoloIdCard card={card} portrait={portrait} />
+        </div>
+        <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] bg-neutral-100 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <Image src={card.back.large} alt="ด้านหลังบัตรประจำตัวประชาชน" fill sizes="(max-width: 448px) 92vw, 400px" className="object-fill" draggable={false} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
   const [isFullImageOpen, setIsFullImageOpen] = useState(false)
+  const [holoFlipped, setHoloFlipped] = useState(false)
+  const [fullHoloFlipped, setFullHoloFlipped] = useState(false)
+  const holoTapRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const fullHoloTapRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false, focalX: 0, focalY: 0, lastTap: 0 })
   const viewRef = useRef<ImageView>({ zoom: 1, x: 0, y: 0 })
   const contentRef = useRef<HTMLDivElement>(null)
   const centerRef = useRef({ x: 0, y: 0 })
+
+  useEffect(() => () => {
+    if (holoTapRef.current) clearTimeout(holoTapRef.current)
+    if (fullHoloTapRef.current) clearTimeout(fullHoloTapRef.current)
+  }, [])
+
+  function handleHoloTap() {
+    if (holoTapRef.current) {
+      clearTimeout(holoTapRef.current)
+      holoTapRef.current = null
+      setFullHoloFlipped(false)
+      setIsFullImageOpen(true)
+      return
+    }
+    holoTapRef.current = setTimeout(() => {
+      holoTapRef.current = null
+      setHoloFlipped((flipped) => !flipped)
+    }, 350)
+  }
+
+  function handleFullHoloTap(event?: React.MouseEvent) {
+    event?.stopPropagation()
+    if (fullHoloTapRef.current) clearTimeout(fullHoloTapRef.current)
+    fullHoloTapRef.current = setTimeout(() => {
+      fullHoloTapRef.current = null
+      setFullHoloFlipped((flipped) => !flipped)
+    }, 350)
+  }
 
   function clampImagePan(pan: { x: number; y: number }, zoom: number) {
     const viewportWidth = Math.min(window.innerWidth, 448)
@@ -124,6 +180,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
 
   function closeFullImage() {
     setIsFullImageOpen(false)
+    setFullHoloFlipped(false)
     applyImageView(1, { x: 0, y: 0 })
     touchRef.current = { ...touchRef.current, moved: false, pinching: false, lastTap: 0 }
   }
@@ -144,9 +201,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
 
         <div className="mt-10 overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5">
           {holo ? (
-            <div className="relative aspect-[810/500] w-full">
-              <HoloIdCard card={holo.card} portrait={holo.portrait} />
-            </div>
+            <HoloDocumentCard card={holo.card} portrait={holo.portrait} flipped={holoFlipped} onClick={handleHoloTap} />
           ) : (
             <Image
               src={cardImage}
@@ -199,9 +254,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
             aria-label="แตะสองครั้งเพื่อขยายหรือย่อภาพ"
           >
             {holo ? (
-              <div className="relative aspect-[810/500] w-full">
-                <HoloIdCard card={holo.card} portrait={holo.portrait} />
-              </div>
+              <HoloDocumentCard card={holo.card} portrait={holo.portrait} flipped={fullHoloFlipped} onClick={(event) => handleFullHoloTap(event)} />
             ) : (
               <Image
                 src={cardImage}
