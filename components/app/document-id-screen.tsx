@@ -5,6 +5,7 @@ import { ChevronLeft } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { HoloIdCard, type HoloCardData } from './holo-id-card'
 import { BackButton } from './page-parts'
+import { beginGesture, endGesture, promoteLayer } from '@/lib/gesture'
 
 type Props = { cardImage: string; holo?: { card: HoloCardData; portrait?: string }; onBack: () => void }
 
@@ -19,6 +20,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
   const touchRef = useRef({ distance: 0, zoom: 1, x: 0, y: 0, panX: 0, panY: 0, pinching: false, moved: false, focalX: 0, focalY: 0, lastTap: 0 })
   const viewRef = useRef<ImageView>({ zoom: 1, x: 0, y: 0 })
   const contentRef = useRef<HTMLDivElement>(null)
+  const centerRef = useRef({ x: 0, y: 0 })
 
   function clampImagePan(pan: { x: number; y: number }, zoom: number) {
     const viewportWidth = Math.min(window.innerWidth, 448)
@@ -32,15 +34,17 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
 
   function applyImageView(nextZoom: number, nextPan: { x: number; y: number }) {
     viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
+    beginGesture()
     if (contentRef.current) {
       contentRef.current.style.transform = `translate3d(${nextPan.x}px, ${nextPan.y}px, 0) scale(${nextZoom}) rotate(90deg)`
+      promoteLayer(contentRef.current)
     }
+    endGesture()
   }
 
   function getImageFocal(event: React.TouchEvent<HTMLDivElement>) {
-    const rect = event.currentTarget.getBoundingClientRect()
-    const x = (event.touches[0].clientX + event.touches[1].clientX) / 2 - (rect.left + rect.width / 2)
-    const y = (event.touches[0].clientY + event.touches[1].clientY) / 2 - (rect.top + rect.height / 2)
+    const x = (event.touches[0].clientX + event.touches[1].clientX) / 2 - centerRef.current.x
+    const y = (event.touches[0].clientY + event.touches[1].clientY) / 2 - centerRef.current.y
     const rotation = document.documentElement.getAttribute('data-forced-portrait')
     if (rotation === 'cw') return { x: y, y: -x }
     if (rotation === 'ccw') return { x: -y, y: x }
@@ -48,6 +52,9 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
   }
 
   function handleImageTouchStart(event: React.TouchEvent<HTMLDivElement>) {
+    // The dialog never moves, so its centre is measured once per gesture instead of on every touch move.
+    const rect = event.currentTarget.getBoundingClientRect()
+    centerRef.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
     if (event.touches.length === 2) {
       const [first, second] = [event.touches[0], event.touches[1]]
       const focal = getImageFocal(event)

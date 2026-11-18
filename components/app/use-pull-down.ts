@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { beginGesture, endGesture } from '@/lib/gesture'
 
 const activateDistance = 6
 const maxPull = 140
@@ -25,6 +26,7 @@ export function usePullDown(enabled: boolean) {
       if (!el) return
       el.style.transition = ''
       el.style.transform = ''
+      el.style.willChange = ''
     }
 
     if (!enabled) return
@@ -43,6 +45,8 @@ export function usePullDown(enabled: boolean) {
       startY = y
       active = false
       pulled = 0
+      // The layer is ready before the finger has moved far enough to start the pull.
+      if (ref.current) ref.current.style.willChange = 'transform'
     }
 
     const flush = () => {
@@ -56,12 +60,14 @@ export function usePullDown(enabled: boolean) {
       if (!active) {
         if (distance < 0) {
           startY = null
+          clear()
           return false
         }
         if (distance < activateDistance) return false
         active = true
         clearTimeout(clearTimer)
         document.body.style.userSelect = 'none'
+        beginGesture()
       }
       pulled = (distance * maxPull) / (maxPull + distance)
       if (!frame) frame = requestAnimationFrame(flush)
@@ -73,18 +79,24 @@ export function usePullDown(enabled: boolean) {
       const wasActive = active
       startY = null
       active = false
-      if (!wasActive) return
+      if (!wasActive) {
+        clear()
+        return
+      }
       document.body.style.userSelect = ''
       cancelAnimationFrame(frame)
       frame = 0
       pulled = 0
       paint(0, true)
+      endGesture(520)
       clearTimer = setTimeout(clear, 460)
     }
 
     const onTouchStart = (e: TouchEvent) => begin(e.touches[0].clientY, e.target)
+    // Passive, so ordinary scrolling is never held up waiting for this handler. Native pull-to-refresh
+    // and bounce are already disabled by overscroll-behavior on the page.
     const onTouchMove = (e: TouchEvent) => {
-      if (move(e.touches[0].clientY) && e.cancelable) e.preventDefault()
+      move(e.touches[0].clientY)
     }
 
     const onMouseDown = (e: MouseEvent) => {
@@ -102,7 +114,7 @@ export function usePullDown(enabled: boolean) {
     }
 
     window.addEventListener('touchstart', onTouchStart, { passive: true })
-    window.addEventListener('touchmove', onTouchMove, { passive: false })
+    window.addEventListener('touchmove', onTouchMove, { passive: true })
     window.addEventListener('touchend', end)
     window.addEventListener('touchcancel', end)
     window.addEventListener('mousedown', onMouseDown)
