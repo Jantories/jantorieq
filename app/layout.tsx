@@ -1,8 +1,15 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Noto_Sans_Thai } from 'next/font/google'
+import { Kanit, Noto_Sans_Thai } from 'next/font/google'
 import { OrientationLock } from '@/components/app/orientation-lock'
 import './globals.css'
+
+const kanit = Kanit({
+  subsets: ['thai', 'latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--font-kanit-local',
+})
 
 const notoSansThai = Noto_Sans_Thai({
   subsets: ['thai', 'latin'],
@@ -44,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="th" className={`${notoSansThai.variable} bg-background`}>
+    <html lang="th" className={`${notoSansThai.variable} ${kanit.variable} bg-background`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
         <OrientationLock />
         {children}

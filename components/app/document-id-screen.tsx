@@ -27,12 +27,12 @@ function HoloDocumentCard({ card, portrait, flipped, onClick }: { card: HoloDocu
       onKeyDown={onClick ? (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onClick() } } : undefined}
       aria-label={onClick ? 'แตะหนึ่งครั้งเพื่อพลิกบัตร แตะสองครั้งเพื่อขยาย' : undefined}
     >
-      <div className="relative aspect-[810/500] w-full [transform-style:preserve-3d] transition-transform duration-700 ease-in-out" style={{ transform: `rotateY(${flipped ? 180 : 0}deg)` }}>
+      <div className="relative aspect-[810/500] w-full [transform-style:preserve-3d] transition-transform duration-700 ease-in-out" style={{ transform: `rotateY(${flipped ? -180 : 0}deg)` }}>
         <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] [backface-visibility:hidden]">
           <HoloIdCard card={card} portrait={portrait} />
         </div>
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <Image src={card.back.large} alt="ด้านหลังบัตรประจำตัวประชาชน" fill sizes="(max-width: 448px) 92vw, 400px" className="object-fill" draggable={false} />
+        <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <Image src={card.back.large} alt="ด้านหลังบัตรประจำตัวประชาชน" fill sizes="(max-width: 448px) 92vw, 400px" className="scale-[1.02] object-fill" draggable={false} />
         </div>
       </div>
     </div>
@@ -199,7 +199,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           <p className="mt-1 text-base leading-relaxed text-neutral-500">ข้อมูลหน้าบัตร รูปภาพ ชื่อ นามสกุล วันหมดอายุ</p>
         </div>
 
-        <div className="mt-10 overflow-hidden rounded-3xl shadow-lg ring-1 ring-black/5">
+        <div className="mt-10">
           {holo ? (
             <HoloDocumentCard card={holo.card} portrait={holo.portrait} flipped={holoFlipped} onClick={handleHoloTap} />
           ) : (
@@ -247,7 +247,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           </button>
           <div
             ref={contentRef}
-            className="relative shrink-0 overflow-hidden rounded-[4.5cqw] shadow-xl touch-none"
+            className="relative shrink-0 touch-none"
             style={{ width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)', transform: 'translate3d(0px, 0px, 0) scale(1) rotate(90deg)', transformOrigin: 'center' }}
             onClick={(event) => event.stopPropagation()}
             onDoubleClick={() => applyImageView(viewRef.current.zoom > 1 ? 1 : 2, { x: 0, y: 0 })}

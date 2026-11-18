@@ -5,7 +5,7 @@ import { useState } from 'react'
 const digits = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 const keyClass =
-  'flex size-23 items-center justify-center rounded-full bg-keypad text-[38px] font-semibold text-brand-dark transition active:scale-95 active:bg-keypad-active disabled:opacity-60'
+  'flex size-23 items-center justify-center rounded-full bg-keypad text-[45px] font-normal leading-none text-brand-dark transition active:scale-95 active:bg-keypad-active disabled:opacity-60'
 
 function BackspaceIcon() {
   return (
@@ -53,7 +53,7 @@ export function PinScreen({ onUnlock, onClose }: { onUnlock: (pin: string) => bo
 
   return (
     <main data-pin-screen className="fixed inset-0 z-50 flex items-end justify-center bg-neutral-950/75 px-0 py-0 sm:px-6 sm:py-8" onClick={onClose}>
-      <section className="flex min-h-[80dvh] w-full max-w-md flex-col items-center rounded-t-[2.75rem] bg-white px-6 pb-10 pt-4 shadow-xl animate-in slide-in-from-bottom duration-300 sm:min-h-0 sm:rounded-[2.75rem]" onClick={(event) => event.stopPropagation()}>
+      <section className="flex min-h-[80dvh] w-full max-w-md flex-col items-center font-kanit rounded-t-[2.75rem] bg-white px-6 pb-10 pt-4 shadow-xl animate-in slide-in-from-bottom duration-300 sm:min-h-0 sm:rounded-[2.75rem]" onClick={(event) => event.stopPropagation()}>
         <div className="h-[3px] w-28 rounded-full bg-neutral-300" aria-hidden />
         <h1 className="mt-6 text-lg font-normal text-brand-dark">ระบุรหัสผ่าน</h1>
         <div className="mt-6 flex gap-3" aria-label="รหัส PIN">
