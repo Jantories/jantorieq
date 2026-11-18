@@ -72,7 +72,8 @@ function CardFace({
             left: `${numberOverlay.x}%`,
             top: `${numberOverlay.y}%`,
             fontSize: `${numberOverlay.size}cqw`,
-            transform: 'translateY(-50%)',
+            color: numberOverlay.color,
+            transform: numberOverlay.align === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)',
           }}
         >
           {numberOverlay.text}
@@ -125,7 +126,7 @@ function toContentDelta(dx: number, dy: number) {
   return { x: dx, y: dy }
 }
 
-type Props = { card: HoloCardData & { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; portrait?: string; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
+type Props = { card: HoloCardData & { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; portrait?: string; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay; backOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
 const FLIP_MS = 1100
 
@@ -320,7 +321,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         style={{ transform: flat ? 'none' : `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} flat={flat} holoCard={card.holo ? card : undefined} portrait={card.portrait} seals={card.seals} numberOverlay={card.numberOverlay} />
-        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} flat={flat} />
+        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} flat={flat} numberOverlay={card.backOverlay} />
       </div>
       {locked && (
         <button

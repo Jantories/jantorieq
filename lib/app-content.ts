@@ -70,6 +70,9 @@ export type NumberOverlay = {
   y: number
   /** Font size, % of card width (cqw) */
   size: number
+  /** 'center' treats x as the horizontal centre of the text */
+  align?: 'left' | 'center'
+  color?: string
 }
 
 // Seal positions for cards built from a provided full-card image (same template).
@@ -249,7 +252,20 @@ export const cardProfiles = {
       large: '/images/card-back-8.png',
     },
   },
-  ninth: { ...firstCard, ...liveCard, number: '9 9999 99999 99 9', fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า', firstNameEn: 'Mr. Ninth', lastNameEn: 'User', photoCode: '0000-00-00000009' },
+  ninth: {
+    ...firstCard,
+    ...liveCard,
+    number: '9 9999 99999 99 9',
+    fullNameTh: 'นาย ผู้ใช้งาน คนที่เก้า',
+    firstNameEn: 'Mr. Ninth',
+    lastNameEn: 'User',
+    photoCode: '0000-00-00000009',
+    back: {
+      small: '/images/card-back-9.png',
+      large: '/images/card-back-9.png',
+    },
+    backOverlay: { text: 'JC4-1777510-20', x: 50.69, y: 66.5, size: 6.975, align: 'center' as const, color: '#8d8d8d' },
+  },
   tenth: {
     ...firstCard,
     ...liveCard,
