@@ -623,7 +623,7 @@ export const houseRegistration = {
     gender: 'ชาย',
     idNumber: '1-3099-03735-85-1',
     status: 'ผู้อาศัย',
-    birth: '19 พ.ย. 2552',
+    birth: '19 พ.ย. 2549',
     mother: { name: 'นริศรา', id: '3-3099-01026-71-9', nationality: 'ไทย' },
     father: { name: 'ภวัฒ', id: '3-3099-01271-76-4', nationality: 'ไทย' },
     movedFrom: 'ฐานข้อมูลทะเบียนราษฎร เข้ามาอยู่ในบ้านนี้เมื่อ 29 ต.ค. 2558',

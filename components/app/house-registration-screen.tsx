@@ -4,98 +4,20 @@ import { ChevronLeft } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { BackButton } from './page-parts'
 import { HouseInfoArtwork } from './house-info-artwork'
+import { HouseMembersArtwork } from './house-members-artwork'
 import { useCardViewer } from './use-card-viewer'
-import { houseRegistration } from '@/lib/app-content'
 
 type Props = { onBack: () => void }
 
 const FACE_WIDTH = 810
 const FACE_HEIGHT = 500
-const RESIDENTS_DESIGN_WIDTH = 480
 const FLIP_DELAY_MS = 260
-
-function Field({ label, value, className = '', wrap = false }: { label: string; value: string; className?: string; wrap?: boolean }) {
-  return (
-    <p className={`text-xs leading-snug text-neutral-900 ${className}`}>
-      {label} <span className={`ml-1 ${wrap ? '' : 'whitespace-nowrap'}`}>{value}</span>
-    </p>
-  )
-}
-
-function ResidentsCard({ className = '' }: { className?: string }) {
-  const { residents } = houseRegistration
-  return (
-    <section aria-labelledby="house-residents-title" className={`rounded-xl bg-house-card px-4 pb-4 pt-4 shadow-md ${className}`}>
-      <h3 id="house-residents-title" className="text-center text-xs font-medium text-neutral-900">
-        {residents.title}
-      </h3>
-      <div className="mt-4 flex flex-col gap-3">
-        <div className="grid grid-cols-[auto_auto_auto] justify-between gap-x-1.5">
-          <Field label="ชื่อ" value={residents.name} />
-          <Field label="สัญชาติ" value={residents.nationality} />
-          <Field label="เพศ" value={residents.gender} />
-        </div>
-        <div className="grid grid-cols-[auto_auto_auto] justify-between gap-x-1.5">
-          <Field label="เลขประจำตัวประชาชน" value={residents.idNumber} />
-          <Field label="สถานภาพ" value={residents.status} />
-          <Field label="เกิดเมื่อ" value={residents.birth} />
-        </div>
-        <div className="grid grid-cols-[auto_auto_auto] justify-between gap-x-1.5">
-          <Field label="มารดาผู้ให้กำเนิด ชื่อ" value={residents.mother.name} />
-          <p className="text-xs text-neutral-900">{residents.mother.id}</p>
-          <Field label="สัญชาติ" value={residents.mother.nationality} />
-        </div>
-        <div className="grid grid-cols-[auto_auto_auto] justify-between gap-x-1.5">
-          <Field label="บิดาผู้ให้กำเนิด ชื่อ" value={residents.father.name} />
-          <p className="text-xs text-neutral-900">{residents.father.id}</p>
-          <Field label="สัญชาติ" value={residents.father.nationality} />
-        </div>
-        <p className="text-xs leading-snug text-neutral-900">
-          มาจาก <span className="ml-1">{residents.movedFrom}</span>
-        </p>
-      </div>
-      <hr className="mt-4 border-t-2 border-dotted border-neutral-900" />
-      <p className="mt-3 text-xs text-neutral-900">
-        ไปที่ <span className="ml-1">{residents.movedTo}</span>
-      </p>
-    </section>
-  )
-}
 
 function HouseDocument() {
   return (
     <div className="flex flex-col gap-6">
       <HouseInfoArtwork className="overflow-hidden rounded-xl shadow-md" />
-      <ResidentsCard />
-    </div>
-  )
-}
-
-// Lays a fixed-size card out at its design size and scales it to fill whatever width the face gets.
-function ScaledFace({ children }: { children: React.ReactNode }) {
-  const frameRef = useRef<HTMLDivElement>(null)
-  const [scale, setScale] = useState(1)
-
-  useEffect(() => {
-    const frame = frameRef.current
-    if (!frame) return
-    const observer = new ResizeObserver(([entry]) => setScale(entry.contentRect.width / RESIDENTS_DESIGN_WIDTH))
-    observer.observe(frame)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div ref={frameRef} className="absolute inset-0 overflow-hidden rounded-[4.5cqw]">
-      <div
-        style={{
-          width: RESIDENTS_DESIGN_WIDTH,
-          height: (RESIDENTS_DESIGN_WIDTH * FACE_HEIGHT) / FACE_WIDTH,
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-        }}
-      >
-        {children}
-      </div>
+      <HouseMembersArtwork className="overflow-hidden rounded-xl shadow-md" />
     </div>
   )
 }
@@ -125,9 +47,9 @@ function FlipHouseCard({ flipped, onClick }: { flipped: boolean; onClick: (event
           </div>
         </div>
         <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]" aria-hidden={!flipped}>
-          <ScaledFace>
-            <ResidentsCard className="h-full rounded-none shadow-none" />
-          </ScaledFace>
+          <div className="absolute inset-0 overflow-hidden rounded-[4.5cqw]">
+            <HouseMembersArtwork className="size-full" />
+          </div>
         </div>
       </div>
     </div>
