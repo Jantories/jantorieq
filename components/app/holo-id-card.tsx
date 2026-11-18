@@ -86,21 +86,21 @@ function fieldText(f: Field, card: HoloCardData, address: [string, string]) {
 }
 
 const HOLO_ITEMS = [
-  { kind: 'seal', left: -1.43, top: 18.83, width: 12.61, rotate: 0 },
-  { kind: 'seal', left: 22.1, top: 22.51, width: 14.71, rotate: 0 },
-  { kind: 'seal', left: 44.96, top: 21.56, width: 13.87, rotate: 0 },
-  { kind: 'seal', left: 74.2, top: 17.74, width: 14.71, rotate: 0 },
-  { kind: 'seal', left: 63.7, top: 44.34, width: 15.13, rotate: 0 },
-  { kind: 'seal', left: 42.27, top: 64.39, width: 13.87, rotate: 0 },
-  { kind: 'seal', left: 14.54, top: 75.31, width: 13.03, rotate: 0 },
-  { kind: 'seal', left: 69.16, top: 86.63, width: 13.03, rotate: 0 },
-  { kind: 'txt', left: 30.67, top: 27.97, width: 10.5, rotate: 90 },
-  { kind: 'txt', left: 83.45, top: 20.46, width: 10.92, rotate: 90 },
-  { kind: 'txt', left: 54.03, top: 44.34, width: 14.71, rotate: 90 },
-  { kind: 'txt', left: 32.86, top: 64.12, width: 13.87, rotate: 90 },
-  { kind: 'txt', left: 14.54, top: 62.07, width: 12.86, rotate: 180 },
-  { kind: 'txt', left: -1.26, top: 31.65, width: 11.76, rotate: 0 },
-  { kind: 'txt', left: 69.16, top: 99.86, width: 12.61, rotate: 0 },
+  { kind: 'seal', left: -1.6, top: 19, width: 12.8, rotate: 0 },
+  { kind: 'seal', left: 22.2123, top: 25.5574, width: 14.7, rotate: 270 },
+  { kind: 'seal', left: 45, top: 21.3897, width: 13.7, rotate: 180 },
+  { kind: 'seal', left: 74.0891, top: 17.217, width: 14.8, rotate: 270 },
+  { kind: 'seal', left: 63.6, top: 44.2, width: 15.1, rotate: 90 },
+  { kind: 'seal', left: 42.1, top: 64.6, width: 14.5, rotate: 90 },
+  { kind: 'seal', left: 14.7, top: 75.4, width: 12.9, rotate: 180 },
+  { kind: 'seal', left: 60.6, top: 85.2, width: 14, rotate: 0 },
+  { kind: 'txt', left: 30.9674, top: 25.5097, width: 13.5, rotate: 270 },
+  { kind: 'txt', left: 83.3012, top: 17.5373, width: 14.2, rotate: 270 },
+  { kind: 'txt', left: 54.2, top: 44.4, width: 14.6, rotate: 90 },
+  { kind: 'txt', left: 33.2, top: 64.2, width: 13.8, rotate: 90 },
+  { kind: 'txt', left: 14.6, top: 61.9, width: 12.8, rotate: 180 },
+  { kind: 'txt', left: -1.1, top: 31.8, width: 11.76, rotate: 0 },
+  { kind: 'txt', left: 60.8661, top: 98.9784, width: 13.7, rotate: 0 },
   { kind: 'txt', left: 45.63, top: 7.09, width: 13.45, rotate: 180 },
 ] as const
 
@@ -203,7 +203,7 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
   return (
     <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${className}`}>
       <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true">
-        <image x="9.3" y="173.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
+        <image x="15.8" y="174.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
         <image className={card.photoCode === '1040-02-04221656' ? 'holo-card-portrait-neutral' : undefined} x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
         {FIELDS.map((f) => (
           <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
