@@ -193,7 +193,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           >
             {holo ? (
               <div className="relative aspect-[810/500] w-full">
-                <HoloIdCard card={holo.card} portrait={holo.portrait} vivid />
+                <HoloIdCard card={holo.card} portrait={holo.portrait} />
               </div>
             ) : (
               <Image
