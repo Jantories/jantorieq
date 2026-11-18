@@ -181,7 +181,7 @@ export function AppShell() {
   function renderContent() {
     if (screen === 'notifications') return <NotificationsScreen onBack={() => setScreen(null)} />
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
-    if (screen === 'documentId') return <DocumentIdScreen cardImage={activeCard.front.large} onBack={() => setScreen(null)} />
+    if (screen === 'documentId') return <DocumentIdScreen cardImage={activeCard.front.large} holo={activeCard.holo ? { card: activeCard, portrait: activeCard.portrait } : undefined} onBack={() => setScreen(null)} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
     if (screen === 'certify') return <CertifyScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />

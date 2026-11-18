@@ -1,0 +1,232 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
+
+export type HoloCardData = {
+  number: string
+  fullNameTh: string
+  firstNameEn: string
+  lastNameEn: string
+  birthTh: string
+  birthEn: string
+  address: string
+  issueTh: string
+  issueEn: string
+  expiryTh: string
+  expiryEn: string
+  photoCode: string
+}
+
+type FieldKey = Exclude<keyof HoloCardData, 'address'> | 'address1' | 'address2'
+
+type Field = {
+  id: string
+  x: number
+  y: number
+  size: number
+  fill: string
+  stroke: number
+  /** Static label text */
+  text?: string
+  /** Value taken from the card data */
+  field?: FieldKey
+  /** Right edge (in the 810x500 card space); longer values are squeezed to fit */
+  maxRight?: number
+}
+
+const INK = '#111111'
+const BLUE = '#263a79'
+
+// Positions, sizes and colours live here; the words come from the card data (lib/app-content.ts).
+const FIELDS: readonly Field[] = [
+  { id: 'number', x: 346.7, y: 90.5, size: 44.4, fill: INK, stroke: 1.012, field: 'number', maxRight: 780 },
+  { id: 'thai-name', x: 258, y: 146, size: 53, fill: INK, stroke: 1.208, field: 'fullNameTh', maxRight: 795 },
+  { id: 'english-first', x: 339, y: 199.1, size: 38.4, fill: BLUE, stroke: 0.876, field: 'firstNameEn', maxRight: 780 },
+  { id: 'english-last', x: 373.9, y: 226.2, size: 39.8, fill: BLUE, stroke: 0.907, field: 'lastNameEn', maxRight: 780 },
+  { id: 'birth-th', x: 377.1, y: 272.8, size: 38, fill: INK, stroke: 0.866, field: 'birthTh', maxRight: 620 },
+  { id: 'birth-en', x: 416.1, y: 302.2, size: 38, fill: BLUE, stroke: 0.866, field: 'birthEn', maxRight: 620 },
+  { id: 'address-1', x: 95, y: 351, size: 35.8, fill: INK, stroke: 0.816, field: 'address1', maxRight: 612 },
+  { id: 'address-2', x: 93.6, y: 383.3, size: 35.8, fill: INK, stroke: 0.816, field: 'address2', maxRight: 612 },
+  { id: 'issue-th', x: 96, y: 415, size: 30, fill: INK, stroke: 0.684, field: 'issueTh', maxRight: 430 },
+  { id: 'issue-label-th', x: 96, y: 436, size: 27, fill: INK, stroke: 0.616, text: 'วันออกบัตร' },
+  { id: 'issue-en', x: 96, y: 464, size: 30, fill: BLUE, stroke: 0.684, field: 'issueEn', maxRight: 430 },
+  { id: 'issue-label-en', x: 96, y: 482, size: 26.5, fill: BLUE, stroke: 0.604, text: 'Date of Issue' },
+  { id: 'expiry-th', x: 439.4, y: 412.9, size: 30, fill: INK, stroke: 0.684, field: 'expiryTh', maxRight: 615 },
+  { id: 'expiry-label-th', x: 438.9, y: 434.9, size: 27, fill: INK, stroke: 0.616, text: 'วันบัตรหมดอายุ' },
+  { id: 'expiry-en', x: 439.6, y: 463.6, size: 30, fill: BLUE, stroke: 0.684, field: 'expiryEn', maxRight: 615 },
+  { id: 'expiry-label-en', x: 439, y: 482.4, size: 26.5, fill: BLUE, stroke: 0.604, text: 'Date of Expiry' },
+  { id: 'photo-code', x: 628.7, y: 458.9, size: 31.7, fill: INK, stroke: 0.723, field: 'photoCode', maxRight: 800 },
+]
+
+const THAI_MARKS = /[\u0E31\u0E34-\u0E3A\u0E47-\u0E4E]/g
+const ADDRESS_LINE_LENGTH = 46
+
+// The address wraps onto two lines at a space, so a long address never runs under the portrait.
+function splitAddress(address: string): [string, string] {
+  const breakAt = address.indexOf('\n')
+  if (breakAt !== -1) {
+    return [address.slice(0, breakAt).trim(), address.slice(breakAt + 1).trim()]
+  }
+  const words = address.trim().split(/\s+/)
+  let first = ''
+  let i = 0
+  for (; i < words.length; i++) {
+    const next = first ? `${first} ${words[i]}` : words[i]
+    if (first && next.replace(THAI_MARKS, '').length > ADDRESS_LINE_LENGTH) break
+    first = next
+  }
+  return [first, words.slice(i).join(' ')]
+}
+
+function fieldText(f: Field, card: HoloCardData, address: [string, string]) {
+  if (f.text) return f.text
+  if (f.field === 'address1') return address[0]
+  if (f.field === 'address2') return address[1]
+  return f.field ? card[f.field] : ''
+}
+
+const HOLO_ITEMS = [
+  { kind: 'seal', left: -1.43, top: 18.83, width: 12.61, rotate: 0 },
+  { kind: 'seal', left: 22.1, top: 22.51, width: 14.71, rotate: 0 },
+  { kind: 'seal', left: 44.96, top: 21.56, width: 13.87, rotate: 0 },
+  { kind: 'seal', left: 74.2, top: 17.74, width: 14.71, rotate: 0 },
+  { kind: 'seal', left: 63.7, top: 44.34, width: 15.13, rotate: 0 },
+  { kind: 'seal', left: 42.27, top: 64.39, width: 13.87, rotate: 0 },
+  { kind: 'seal', left: 14.54, top: 75.31, width: 13.03, rotate: 0 },
+  { kind: 'seal', left: 69.16, top: 86.63, width: 13.03, rotate: 0 },
+  { kind: 'txt', left: 30.67, top: 27.97, width: 10.5, rotate: 90 },
+  { kind: 'txt', left: 83.45, top: 20.46, width: 10.92, rotate: 90 },
+  { kind: 'txt', left: 54.03, top: 44.34, width: 14.71, rotate: 90 },
+  { kind: 'txt', left: 32.86, top: 64.12, width: 13.87, rotate: 90 },
+  { kind: 'txt', left: 14.54, top: 62.07, width: 12.86, rotate: 180 },
+  { kind: 'txt', left: -1.26, top: 31.65, width: 11.76, rotate: 0 },
+  { kind: 'txt', left: 69.16, top: 99.86, width: 12.61, rotate: 0 },
+  { kind: 'txt', left: 45.63, top: 7.09, width: 13.45, rotate: 180 },
+] as const
+
+const SWEEP_SECONDS = 6
+const HOLD_SECONDS = 3
+const PERIOD = 70
+
+const mod = (a: number, n: number) => ((a % n) + n) % n
+const clamp = (v: number) => Math.max(-1, Math.min(1, v))
+
+export const DEFAULT_PORTRAIT = '/images/alpha/portrait.png'
+export const DEFAULT_BARCODE = '/images/alpha/barcode.svg'
+
+type Props = { card: HoloCardData; portrait?: string; barcode?: string; className?: string }
+
+export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAULT_BARCODE, className = '' }: Props) {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const address = splitAddress(card.address)
+
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    let cancelled = false
+    const fit = () => {
+      if (cancelled) return
+      root.querySelectorAll<SVGTextElement>('text[data-max-right]').forEach((node) => {
+        node.removeAttribute('textLength')
+        const room = Number(node.dataset.maxRight) - Number(node.getAttribute('x'))
+        const width = node.getComputedTextLength()
+        if (width > room) {
+          node.setAttribute('textLength', String(room))
+          node.setAttribute('lengthAdjust', 'spacingAndGlyphs')
+        }
+      })
+    }
+    fit()
+    document.fonts?.ready.then(fit)
+    return () => {
+      cancelled = true
+    }
+  }, [card])
+
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+    const nodes = Array.from(root.querySelectorAll<HTMLElement>('[data-holo]'))
+    const dirs = nodes.map(() => 1)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let target = 0
+    let cur = 0
+    let clock = 0
+    let lastCycle = -1
+    let last = performance.now()
+    let raf = 0
+
+    const setPos = (nx: number, ny: number) => {
+      target = (nx + ny) * 35
+    }
+    const onPointer = (e: PointerEvent) => setPos((e.clientX / innerWidth) * 2 - 1, (e.clientY / innerHeight) * 2 - 1)
+    const onTilt = (e: DeviceOrientationEvent) => {
+      if (e.gamma == null || e.beta == null) return
+      setPos(clamp(e.gamma / 40), clamp((e.beta - 45) / 40))
+    }
+    window.addEventListener('pointermove', onPointer)
+    window.addEventListener('deviceorientation', onTilt)
+
+    const frame = (t: number) => {
+      const dt = Math.min(0.1, (t - last) / 1000)
+      last = t
+      let p = 0
+      let e = 0
+      if (!reduce) {
+        clock += dt
+        const cycle = Math.floor(clock / (SWEEP_SECONDS + HOLD_SECONDS))
+        if (cycle !== lastCycle) {
+          lastCycle = cycle
+          for (let i = 0; i < dirs.length; i++) dirs[i] = Math.random() < 0.5 ? 1 : -1
+        }
+        const phase = clock - cycle * (SWEEP_SECONDS + HOLD_SECONDS)
+        p = phase < SWEEP_SECONDS ? phase / SWEEP_SECONDS : 1
+        e = p * p * p * (p * (p * 6 - 15) + 10)
+      }
+      cur += (target - cur) * Math.min(1, dt * 2.5)
+      nodes.forEach((node, k) => {
+        const d = dirs[k]
+        node.style.setProperty('--o', mod(d * e * PERIOD + cur, PERIOD).toFixed(3) + '%')
+        node.style.setProperty('--s', (-d * Math.sin(Math.PI * p) * PERIOD * 0.5 - cur * 0.5).toFixed(2) + '%')
+      })
+      raf = requestAnimationFrame(frame)
+    }
+    raf = requestAnimationFrame(frame)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('pointermove', onPointer)
+      window.removeEventListener('deviceorientation', onTilt)
+    }
+  }, [])
+
+  return (
+    <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${className}`}>
+      <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true">
+        <image x="9.3" y="173.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
+        <image className={card.photoCode === '1040-02-04221656' ? 'holo-card-portrait-neutral' : undefined} x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
+        {FIELDS.map((f) => (
+          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
+            {fieldText(f, card, address)}
+          </text>
+        ))}
+      </svg>
+      {HOLO_ITEMS.map((item, i) => (
+        <div
+          key={i}
+          data-holo
+          className={item.kind === 'seal' ? 'holo-seal' : 'holo-seal-text'}
+          style={{
+            left: `${item.left}%`,
+            top: `${item.top}%`,
+            width: `${item.width}%`,
+            transform: `translate(-50%, -50%) rotate(${item.rotate}deg)`,
+          }}
+        >
+          <i className="holo-band" />
+          <i className="holo-sheen" />
+        </div>
+      ))}
+    </div>
+  )
+}
