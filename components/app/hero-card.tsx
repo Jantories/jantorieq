@@ -72,7 +72,8 @@ function CardFace({
             left: `${numberOverlay.x}%`,
             top: `${numberOverlay.y}%`,
             fontSize: `${numberOverlay.size}cqw`,
-            transform: 'translateY(-50%)',
+            color: numberOverlay.color,
+            transform: numberOverlay.align === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)',
           }}
         >
           {numberOverlay.text}
@@ -87,7 +88,7 @@ const circleBtn =
   'flex size-8 items-center justify-center rounded-full bg-brand-dark text-white transition hover:bg-brand-dark/80 active:scale-95 disabled:pointer-events-none'
 
 const glassBtn =
-  'flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95'
+  'flex size-11 items-center justify-center rounded-full bg-white/35 text-white transition hover:bg-white/45 active:scale-95'
 
 const DOUBLE_TAP_MS = 350
 const MAX_CARD_ZOOM = 2.45
@@ -125,7 +126,7 @@ function toContentDelta(dx: number, dy: number) {
   return { x: dx, y: dy }
 }
 
-type Props = { card: HoloCardData & { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; portrait?: string; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
+type Props = { card: HoloCardData & { expandLabel: string; infoLabel: string; front: CardImage; back: CardImage; holo?: boolean; portrait?: string; seals: readonly CardSeal[]; numberOverlay?: NumberOverlay; backOverlay?: NumberOverlay }; onOpenInfo: () => void; locked?: boolean; onRequestUnlock?: () => void }
 
 const FLIP_MS = 1100
 
@@ -173,12 +174,15 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     const { zoom, x, y } = shownRef.current
     if (contentRef.current) {
       contentRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${zoom}) rotate(90deg)`
+      if (settled) contentRef.current.removeAttribute('data-gesture')
     }
     frameRef.current = settled || !contentRef.current ? 0 : requestAnimationFrame(paintView)
   }
 
   const applyView = (nextZoom: number, nextPan: { x: number; y: number }) => {
     viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
+    // Pauses the holographic shimmer while the card is being pinched or dragged.
+    contentRef.current?.setAttribute('data-gesture', '')
     if (!frameRef.current) frameRef.current = requestAnimationFrame(paintView)
   }
 
@@ -317,7 +321,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
         style={{ transform: flat ? 'none' : `rotateY(${isFlipped ? -180 : 0}deg)`, borderRadius: '4.5cqw' }}
       >
         <CardFace face={card.front} label="บัตรด้านหน้า" blurred={locked} hiRes={hiRes} flat={flat} holoCard={card.holo ? card : undefined} portrait={card.portrait} seals={card.seals} numberOverlay={card.numberOverlay} />
-        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} flat={flat} />
+        <CardFace face={card.back} label="บัตรด้านหลัง" back blurred={locked} hiRes={hiRes} flat={flat} numberOverlay={card.backOverlay} />
       </div>
       {locked && (
         <button
@@ -367,7 +371,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           role="dialog"
           aria-modal="true"
           aria-label={card.expandLabel}
-          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none [overscroll-behavior:none] [touch-action:none]"
+          className="fixed inset-0 z-50 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/65 touch-none [overscroll-behavior:none] [touch-action:none]"
           onTouchStart={handleExpandedTouchStart}
           onTouchMove={handleExpandedTouchMove}
           onTouchEnd={handleExpandedTouchEnd}

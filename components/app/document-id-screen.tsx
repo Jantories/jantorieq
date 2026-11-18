@@ -169,7 +169,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           role="dialog"
           aria-modal="true"
           aria-label="ภาพบัตรประจำตัวประชาชนขนาดเต็ม"
-          className="fixed inset-0 z-40 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/60 backdrop-blur-[2px] touch-none [overscroll-behavior:none] [touch-action:none]"
+          className="fixed inset-0 z-40 mx-auto flex max-w-md items-center justify-center overflow-hidden bg-neutral-900/65 touch-none [overscroll-behavior:none] [touch-action:none]"
           onTouchStart={handleImageTouchStart}
           onTouchMove={handleImageTouchMove}
           onTouchEnd={handleImageTouchEnd}
@@ -178,7 +178,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           <button
             type="button"
             aria-label="ปิดภาพเต็ม"
-            className="absolute left-5 top-[max(env(safe-area-inset-top),1.25rem)] z-10 flex size-11 items-center justify-center rounded-full bg-white/30 text-white backdrop-blur transition hover:bg-white/40 active:scale-95"
+            className="absolute left-5 top-[max(env(safe-area-inset-top),1.25rem)] z-10 flex size-11 items-center justify-center rounded-full bg-white/35 text-white transition hover:bg-white/45 active:scale-95"
             onClick={closeFullImage}
           >
             <ChevronLeft className="size-8" strokeWidth={2.5} />
