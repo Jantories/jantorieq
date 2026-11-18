@@ -31,8 +31,8 @@ function HoloDocumentCard({ card, portrait, flipped, onClick }: { card: HoloDocu
         <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] [backface-visibility:hidden]">
           <HoloIdCard card={card} portrait={portrait} />
         </div>
-        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
-          <Image src={card.back.large} alt="ด้านหลังบัตรประจำตัวประชาชน" fill sizes="(max-width: 448px) 92vw, 400px" className="object-fill" draggable={false} />
+        <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <Image src={card.back.large} alt="ด้านหลังบัตรประจำตัวประชาชน" fill sizes="(max-width: 448px) 92vw, 400px" className="scale-[1.02] object-fill" draggable={false} />
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
     viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
     beginGesture()
     if (contentRef.current) {
-      contentRef.current.style.transform = `translate3d(${nextPan.x}px, ${nextPan.y}px, 0) scale(${nextZoom}) rotate(90deg)`
+      contentRef.current.style.transform = `translate3d(${nextPan.x}px, ${nextPan.y}px, 0) scale(${nextZoom}) rotate(-90deg)`
       promoteLayer(contentRef.current)
     }
     endGesture()
@@ -248,7 +248,7 @@ export function DocumentIdScreen({ cardImage, holo, onBack }: Props) {
           <div
             ref={contentRef}
             className="relative shrink-0 touch-none"
-            style={{ width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)', transform: 'translate3d(0px, 0px, 0) scale(1) rotate(90deg)', transformOrigin: 'center' }}
+            style={{ width: 'min(calc(var(--app-h, 100dvh) * 0.78), 140vw, 40rem)', transform: 'translate3d(0px, 0px, 0) scale(1) rotate(-90deg)', transformOrigin: 'center' }}
             onClick={(event) => event.stopPropagation()}
             onDoubleClick={() => applyImageView(viewRef.current.zoom > 1 ? 1 : 2, { x: 0, y: 0 })}
             aria-label="แตะสองครั้งเพื่อขยายหรือย่อภาพ"

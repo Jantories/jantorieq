@@ -1,13 +1,12 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Noto_Sans_Thai } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Kanit, Noto_Sans_Thai } from 'next/font/google'
 import { OrientationLock } from '@/components/app/orientation-lock'
 import './globals.css'
 
-const kanit = localFont({
-  src: '../public/fonts/Kanit-Regular.ttf',
-  weight: '400',
+const kanit = Kanit({
+  subsets: ['thai', 'latin'],
+  weight: ['400', '500'],
   display: 'swap',
   variable: '--font-kanit-local',
 })
