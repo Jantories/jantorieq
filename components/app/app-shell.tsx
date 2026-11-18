@@ -244,13 +244,6 @@ export function AppShell() {
         onClickCapture={guardLockedClick}
         className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-clip rounded-none bg-white sm:min-h-[calc(100dvh-1rem)] sm:rounded-[2.75rem]"
       >
-        <div
-          aria-hidden
-          className={`pointer-events-none fixed inset-x-0 top-0 z-30 h-[env(safe-area-inset-top)] ${
-            screen === 'scan' ? 'bg-brand-dark' : !screen && (tab === 'docs' || tab === 'history' || tab === 'settings') ? 'hidden' : 'bg-brand'
-          }`}
-        />
-
         {renderContent()}
 
         <button

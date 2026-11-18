@@ -1,11 +1,7 @@
 @import 'tailwindcss';
 
 html {
-  background-color: #2b2f8f;
-  background-image: linear-gradient(to bottom, #2b2f8f 0, #2b2f8f 50%, #fff 50%, #fff 100%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-color: #fff;
 }
 body {
   background: transparent;
