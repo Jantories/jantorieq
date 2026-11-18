@@ -3,13 +3,15 @@
 import { ChevronLeft } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { BackButton } from './page-parts'
+import { HouseInfoArtwork } from './house-info-artwork'
 import { useCardViewer } from './use-card-viewer'
 import { houseRegistration } from '@/lib/app-content'
 
 type Props = { onBack: () => void }
 
-const FACE_WIDTH = 400
-const FACE_HEIGHT = 290
+const FACE_WIDTH = 810
+const FACE_HEIGHT = 500
+const RESIDENTS_DESIGN_WIDTH = 480
 const FLIP_DELAY_MS = 260
 
 function Field({ label, value, className = '', wrap = false }: { label: string; value: string; className?: string; wrap?: boolean }) {
@@ -17,32 +19,6 @@ function Field({ label, value, className = '', wrap = false }: { label: string; 
     <p className={`text-xs leading-snug text-neutral-900 ${className}`}>
       {label} <span className={`ml-1 ${wrap ? '' : 'whitespace-nowrap'}`}>{value}</span>
     </p>
-  )
-}
-
-function HouseInfoCard({ className = '' }: { className?: string }) {
-  const { house } = houseRegistration
-  return (
-    <section aria-labelledby="house-info-title" className={`rounded-xl bg-house-card px-4 pb-4 pt-4 shadow-md ${className}`}>
-      <h3 id="house-info-title" className="text-center text-xs font-medium text-neutral-900">
-        {house.title}
-      </h3>
-      <div className="mt-4 grid grid-cols-[auto_1fr] gap-x-3 gap-y-3">
-        <Field label="เลขรหัสประจำบ้าน" value={house.code} />
-        <Field label="สำนักทะเบียน" value={house.office} wrap />
-        <Field label="รายการที่อยู่" value={house.address} className="col-span-2" wrap />
-        <Field label="ชื่อหมู่บ้าน" value={house.village} className="mt-3" />
-        <Field label="ชื่อบ้าน" value={house.name} className="mt-3" />
-        <Field label="ประเภทบ้าน" value={house.type} />
-        <Field label="ลักษณะบ้าน" value={house.kind} />
-        <Field label="วันเดือนปีที่กำหนดบ้านเลขที่" value={house.assignedDate} />
-        <p className="text-right text-xs leading-snug text-neutral-900">{house.community}</p>
-      </div>
-      <hr className="mt-4 border-t-2 border-dotted border-neutral-900" />
-      <p className="mt-3 text-center text-xs text-neutral-900">
-        วันเดือนปีที่พิมพ์ทะเบียนบ้าน <span className="ml-1">{house.printedDate}</span>
-      </p>
-    </section>
   )
 }
 
@@ -89,7 +65,7 @@ function ResidentsCard({ className = '' }: { className?: string }) {
 function HouseDocument() {
   return (
     <div className="flex flex-col gap-6">
-      <HouseInfoCard />
+      <HouseInfoArtwork className="overflow-hidden rounded-xl shadow-md" />
       <ResidentsCard />
     </div>
   )
@@ -103,14 +79,23 @@ function ScaledFace({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const frame = frameRef.current
     if (!frame) return
-    const observer = new ResizeObserver(([entry]) => setScale(entry.contentRect.width / FACE_WIDTH))
+    const observer = new ResizeObserver(([entry]) => setScale(entry.contentRect.width / RESIDENTS_DESIGN_WIDTH))
     observer.observe(frame)
     return () => observer.disconnect()
   }, [])
 
   return (
     <div ref={frameRef} className="absolute inset-0 overflow-hidden rounded-[4.5cqw]">
-      <div style={{ width: FACE_WIDTH, height: FACE_HEIGHT, transform: `scale(${scale})`, transformOrigin: 'top left' }}>{children}</div>
+      <div
+        style={{
+          width: RESIDENTS_DESIGN_WIDTH,
+          height: (RESIDENTS_DESIGN_WIDTH * FACE_HEIGHT) / FACE_WIDTH,
+          transform: `scale(${scale})`,
+          transformOrigin: 'top left',
+        }}
+      >
+        {children}
+      </div>
     </div>
   )
 }
@@ -135,9 +120,9 @@ function FlipHouseCard({ flipped, onClick }: { flipped: boolean; onClick: (event
         style={{ aspectRatio: `${FACE_WIDTH} / ${FACE_HEIGHT}`, transform: `rotateY(${flipped ? 180 : 0}deg)` }}
       >
         <div className="absolute inset-0 [backface-visibility:hidden]" aria-hidden={flipped}>
-          <ScaledFace>
-            <HouseInfoCard className="h-full rounded-none shadow-none" />
-          </ScaledFace>
+          <div className="absolute inset-0 overflow-hidden rounded-[4.5cqw]">
+            <HouseInfoArtwork className="size-full" />
+          </div>
         </div>
         <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]" aria-hidden={!flipped}>
           <ScaledFace>
