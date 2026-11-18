@@ -129,12 +129,13 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
       if (cancelled) return
       root.querySelectorAll<SVGTextElement>('text[data-max-right]').forEach((node) => {
         node.removeAttribute('textLength')
-        const room = Number(node.dataset.maxRight) - Number(node.getAttribute('x'))
+        node.removeAttribute('lengthAdjust')
+        node.removeAttribute('transform')
+        const x = Number(node.getAttribute('x'))
+        const room = Number(node.dataset.maxRight) - x
         const width = node.getComputedTextLength()
-        if (width > room) {
-          node.setAttribute('textLength', String(room))
-          node.setAttribute('lengthAdjust', 'spacingAndGlyphs')
-        }
+        // textLength re-spaces Thai combining marks (karan, tone marks) so they sink into the letter; a plain horizontal scale keeps them floating.
+        if (width > room) node.setAttribute('transform', `translate(${x} 0) scale(${room / width} 1) translate(${-x} 0)`)
       })
     }
     fit()
