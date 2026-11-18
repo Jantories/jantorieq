@@ -32,6 +32,7 @@ import { SplashScreen } from './splash-screen'
 import { announcements, cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
 const civilDocumentProfiles: readonly string[] = ['first', 'eighth', 'tenth']
+const birthCertificateImages: Record<string, string | undefined> = { tenth: '/images/birth-certificate-tenth.svg' }
 
 type Screen = 'notifications' | 'cardInfo' | 'documentId' | 'houseRegistration' | 'birthCertificate' | 'scan' | 'checkRequests' | 'certify' | 'move' | 'announcement' | null
 
@@ -198,7 +199,7 @@ export function AppShell() {
     if (screen === 'cardInfo') return <CardInfoScreen cardInfo={activeCardInfo} onBack={() => setScreen(null)} />
     if (screen === 'documentId') return <DocumentIdScreen cardImage={activeCard.front.large} holo={activeCard.holo ? { card: activeCard, portrait: activeCard.portrait } : undefined} onBack={() => setScreen(null)} />
     if (screen === 'houseRegistration') return <HouseRegistrationScreen onBack={() => setScreen(null)} />
-    if (screen === 'birthCertificate') return <BirthCertificateScreen onBack={() => setScreen(null)} />
+    if (screen === 'birthCertificate') return <BirthCertificateScreen onBack={() => setScreen(null)} imageSrc={birthCertificateImages[authenticatedAs]} />
     if (screen === 'scan') return <ScanScreen onBack={() => setScreen(null)} />
     if (screen === 'checkRequests') return <CheckRequestsScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />
     if (screen === 'certify') return <CertifyScreen profileId={authenticatedAs} onBack={() => setScreen(null)} />

@@ -5,15 +5,16 @@ import { useEffect, useState } from 'react'
 import { BackButton } from './page-parts'
 import { useCardViewer } from './use-card-viewer'
 
-type Props = { onBack: () => void }
+type Props = { onBack: () => void; imageSrc?: string }
 
-const IMAGE_SRC = '/images/birth-certificate.svg'
+const DEFAULT_IMAGE_SRC = '/images/birth-certificate.svg'
 const IMAGE_WIDTH = 1234
 const IMAGE_HEIGHT = 1748
 const RATIO = IMAGE_WIDTH / IMAGE_HEIGHT
 const ALT = 'แบบรับรองรายการทะเบียนคนเกิด (สูติบัตร)'
 
-export function BirthCertificateScreen({ onBack }: Props) {
+export function BirthCertificateScreen({ onBack, imageSrc = DEFAULT_IMAGE_SRC }: Props) {
+  const IMAGE_SRC = imageSrc
   const [isFullOpen, setIsFullOpen] = useState(false)
   const viewer = useCardViewer(RATIO, undefined, 0)
 
