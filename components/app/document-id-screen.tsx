@@ -31,7 +31,7 @@ function HoloDocumentCard({ card, portrait, flipped, onClick }: { card: HoloDocu
         <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] [backface-visibility:hidden]">
           <HoloIdCard card={card} portrait={portrait} />
         </div>
-        <div className="absolute inset-0 overflow-hidden rounded-[3.3cqw] bg-neutral-100 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <Image src={card.back.large} alt="ด้านหลังบัตรประจำตัวประชาชน" fill sizes="(max-width: 448px) 92vw, 400px" className="object-fill" draggable={false} />
         </div>
       </div>
