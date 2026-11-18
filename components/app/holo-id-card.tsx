@@ -206,7 +206,7 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
         <image x="9.3" y="173.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
         <image className={card.photoCode === '1040-02-04221656' ? 'holo-card-portrait-neutral' : undefined} x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
         {FIELDS.map((f) => (
-          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke * 0.4} data-max-right={f.maxRight}>
+          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
             {fieldText(f, card, address)}
           </text>
         ))}
