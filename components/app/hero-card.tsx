@@ -358,7 +358,7 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
           </div>
           <div
             ref={contentRef}
-            className="touch-none [will-change:transform]"
+            className="touch-none"
             style={{ transform: 'translate3d(0px, 0px, 0) scale(1) rotate(90deg)', transformOrigin: 'center' }}
           >
             {renderCard({
