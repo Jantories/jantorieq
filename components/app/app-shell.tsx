@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { MessageCircleMore } from 'lucide-react'
 import { usePullDown } from './use-pull-down'
+import { beginGesture, endGesture } from '@/lib/gesture'
 import { AppHeader } from './app-header'
 import { HeroCard } from './hero-card'
 import { ServiceMenu } from './service-menu'
@@ -104,6 +105,16 @@ export function AppShell() {
     }, pressLoaderDurationMs)
     return () => window.clearTimeout(id)
   }, [pressLoading])
+
+  // Holographic shimmer and seal animations pause while the page scrolls, so scrolling stays on the compositor.
+  useEffect(() => {
+    const onScroll = () => {
+      beginGesture()
+      endGesture(160)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     const saved = window.localStorage.getItem(lastProfileKey)

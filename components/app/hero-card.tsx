@@ -5,6 +5,7 @@ import { ChevronLeft } from 'lucide-react'
 import type { CardSeal, NumberOverlay } from '@/lib/app-content'
 import { ExpandIcon, FlipIcon, PersonIcon } from './card-action-icons'
 import { HoloIdCard, type HoloCardData } from './holo-id-card'
+import { beginGesture, endGesture, promoteLayer } from '@/lib/gesture'
 
 type CardImage = { small: string; large: string; cropScale?: number; cropRotate?: number }
 
@@ -49,7 +50,7 @@ function CardFace({
 }) {
   return (
     <div
-      className={`absolute inset-0 overflow-hidden rounded-[4.5cqw] ${flat ? (back ? 'hidden' : '') : `[backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''}`} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
+      className={`absolute inset-0 isolate overflow-hidden rounded-[4.5cqw] ${flat ? (back ? 'hidden' : '') : `[backface-visibility:hidden] ${back ? '[transform:rotateY(180deg)]' : ''}`} ${blurred ? 'bg-sky-100/40 blur-[5px]' : ''}`}
     >
       {holoCard ? (
         <HoloIdCard card={holoCard} portrait={portrait} className="rounded-[3.3cqw]" />
@@ -157,14 +158,19 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
   const shownRef = useRef({ zoom: 1, x: 0, y: 0 })
   const contentRef = useRef<HTMLDivElement>(null)
   const frameRef = useRef(0)
+  const lastFrameRef = useRef(0)
+  const centerRef = useRef({ x: 0, y: 0 })
   const flipExpanded = () => setExpandedFlipped((f) => !f)
   const flatMain = useFlat(flipped)
   const flatExpanded = useFlat(expandedFlipped)
 
-  const paintView = () => {
+  const paintView = (now: number) => {
     const target = viewRef.current
     const shown = shownRef.current
-    const ease = 0.4
+    // Easing is scaled by the real frame time so it feels the same on 60, 90 and 120Hz screens.
+    const dt = lastFrameRef.current ? Math.min(50, now - lastFrameRef.current) : 16.7
+    lastFrameRef.current = now
+    const ease = 1 - Math.pow(0.6, dt / 16.7)
     shown.zoom += (target.zoom - shown.zoom) * ease
     shown.x += (target.x - shown.x) * ease
     shown.y += (target.y - shown.y) * ease
@@ -174,19 +180,29 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
     const { zoom, x, y } = shownRef.current
     if (contentRef.current) {
       contentRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${zoom}) rotate(90deg)`
-      if (settled) contentRef.current.removeAttribute('data-gesture')
+      promoteLayer(contentRef.current)
+    }
+    if (settled) {
+      lastFrameRef.current = 0
+      endGesture()
     }
     frameRef.current = settled || !contentRef.current ? 0 : requestAnimationFrame(paintView)
   }
 
   const applyView = (nextZoom: number, nextPan: { x: number; y: number }) => {
     viewRef.current = { zoom: nextZoom, x: nextPan.x, y: nextPan.y }
-    // Pauses the holographic shimmer while the card is being pinched or dragged.
-    contentRef.current?.setAttribute('data-gesture', '')
+    // Pauses the holographic shimmer and seal animations while the card is being pinched or dragged.
+    beginGesture()
     if (!frameRef.current) frameRef.current = requestAnimationFrame(paintView)
   }
 
-  useEffect(() => () => cancelAnimationFrame(frameRef.current), [])
+  useEffect(
+    () => () => {
+      cancelAnimationFrame(frameRef.current)
+      endGesture(0)
+    },
+    [],
+  )
 
   const openExpanded = () => {
     cancelAnimationFrame(frameRef.current)
@@ -230,13 +246,15 @@ export function HeroCard({ card, onOpenInfo, locked = false, onRequestUnlock }: 
 
   // Midpoint of two fingers, relative to the dialog centre and expressed in card (content) coordinates.
   function getFocal(e: React.TouchEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect()
-    const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - (rect.left + rect.width / 2)
-    const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - (rect.top + rect.height / 2)
+    const mx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - centerRef.current.x
+    const my = (e.touches[0].clientY + e.touches[1].clientY) / 2 - centerRef.current.y
     return toContentDelta(mx, my)
   }
 
   function handleExpandedTouchStart(e: React.TouchEvent<HTMLDivElement>) {
+    // The dialog never moves, so its centre is measured once per gesture instead of on every touch move.
+    const rect = e.currentTarget.getBoundingClientRect()
+    centerRef.current = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
     if (e.touches.length === 2) {
       const [first, second] = [e.touches[0], e.touches[1]]
       const focal = getFocal(e)
