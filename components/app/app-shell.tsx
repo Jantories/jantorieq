@@ -31,6 +31,8 @@ import { UnlockLoader } from './unlock-loader'
 import { SplashScreen } from './splash-screen'
 import { announcements, cardInfoProfiles, cardProfiles, profiles } from '@/lib/app-content'
 
+const civilDocumentProfiles: readonly string[] = ['first', 'eighth', 'tenth']
+
 type Screen = 'notifications' | 'cardInfo' | 'documentId' | 'houseRegistration' | 'birthCertificate' | 'scan' | 'checkRequests' | 'certify' | 'move' | 'announcement' | null
 
 const lastProfileKey = 'last-profile'
@@ -206,7 +208,8 @@ export function AppShell() {
       if (detail) return <AnnouncementScreen detail={detail} onBack={() => setScreen(null)} />
     }
     if (tab === 'docs') {
-      return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} onOpenHouse={authenticatedAs === 'first' ? () => setScreen('houseRegistration') : undefined} onOpenBirth={authenticatedAs === 'first' ? () => setScreen('birthCertificate') : undefined} onNotFound={setNotFoundDocument} />
+      const hasCivilDocuments = civilDocumentProfiles.includes(authenticatedAs)
+      return <DocumentsTab onAction={notify} onOpenIdCard={() => setScreen('documentId')} onOpenHouse={hasCivilDocuments ? () => setScreen('houseRegistration') : undefined} onOpenBirth={hasCivilDocuments ? () => setScreen('birthCertificate') : undefined} onNotFound={setNotFoundDocument} />
     }
     if (tab === 'history') return <HistoryTab onAction={notify} />
     if (tab === 'settings') return <SettingsTab onAction={notify} onLogout={openLogout} />
