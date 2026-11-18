@@ -25,12 +25,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: 'แอปบริการ',
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#2b2f8f',
+  themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
