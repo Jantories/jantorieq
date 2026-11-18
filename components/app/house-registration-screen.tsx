@@ -135,22 +135,6 @@ export function HouseRegistrationScreen({ onBack }: Props) {
               </div>
             ))}
           </div>
-
-          <div
-            className="absolute inset-y-0 right-1 z-10 flex flex-col items-center justify-center gap-2"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {SLIDES.map(({ id, label }, index) => (
-              <button
-                key={id}
-                type="button"
-                aria-label={`ไปที่${label}`}
-                aria-current={index === activeIndex}
-                onClick={() => goTo(index)}
-                className={`w-2 rounded-full transition-all ${index === activeIndex ? 'h-6 bg-white' : 'h-2 bg-white/50'}`}
-              />
-            ))}
-          </div>
         </div>
       )}
     </main>
