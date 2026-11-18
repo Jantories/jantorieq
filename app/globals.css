@@ -501,3 +501,29 @@ html[data-forced-portrait] .min-h-\[80dvh\] {
   background: linear-gradient(225deg, transparent 38%, rgba(255, 255, 255, 0.85) 50%, transparent 62%);
   transform: translate(var(--s), var(--s));
 }
+
+/* Zoomed card: punchier, more saturated holograms with a brighter sweeping glint. */
+.holo-card--vivid .holo-seal,
+.holo-card--vivid .holo-seal-text {
+  opacity: 1;
+  mix-blend-mode: normal;
+  filter: saturate(1.8) contrast(1.2);
+}
+
+.holo-card--vivid .holo-band {
+  background: repeating-linear-gradient(
+    225deg,
+    #ffd84a calc(var(--o) + 0%),
+    #ff3fa4 calc(var(--o) + 12%),
+    #c43bff calc(var(--o) + 24%),
+    #6a5cff calc(var(--o) + 36%),
+    #1f9bff calc(var(--o) + 48%),
+    #19d8c4 calc(var(--o) + 59%),
+    #ffd84a calc(var(--o) + 70%)
+  );
+}
+
+.holo-card--vivid .holo-sheen {
+  mix-blend-mode: hard-light;
+  background: linear-gradient(225deg, transparent 34%, rgba(255, 255, 255, 1) 50%, transparent 66%);
+}

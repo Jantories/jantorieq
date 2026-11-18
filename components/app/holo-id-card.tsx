@@ -110,9 +110,14 @@ const clamp = (v: number) => Math.max(-1, Math.min(1, v))
 export const DEFAULT_PORTRAIT = '/images/alpha/portrait.png'
 export const DEFAULT_BARCODE = '/images/alpha/barcode.svg'
 
-type Props = { card: HoloCardData; portrait?: string; barcode?: string; className?: string }
+const VIVID_SWEEP_SECONDS = 3.5
+const VIVID_HOLD_SECONDS = 0.8
 
-export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAULT_BARCODE, className = '' }: Props) {
+type Props = { card: HoloCardData; portrait?: string; barcode?: string; className?: string; vivid?: boolean }
+
+export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAULT_BARCODE, className = '', vivid = false }: Props) {
+  const sweepSeconds = vivid ? VIVID_SWEEP_SECONDS : SWEEP_SECONDS
+  const holdSeconds = vivid ? VIVID_HOLD_SECONDS : HOLD_SECONDS
   const rootRef = useRef<HTMLDivElement>(null)
   const address = splitAddress(card.address)
 
@@ -170,13 +175,13 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
       let e = 0
       if (!reduce) {
         clock += dt
-        const cycle = Math.floor(clock / (SWEEP_SECONDS + HOLD_SECONDS))
+        const cycle = Math.floor(clock / (sweepSeconds + holdSeconds))
         if (cycle !== lastCycle) {
           lastCycle = cycle
           for (let i = 0; i < dirs.length; i++) dirs[i] = Math.random() < 0.5 ? 1 : -1
         }
-        const phase = clock - cycle * (SWEEP_SECONDS + HOLD_SECONDS)
-        p = phase < SWEEP_SECONDS ? phase / SWEEP_SECONDS : 1
+        const phase = clock - cycle * (sweepSeconds + holdSeconds)
+        p = phase < sweepSeconds ? phase / sweepSeconds : 1
         e = p * p * p * (p * (p * 6 - 15) + 10)
       }
       cur += (target - cur) * Math.min(1, dt * 2.5)
@@ -194,10 +199,10 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
       window.removeEventListener('pointermove', onPointer)
       window.removeEventListener('deviceorientation', onTilt)
     }
-  }, [])
+  }, [sweepSeconds, holdSeconds])
 
   return (
-    <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${className}`}>
+    <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${vivid ? 'holo-card--vivid' : ''} ${className}`}>
       <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true">
         <image x="9.3" y="173.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
         <image x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
