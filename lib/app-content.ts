@@ -223,18 +223,7 @@ export const cardProfiles = {
     },
   },
   sixth: { ...firstCard, ...liveCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
-  seventh: {
-    ...firstCard,
-    number: '7 7777 77777 77 7',
-    fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด',
-    firstNameEn: 'Mr. Seventh',
-    lastNameEn: 'User',
-    photoCode: '0000-00-00000007',
-    front: {
-      small: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png',
-      large: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png',
-    },
-  },
+  seventh: { ...firstCard, ...liveCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
   eighth: {
     ...firstCard,
     ...liveCard,
