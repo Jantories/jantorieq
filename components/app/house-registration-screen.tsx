@@ -68,9 +68,9 @@ export function HouseRegistrationScreen({ onBack }: Props) {
           <p className="mt-1 text-base leading-relaxed text-neutral-500">ข้อมูลทะเบียนบ้าน</p>
         </div>
 
-        <div className="mt-8 flex flex-col gap-6">
+        <div className="mt-8 flex flex-col overflow-hidden rounded-xl shadow-md">
           {SLIDES.map(({ id, Artwork }) => (
-            <Artwork key={id} className="overflow-hidden rounded-xl shadow-md" />
+            <Artwork key={id} className="block w-full" />
           ))}
         </div>
 
@@ -92,6 +92,12 @@ export function HouseRegistrationScreen({ onBack }: Props) {
           aria-roledescription="carousel"
           aria-label="เอกสารทะเบียนบ้านขนาดเต็ม"
           className="fixed inset-0 z-40 mx-auto max-w-md overflow-hidden bg-neutral-900/65 touch-none [overscroll-behavior:none] [touch-action:none]"
+          style={
+            {
+              '--card-w': `min(calc(var(--app-h, 100dvh) * 0.78), calc((min(100vw, 28rem) - 2rem) * ${FACE_WIDTH / FACE_HEIGHT}), 40rem)`,
+              '--card-h': `calc(var(--card-w) * ${FACE_HEIGHT / FACE_WIDTH})`,
+            } as React.CSSProperties
+          }
           onTouchStart={viewer.handlers.onTouchStart}
           onTouchMove={viewer.handlers.onTouchMove}
           onTouchEnd={viewer.handlers.onTouchEnd}
@@ -107,13 +113,14 @@ export function HouseRegistrationScreen({ onBack }: Props) {
           </button>
 
           <div
-            className="flex size-full transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            className="absolute left-1/2 top-0 flex h-full items-center transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(calc(var(--card-h) * ${-(activeIndex + 0.5)}))` }}
           >
             {SLIDES.map(({ id, label, Artwork }, index) => (
               <div
                 key={id}
-                className="flex size-full shrink-0 items-center justify-center"
+                className="flex shrink-0 items-center justify-center"
+                style={{ width: 'var(--card-h)', height: 'var(--card-w)' }}
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${label} (${index + 1} จาก ${SLIDES.length})`}
@@ -121,9 +128,9 @@ export function HouseRegistrationScreen({ onBack }: Props) {
               >
                 <div
                   ref={index === activeIndex ? viewer.contentRef : undefined}
-                  className="relative shrink-0 overflow-hidden rounded-[4.5cqw] shadow-xl touch-none"
+                  className={`relative shrink-0 overflow-hidden shadow-xl touch-none ${index === 0 ? 'rounded-b-[4.5cqw]' : 'rounded-t-[4.5cqw]'}`}
                   style={{
-                    width: `min(calc(var(--app-h, 100dvh) * 0.78), calc((min(100vw, 28rem) - 2rem) * ${FACE_WIDTH / FACE_HEIGHT}), 40rem)`,
+                    width: 'var(--card-w)',
                     aspectRatio: `${FACE_WIDTH} / ${FACE_HEIGHT}`,
                     transform: 'translate3d(0px, 0px, 0) scale(1) rotate(90deg)',
                     transformOrigin: 'center',
