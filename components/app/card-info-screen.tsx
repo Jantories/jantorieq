@@ -29,7 +29,7 @@ export function CardInfoScreen({ cardInfo: c, onBack }: Props) {
 
         {c.photo ? (
           <div className="relative mx-auto mt-6 block aspect-[5/6] w-[72%] overflow-hidden bg-neutral-100">
-            <Image src={c.photo} alt={c.photoTitle} fill sizes="(max-width: 448px) 72vw, 320px" className="object-cover" priority />
+            <Image src={c.photo} alt={c.photoTitle} fill sizes="(max-width: 448px) 72vw, 320px" className={`object-cover ${c.photo === '/images/alpha/portrait-eighth.png' ? 'scale-[1.06]' : ''}`} priority />
           </div>
         ) : (
           <div
