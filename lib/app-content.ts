@@ -231,6 +231,13 @@ export const cardProfiles = {
     ...firstCard,
     ...liveCard,
     portrait: '/images/alpha/portrait-eighth.png',
+    cardFont: 'eighth' as const,
+    fieldOverrides: {
+      'birth-en': { x: 422, y: 302.9 },
+      'address-1': { size: 37, stroke: 0.844 },
+      'address-2': { size: 35, stroke: 0.798 },
+      'photo-code': { x: 629.3, y: 461.9 },
+    },
     number: '1 1017 00437 68 0',
     fullNameTh: 'น.ส. วีริณฒิรา วงศ์ธนินยา',
     firstNameEn: 'Miss veryntira',

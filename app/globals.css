@@ -457,6 +457,13 @@ html[data-forced-portrait] .min-h-\[80dvh\] {
 }
 
 @font-face {
+  font-family: 'AlphaDilleniaEighth';
+  src: url('/fonts/DilleniaUPC-eighth.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'AlphaDillenia';
   src: url('/fonts/DilleniaUPC.ttf') format('truetype');
   font-weight: 400;

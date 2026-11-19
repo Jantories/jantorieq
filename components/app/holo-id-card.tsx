@@ -16,10 +16,12 @@ export type HoloCardData = {
   expiryEn: string
   photoCode: string
   /** Optional font file for the overlay text (defaults to the shared card font) */
-  cardFont?: 'card'
+  cardFont?: 'card' | 'eighth'
+  /** Per-card position/size tweaks for individual fields, keyed by field id */
+  fieldOverrides?: Readonly<Record<string, Partial<Pick<Field, 'x' | 'y' | 'size' | 'stroke'>>>>
 }
 
-type FieldKey = Exclude<keyof HoloCardData, 'address'> | 'address1' | 'address2'
+type FieldKey = Exclude<keyof HoloCardData, 'address' | 'cardFont' | 'fieldOverrides'> | 'address1' | 'address2'
 
 type Field = {
   id: string
@@ -116,6 +118,11 @@ const clamp = (v: number) => Math.max(-1, Math.min(1, v))
 
 export const DEFAULT_PORTRAIT = '/images/alpha/portrait.png'
 export const DEFAULT_BARCODE = '/images/alpha/barcode.svg'
+
+const CARD_FONT_STYLES: Record<string, React.CSSProperties | undefined> = {
+  card: { fontFamily: "'AlphaDilleniaCard', Tahoma, sans-serif" },
+  eighth: { fontFamily: "'AlphaDilleniaEighth', Tahoma, sans-serif" },
+}
 
 type Props = { card: HoloCardData; portrait?: string; barcode?: string; className?: string }
 
@@ -242,14 +249,17 @@ export function HoloIdCard({ card, portrait = DEFAULT_PORTRAIT, barcode = DEFAUL
 
   return (
     <div ref={rootRef} role="img" aria-label="บัตรประจำตัวประชาชน" className={`holo-card ${className}`}>
-      <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true" style={card.cardFont === 'card' ? { fontFamily: "'AlphaDilleniaCard', Tahoma, sans-serif" } : undefined}>
+      <svg className="holo-card-overlay" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 500" preserveAspectRatio="none" aria-hidden="true" style={CARD_FONT_STYLES[card.cardFont ?? '']}>
         <image x="15.8" y="174.67" width="54.4" height="297.67" preserveAspectRatio="none" href={barcode} />
         <image className={card.photoCode === '1040-02-04221656' ? 'holo-card-portrait-neutral' : undefined} x="624" y="240" width="162" height="202" preserveAspectRatio="xMidYMid slice" href={portrait} />
-        {FIELDS.map((f) => (
-          <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
-            {fieldText(f, card, address)}
-          </text>
-        ))}
+        {FIELDS.map((base) => {
+          const f = { ...base, ...card.fieldOverrides?.[base.id] }
+          return (
+            <text key={f.id} x={f.x} y={f.y} fontSize={f.size} fill={f.fill} stroke={f.fill} strokeWidth={f.stroke} data-max-right={f.maxRight}>
+              {fieldText(f, card, address)}
+            </text>
+          )
+        })}
       </svg>
       {HOLO_ITEMS.map((item, i) => (
         <div
