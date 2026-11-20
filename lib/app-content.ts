@@ -13,7 +13,7 @@ export const profiles = {
   fourth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ คุณธรรม พิพัฒน์ธรรมคุณ', avatar: '/images/user-4-photo.jpg' },
   fifth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ธนันท์รัฐ วัฒนสินศักดิ์', avatar: '/images/user-5-photo.jpg' },
   sixth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่หก' },
-  seventh: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เจ็ด', avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-G3iNnAve0g2Q9zSGnJwPzwGosRGENp.png' },
+  seventh: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ คัศซะยะ รุ่งบรรณพันธุ์', avatar: '/images/alpha/portrait-seventh.png' },
   eighth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ วีริณฒิรา วงศ์ธนินยา', avatar: '/images/alpha/portrait-eighth.png' },
   ninth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ผู้ใช้งานคนที่เก้า' },
   tenth: { greeting: 'สวัสดี', status: 'ONLINE', name: 'คุณ ศิวกร สุสัมพันธ์ไพบูลย์', avatar: '/images/card-photo-siwakorn.png' },
