@@ -226,7 +226,7 @@ export const cardProfiles = {
     },
   },
   sixth: { ...firstCard, ...liveCard, number: '6 6666 66666 66 6', fullNameTh: 'นาย ผู้ใช้งาน คนที่หก', firstNameEn: 'Mr. Sixth', lastNameEn: 'User', photoCode: '0000-00-00000006' },
-  seventh: { ...firstCard, ...liveCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007' },
+  seventh: { ...firstCard, ...liveCard, number: '7 7777 77777 77 7', fullNameTh: 'นาย ผู้ใช้งาน คนที่เจ็ด', firstNameEn: 'Mr. Seventh', lastNameEn: 'User', photoCode: '0000-00-00000007', back: { small: '/images/card-back-7.png', large: '/images/card-back-7.png' } },
   eighth: {
     ...firstCard,
     ...liveCard,
