@@ -576,6 +576,7 @@ export const cardInfoProfiles = {
   sixth: { ...firstCardInfo, number: '6-6666-66666-66-6', nameTh: 'นาย ผู้ใช้งาน คนที่หก', nameEn: 'Mr. Sixth User' },
   seventh: {
     ...firstCardInfo,
+    photo: '/images/alpha/portrait-seventh.png',
     number: '1-1039-00251-89-1',
     nameTh: 'นาย คัศซะยะ รุ่งบรรณพันธุ์',
     nameEn: 'Mr. Khatsaya  Rungbannaphan',
