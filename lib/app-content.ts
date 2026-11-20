@@ -210,7 +210,7 @@ export const cardProfiles = {
     lastNameEn: 'Watthanasinsak',
     birthTh: '13 ต.ค. 2549',
     birthEn: '13 Oct. 2006',
-    address: 'ที่อยู่ 65/25 ถ.วิทยุ แขวงลุมพินี เขตปทุมวัน กรุงเทพมหานคร',
+    address: 'ที่อยู่ 65/25 ถ.วิทยุ แขวงลุมพินี เขตปทุมวัน\nกรุงเทพมหานคร',
     issueTh: '28 ต.ค. 2569',
     issueEn: '28 Oct. 2026',
     expiryTh: '12 ต.ค. 2578',
